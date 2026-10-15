@@ -2,18 +2,18 @@
 
 An Android lab for trying Jetpack Compose in a working interface, then inspecting how it behaves.
 
-The first experiment is a temperature chart with **synthetic data**. Drag across two
-series, switch between day/week/month fixtures, adjust a Tween or Spring reveal,
-and open **Understand** for the mechanism and source. Empty and incomplete data are
-deliberate scenarios you can reproduce.
+Five experiments turn Compose APIs into things you can try: a chart, a fictional
+audio player, an object collection, a form and a custom timeline. Change a setting,
+observe the result, then open **Understand** for the mechanism behind it.
+All content is synthetic; the player makes no sound and the form sends nothing.
 
 This is a small, evolving lab. It does not read sensors, need an account, or call a
 backend. Device performance has not been measured. The original code is [MIT](LICENSE).
 
 <p>
-  <img src="docs/images/phone-home.png" width="230" alt="Explore gallery on the native Android build">
-  <img src="docs/images/motion-quarter-overshoot.png" width="230" alt="Temperature chart and Adjust controls">
-  <img src="docs/images/motion-understand.png" width="230" alt="Understand explains the chart interaction">
+  <img src="docs/images/gallery-home.png" width="230" alt="Explore gallery on the native Android build">
+  <img src="docs/images/gallery-player.png" width="230" alt="Fictional audio player with waveform artwork and playback controls">
+  <img src="docs/images/gallery-agenda.png" width="230" alt="Custom agenda with overlapping sessions and adjustable time geometry">
 </p>
 
 ## Run it
@@ -59,9 +59,25 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
    ```
 
    Use `adb -s DEVICE_ID` when more than one device is connected. Open
-   **Temperature study** from Explore.
+   any experiment from Explore.
 
-## Try the experiment
+## Choose an experiment
+
+| Scene | Try this | What to watch |
+| --- | --- | --- |
+| Quiet frequency | Play, seek, change track, compact the player | Title transitions, size animation, gesture ownership and a cancellable clock |
+| Object collection | Save Arc lamp, reverse, filter, switch Grid/List | Stable item identity, reordering motion and restored favorites |
+| Session builder | Submit empty input, then use Next and Done on the keyboard | Error feedback, focus movement and a local confirmation |
+| Spatial agenda | Overlap sessions, zoom, move Motion workshop | Time-driven placement and columns for overlapping events |
+| Temperature study | Replay Tween and Spring at 0.25× | Duration-based easing versus spring overshoot |
+
+Every scene has an **Understand** tab. Changes survive activity recreation.
+Returning to the player restores its position paused. The agenda uses a list in
+narrow windows or with enlarged text; the normal phone shows a custom timeline.
+The [coverage map](docs/coverage.md) lists implemented capabilities and candidates
+for later milestones.
+
+### Explore the temperature chart
 
 - **Inspect:** drag or tap the chart. Previous point and Next point provide the same
   selection without requiring a precise gesture.
@@ -102,8 +118,9 @@ the toolchain and tested API 36 target are intentionally pinned. `OldTargetApi` 
 an excluded update notice; Android API usage compatibility checks remain enabled.
 
 Unit tests exercise chart coordinates, nearest-sample boundaries, gap segmentation,
-distinct fixtures and state changes. Instrumented tests cover navigation, inspection,
-state recreation, series visibility, scenarios and controlled animation time.
+distinct fixtures, filtering, validation and interval placement. Instrumented tests
+cover all five scenes, navigation, state recreation, playback completion, keyboard
+actions, scenarios and controlled chart animation time.
 Reports are under `app/build/reports/`.
 
 GitHub Actions runs the same checks on every push and PR, with a separate API 36
@@ -114,6 +131,14 @@ See [verification](docs/verification.md) for actual runs and remaining limits.
 
 ## Source map
 
+- [Gallery and shared shell](app/src/main/java/dev/devaxes/composeatlas/ui/ExperimentGallery.kt):
+  five destinations with saved scene state.
+- [Player](app/src/main/java/dev/devaxes/composeatlas/ui/PlayerExperience.kt),
+  [collection](app/src/main/java/dev/devaxes/composeatlas/ui/CollectionExperience.kt),
+  [form](app/src/main/java/dev/devaxes/composeatlas/ui/FormExperience.kt), and
+  [agenda](app/src/main/java/dev/devaxes/composeatlas/ui/AgendaExperience.kt):
+  self-contained scenes and their explanations.
+
 - [Data and chart math](app/src/main/java/dev/devaxes/composeatlas/data/TemperatureData.kt):
   deterministic fixtures, state transitions and gap-preserving segments.
 - [Canvas](app/src/main/java/dev/devaxes/composeatlas/ui/TemperatureChart.kt):
@@ -121,7 +146,7 @@ See [verification](docs/verification.md) for actual runs and remaining limits.
 - [Motion comparison](app/src/main/java/dev/devaxes/composeatlas/ui/MotionComparison.kt):
   parallel markers and playback speed composed with Android animation scale.
 - [Screen state and layout](app/src/main/java/dev/devaxes/composeatlas/ui/AtlasApp.kt):
-  saved settings, replay and gallery navigation.
+  saved chart settings and replay.
 - [Controls and explanations](app/src/main/java/dev/devaxes/composeatlas/ui/ControlPanel.kt):
   Adjust / Understand and reproducible scenarios.
 - [Architecture and tradeoffs](docs/architecture.md), [design](DESIGN.md), and

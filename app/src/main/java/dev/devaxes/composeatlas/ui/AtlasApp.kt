@@ -96,8 +96,7 @@ private val experimentSaver =
     )
 
 @Composable
-fun AtlasApp() {
-    var detail by rememberSaveable { mutableStateOf(false) }
+fun TemperatureExperience(onExit: () -> Unit) {
     var state by rememberSaveable(stateSaver = experimentSaver) { mutableStateOf(ExperimentState()) }
     var panelOpen by rememberSaveable { mutableStateOf(true) }
     var understand by rememberSaveable { mutableStateOf(false) }
@@ -105,8 +104,8 @@ fun AtlasApp() {
     val progress = if (state.mode == MotionMode.TWEEN) motion.tween else motion.spring
     var replay by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
-    LaunchedEffect(detail, replay, state.period, state.scenario, state.animate, state.mode, state.speed) {
-        if (detail && state.animate && state.data.samples.isNotEmpty()) {
+    LaunchedEffect(replay, state.period, state.scenario, state.animate, state.mode, state.speed) {
+        if (state.animate && state.data.samples.isNotEmpty()) {
             motion.replay(state)
         } else {
             motion.finish()
@@ -116,138 +115,86 @@ fun AtlasApp() {
         scope.launch { motion.finish() }
         Unit
     }
-    BackHandler(detail) {
-        if (panelOpen) panelOpen = false else detail = false
+    BackHandler {
+        if (panelOpen) panelOpen = false else onExit()
     }
-    InstrumentTheme {
-        Surface(color = Instrument.Background, modifier = Modifier.fillMaxSize()) {
-            if (!detail) {
-                ExploreScreen {
-                    panelOpen = true
-                    detail = true
-                }
-            } else {
-                Column(Modifier.safeDrawingPadding().fillMaxSize()) {
-                    Row(Modifier.fillMaxWidth().padding(start = 4.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(onClick = { detail = false }, modifier = Modifier.testTag("back-to-explore")) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back to Explore")
-                        }
-                        Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
-                            Text("Temperature study", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Medium)
-                            Text("Synthetic data", style = MaterialTheme.typography.bodySmall, color = Instrument.Muted)
-                        }
-                    }
-                    BoxWithConstraints(Modifier.weight(1f)) {
-                        val compactHeight = maxHeight < 600.dp || LocalDensity.current.fontScale > 1.25f
-                        val chartHeight = if (compactHeight) 240.dp else (maxHeight * 0.31f).coerceIn(210.dp, 290.dp)
-                        Column(
-                            Modifier.fillMaxSize().then(if (compactHeight) Modifier.verticalScroll(rememberScrollState()) else Modifier),
-                        ) {
-                            ChoiceRow(
-                                Period.entries.map { it.label },
-                                state.period.ordinal,
-                                {
-                                    state =
-                                        state.changePeriod(Period.entries[it])
-                                },
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                            )
-                            ChartCard(
-                                state,
-                                progress.value,
-                                { state = state.select(it) },
-                                inspect,
-                                Modifier.padding(horizontal = 10.dp).height(chartHeight),
-                                replaying = progress.isRunning || progress.value < 0.999f,
-                            )
-                            MotionComparison(
-                                state = state,
-                                tweenPosition = motion.tween.value,
-                                springPosition = motion.spring.value,
-                                onSpeed = { state = state.copy(speed = it) },
-                                onReplay = { replay++ },
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                            )
-                            if (panelOpen) {
-                                ControlPanel(
-                                    state = state,
-                                    understand = understand,
-                                    onUnderstand = { understand = it },
-                                    onState = { state = it },
-                                    onClose = { panelOpen = false },
-                                    onReplay = { replay++ },
-                                    onReset = {
-                                        state = ExperimentState()
-                                        replay++
-                                    },
-                                    onInspect = inspect,
-                                    modifier =
-                                        if (compactHeight) {
-                                            Modifier.padding(
-                                                top = 12.dp,
-                                            )
-                                        } else {
-                                            Modifier.weight(1f).padding(top = 12.dp)
-                                        },
-                                    scroll = !compactHeight,
+    Column(Modifier.safeDrawingPadding().fillMaxSize()) {
+        Row(Modifier.fillMaxWidth().padding(start = 4.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = onExit, modifier = Modifier.testTag("back-to-explore")) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back to Explore")
+            }
+            Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
+                Text("Temperature study", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Medium)
+                Text("Synthetic data", style = MaterialTheme.typography.bodySmall, color = Instrument.Muted)
+            }
+        }
+        BoxWithConstraints(Modifier.weight(1f)) {
+            val compactHeight = maxHeight < 600.dp || LocalDensity.current.fontScale > 1.25f
+            val chartHeight = if (compactHeight) 240.dp else (maxHeight * 0.31f).coerceIn(210.dp, 290.dp)
+            Column(
+                Modifier.fillMaxSize().then(if (compactHeight) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+            ) {
+                ChoiceRow(
+                    Period.entries.map { it.label },
+                    state.period.ordinal,
+                    {
+                        state =
+                            state.changePeriod(Period.entries[it])
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+                ChartCard(
+                    state,
+                    progress.value,
+                    { state = state.select(it) },
+                    inspect,
+                    Modifier.padding(horizontal = 10.dp).height(chartHeight),
+                    replaying = progress.isRunning || progress.value < 0.999f,
+                )
+                MotionComparison(
+                    state = state,
+                    tweenPosition = motion.tween.value,
+                    springPosition = motion.spring.value,
+                    onSpeed = { state = state.copy(speed = it) },
+                    onReplay = { replay++ },
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+                if (panelOpen) {
+                    ControlPanel(
+                        state = state,
+                        understand = understand,
+                        onUnderstand = { understand = it },
+                        onState = { state = it },
+                        onClose = { panelOpen = false },
+                        onReplay = { replay++ },
+                        onReset = {
+                            state = ExperimentState()
+                            replay++
+                        },
+                        onInspect = inspect,
+                        modifier =
+                            if (compactHeight) {
+                                Modifier.padding(
+                                    top = 12.dp,
                                 )
                             } else {
-                                Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                                    PointControls(state, {
-                                        inspect()
-                                        state = state.select(it)
-                                    })
-                                    Button(
-                                        onClick = { panelOpen = true },
-                                        modifier = Modifier.fillMaxWidth(),
-                                    ) { Text("Experiment controls") }
-                                }
-                            }
-                        }
+                                Modifier.weight(1f).padding(top = 12.dp)
+                            },
+                        scroll = !compactHeight,
+                    )
+                } else {
+                    Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        PointControls(state, {
+                            inspect()
+                            state = state.select(it)
+                        })
+                        Button(
+                            onClick = { panelOpen = true },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) { Text("Experiment controls") }
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun ExploreScreen(onOpen: () -> Unit) {
-    Column(
-        Modifier
-            .safeDrawingPadding()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-    ) {
-        Text("Compose Atlas", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Medium)
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("Explore", style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.SemiBold)
-            Text("Try an interface. Explore how it works.", style = MaterialTheme.typography.bodyLarge, color = Instrument.Muted)
-        }
-        Card(
-            colors = CardDefaults.cardColors(containerColor = Instrument.Surface),
-            border = BorderStroke(1.dp, Instrument.Outline),
-            shape = RoundedCornerShape(16.dp),
-        ) {
-            Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                Text("Temperature study", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Medium)
-                Text("Inspect two series. Change the timeline.", color = Instrument.Muted)
-                Box(Modifier.fillMaxWidth().height(200.dp)) {
-                    TemperatureChart(ExperimentState(), interactive = false)
-                }
-                Button(onClick = onOpen, modifier = Modifier.fillMaxWidth().testTag("open-experiment"), shape = RoundedCornerShape(12.dp)) {
-                    Text("Open experiment")
-                    Spacer(Modifier.width(12.dp))
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null, Modifier.size(18.dp))
-                }
-            }
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Text("Inside this experiment", style = MaterialTheme.typography.titleMedium)
-            Text("Canvas drawing · touch inspection · controlled animation · accessible values", color = Instrument.Muted)
-            Text("All values are synthetic. This lab runs offline.", color = Instrument.Muted, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

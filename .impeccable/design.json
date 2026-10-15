@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-15T01:05:09.195692+00:00",
+  "generatedAt": "2026-10-15T02:20:37.496184+00:00",
   "title": "Design System: Compose Atlas",
   "extensions": {
     "colorMeta": {
@@ -180,10 +180,21 @@
       "platform": "Android / Jetpack Compose / Material 3",
       "units": "dp for layout; sp for text. Browser previews approximate logical units with CSS pixels.",
       "rampProvenance": "Synthesized OKLCH documentation swatches; not implemented palette variants.",
-      "layoutCondition": "Available height < 600dp or font scale > 1.25 selects whole-content scrolling.",
+      "layoutCondition": "Temperature study: available height < 600dp or font scale > 1.25 selects whole-content scrolling. Four added scenes: centered body and Experiment / Understand selector capped at 600dp; separate tab scroll positions. Collection Experiment uses its lazy grid/list as scroll owner; other scenes scroll as pages.",
       "previewLimit": "Illustrative HTML/CSS documentation only. No native runtime or screenshot equivalence.",
       "visualGate": "Strict raw score 71.03%, below 72%; native adaptations separately reviewed.",
-      "motionComparison": "Two horizontal lanes expose raw animation position with an amber 100% target and space to 150%. Selected mode is lime, other marker is the text color. Playback speed 1x/0.5x/0.25x scales time while retaining Android motion-off. This is an experiment diagnostic, not temperature data."
+      "motionComparison": "Two horizontal lanes expose raw animation position with an amber 100% target and space to 150%. Selected mode is lime, other marker is the text color. Playback speed 1x/0.5x/0.25x scales time while retaining Android motion-off. This is an experiment diagnostic, not temperature data.",
+      "galleryInventory": [
+        "Quiet frequency",
+        "Temperature study",
+        "Object collection",
+        "Session builder",
+        "Spatial agenda"
+      ],
+      "galleryCards": "Text-led cards with description, cyan mechanism label and full-width opening action; no chart preview.",
+      "agendaFallback": "Timeline when available content width >= 360dp and font scale <= 1.2; otherwise chronological list, disabled zoom and explanatory text. Event details and 15-minute move actions remain available.",
+      "fieldsAndChips": "Native Material OutlinedTextField and FilterChip retain library shapes, focus, error and selection treatments. Session validation uses supporting text; collection chips wrap with 8dp horizontal gaps.",
+      "sceneFraming": "ExperimentFrame preserves safe-drawing and IME insets. Body padding 20dp, content gap 16dp. LabSurface uses the existing 16dp rounded outlined surface and 20dp padding."
     }
   },
   "components": [
@@ -227,9 +238,9 @@
     {
       "name": "Gallery card",
       "kind": "card",
-      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
-      "html": "<article class=\"ds-card\"><h3>Temperature study</h3><p>Inspect two series. Change the timeline.</p></article>",
-      "css": ".ds-card{padding:20px;border:1px solid #2D433C;border-radius:16px;background:#112523;color:#EEF4F0;font:16px Roboto,sans-serif}.ds-card h3{font-size:24px;font-weight:500;margin:0 0 16px}.ds-card p{color:#B0C3BB;margin:0}",
+      "description": "Illustrative preview of one of five native text-led gallery cards; includes mechanism label and opening action, with no chart preview.",
+      "html": "<article class=\"ds-card\"><h3>Temperature study</h3><p>Inspect two series. Compare Tween and Spring.</p><small>Canvas · pointer input · animation clock</small><button>Open experiment</button></article>",
+      "css": ".ds-card{padding:20px;border:1px solid #2D433C;border-radius:16px;background:#112523;color:#EEF4F0;font:16px Roboto,sans-serif}.ds-card h3{font-size:24px;font-weight:500;margin:0 0 16px}.ds-card p{color:#B0C3BB;margin:0}.ds-card small{display:block;color:#6FBDCB;margin:12px 0}.ds-card button{width:100%;min-height:48px;border:0;border-radius:12px;background:#B9EE77;color:#0B1A19;font:500 14px Roboto,sans-serif}.ds-card button:hover{filter:brightness(1.08)}.ds-card button:focus-visible{outline:2px solid #6FBDCB;outline-offset:3px}",
       "refersTo": "gallery-card"
     },
     {
@@ -239,16 +250,30 @@
       "html": "<div class=\"ds-readout\"><time>12:00</time><span>Studio 23.0°C</span><span>Gallery 22.0°C</span></div>",
       "css": ".ds-readout{display:flex;gap:8px;padding:10px;border-radius:8px;background:#112523;font:500 12px Roboto,sans-serif}.ds-readout time{color:#E9B965;font-family:monospace}.ds-readout span{color:#B9EE77}.ds-readout span:last-child{color:#6FBDCB}",
       "refersTo": "readout"
+    },
+    {
+      "name": "Outlined text field",
+      "kind": "input",
+      "description": "Illustrative native collection search field. Session Name / Email add Material supporting error text after validation; native focus, IME and error behavior remain library-owned.",
+      "html": "<label class=\"ds-field\">Search objects<input type=\"search\" aria-label=\"Search objects\"></label>",
+      "css": ".ds-field{display:block;color:#B0C3BB;font:16px Roboto,sans-serif}.ds-field input{display:block;width:100%;min-height:48px;margin-top:8px;border:1px solid #2D433C;border-radius:4px;background:transparent;color:#EEF4F0;font:16px Roboto,sans-serif}.ds-field input:hover{border-color:#B0C3BB}.ds-field input:focus-visible{outline:2px solid #B9EE77;outline-offset:0}"
+    },
+    {
+      "name": "Filter chip",
+      "kind": "chip",
+      "description": "Illustrative native category filter. The same Material FilterChip pattern supports Saved only and agenda overlap; selected state uses the existing theme container.",
+      "html": "<div class=\"ds-filters\"><button aria-pressed=\"true\">All</button><button aria-pressed=\"false\">Light</button></div>",
+      "css": ".ds-filters{display:flex;flex-wrap:wrap;gap:8px}.ds-filters button{font:500 14px Roboto,sans-serif;padding:6px 16px;border:1px solid #2D433C;border-radius:8px;background:transparent;color:#B0C3BB}.ds-filters button[aria-pressed=\"true\"]{background:#395630;color:#EEF4F0;border-color:transparent}.ds-filters button:hover{filter:brightness(1.15)}.ds-filters button:focus-visible{outline:2px solid #B9EE77;outline-offset:2px}"
     }
   ],
   "narrative": {
     "northStar": "Instrument",
-    "overview": "Instrument is a measuring surface where changes can be inspected, replayed and understood. Green-black fields hold clear measurements, solid lime and dashed cyan traces, and an amber selection cursor. Material 3 provides native Android interaction and text scaling.\n\nThis records the implemented dark-only system, extracted from InstrumentTheme.kt, AtlasApp.kt, ControlPanel.kt and TemperatureChart.kt under app/src/main/java/dev/devaxes/composeatlas/ui. PRODUCT.md establishes the offline, synthetic-data scope. The approved surface brief selects composition B with C explanations; it is not a requirement that future experiments repeat this exact screen.",
+    "overview": "Instrument is a measuring surface where changes can be inspected, replayed and understood. Green-black fields hold clear measurements, solid lime and dashed cyan traces, and an amber selection cursor. Material 3 provides native Android interaction and text scaling.\n\nThis records the implemented dark-only system, extracted from InstrumentTheme.kt, ExperimentGallery.kt, AtlasApp.kt, ControlPanel.kt, TemperatureChart.kt and the Player, Collection, Form and Agenda experience files under app/src/main/java/dev/devaxes/composeatlas/ui. PRODUCT.md establishes the offline, synthetic-data scope. The approved surface brief selects composition B with C explanations for Temperature study; the gallery extension retains Instrument with a shared native scene frame rather than repeating the chart composition.",
     "keyCharacteristics": [
       "Tonal green-black surfaces with restrained outlines.",
       "Series identity carried by color, line pattern and names.",
       "Native controls and readable, scalable text.",
-      "One working experiment in an evolving gallery."
+      "Five working experiments in an evolving gallery: Quiet frequency, Temperature study, Object collection, Session builder and Spatial agenda."
     ],
     "rules": [
       {

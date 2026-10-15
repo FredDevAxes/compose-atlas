@@ -105,3 +105,64 @@ Confirmation captures: [quarter-speed overshoot](images/motion-quarter-overshoot
 [Understand](images/motion-understand.png), [large text](images/motion-large-understand.png),
 and [landscape window](images/motion-landscape-understand.png). The selected flow
 passed at normal size, font scale 1.3 and the 2400 × 1080 window override.
+
+
+## Gallery milestone — 0.2.0
+
+The gallery adds Quiet frequency, Object collection, Session builder and Spatial
+agenda alongside Temperature study. The native captures below belong to the
+0.2.0 source. Earlier chart captures remain historical evidence for their sections.
+
+Local verification on 15 October 2026 used the same API 36 Google APIs ARM64 AVD,
+1080 × 2400 at density 420, host GPU rendering, JDK 17.0.11 and the pinned toolchain.
+
+| Check | Result |
+| --- | --- |
+| ktlint, Android Lint, debug app and test APK assembly | Passed |
+| Minified release assembly (R8) | Passed; unsigned APK |
+| JVM unit tests | 13 passed |
+| Complete instrumented suite | 14 passed, none skipped |
+| New-scene navigation and Understand at font scale 1.3 | Passed |
+| New-scene navigation and Understand at 2400 × 1080 window override | Passed |
+| Public image origin metadata | 24 rasters, none missing |
+| Secret scan | Passed, no findings |
+
+The six gallery tests include four functional scene flows, a player gesture/back
+flow and a capture/navigation flow. They check playback completion and seeking,
+paused restoration, empty queue recovery, favorite identity through filtering and
+layout changes, empty search, IME focus and submission, local notes confirmation,
+agenda time changes, overlap, zoom and recreation. The eight existing chart tests
+also pass. Pure tests cover filtering, validation, interval lanes, clamped movement,
+clock labels and existing chart math.
+
+The first gallery run exposed a missing IME action in collection search. The
+corrected search declares Done and clears focus. The visual pass also corrected
+tab scroll sharing and clarified disabled timeline zoom in list mode. Failed
+preliminary runs are not counted as successful verification.
+
+### Native evidence
+
+- [Gallery](images/gallery-home.png)
+- [Player](images/gallery-player.png) and [compact player](images/gallery-player-compact.png)
+- [Collection](images/gallery-collection.png)
+- [Form](images/gallery-form.png) and [local confirmation](images/gallery-form-confirmation.png)
+- [Overlapping agenda](images/gallery-agenda.png)
+- [Understand](images/gallery-understand.png)
+- [Large-text agenda list](images/gallery-large-agenda.png)
+- [Landscape Understand](images/gallery-landscape-understand.png)
+
+The large-text and landscape runs exercise scene navigation, scrolling and opening
+Understand. They are not repeats of every functional scenario at every size.
+The landscape evidence uses a window-size override, not a sensor-rotation test.
+The displayed objects, waveform artwork, sessions and chart values are synthetic.
+
+The independent extension review found the native visual direction consistent
+with Instrument. Its sole material finding was stale design-system documentation.
+The documenter updated DESIGN.md and its sidecar; the reviewer scored that fix
+**resolved**, with disposition **ship** for that persistence fix. This is not a new
+full-surface or hardware validation. The historical chart reproduction gate
+(71.03% versus 72%) remains unchanged and outside this extension.
+
+No real audio, network delivery, hardware performance, complete TalkBack session,
+tablet-specific layout, light theme or exhaustive Compose API coverage is claimed.
+The remaining experiments are tracked in [capability coverage](coverage.md).

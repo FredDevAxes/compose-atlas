@@ -82,3 +82,40 @@ Consulted on 15 October 2026:
 - [Animation testing](https://developer.android.com/develop/ui/compose/animation/testing)
 
 The implementation is original; reference examples were not copied into the app.
+
+
+## A gallery with independent scene state
+
+The root uses a saveable route and SaveableStateHolder. Each scene owns its state;
+leaving a scene removes its effects from composition while retaining saveable
+values for re-entry. This small local gallery does not need a navigation dependency
+or a production back stack. Experiment and Understand keep independent scroll
+positions. The new scene body is capped at 600 dp in wide windows for readable
+copy and controls. Android Back returns to Explore; the chart first
+closes its control panel, and native dialogs handle their own dismissal.
+
+Quiet frequency uses a cancellable coroutine ticking every 100 ms. Its clock is
+a simulation, not an audio clock or performance benchmark. A lifecycle observer
+pauses on ON_STOP. Playback itself is transient; position and track are saveable.
+Vertical dragging belongs only to the title, leaving normal page scrolling free.
+
+The collection hoists favorite IDs out of lazy items. Both layouts use stable
+keys and animateItem, so reordered items keep their identity. Search and category
+filters combine with the saved-only filter. Its controls live inside the lazy
+container, avoiding an inaccessible results pane with a short window or large font.
+
+The form derives validation from input state and only displays errors after a
+submission attempt. IME Next requests the email focus; Done runs the same submit
+action as the button. Confirmation is local. Input and confirmation are saveable.
+
+The agenda's pure overlap algorithm groups connected intervals, assigning the
+first free lane and a consistent lane count within each group. Its custom Layout
+measures each child exactly once from duration and lane width, then places it from
+start time. The Canvas hour grid shares the same pixels-per-minute scale.
+Narrow windows or font scale above 1.2 use a chronological list, preserving readable
+event content. Timeline zoom is disabled in that list with a visible explanation. Time changes clamp the entire event within the displayed day.
+
+References: [lazy lists and keys](https://developer.android.com/develop/ui/compose/lists),
+[custom layouts](https://developer.android.com/develop/ui/compose/layouts/custom),
+[text-field focus](https://developer.android.com/develop/ui/compose/touch-input/focus/focus-in-text-fields),
+and [animation composables](https://developer.android.com/develop/ui/compose/animation/composables-modifiers).
