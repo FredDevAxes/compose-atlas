@@ -29,7 +29,8 @@ android {
     lint {
         abortOnError = true
         warningsAsErrors = true
-        disable += setOf("GradleDependency", "AndroidGradlePluginVersion")
+        // API 36 is this milestone's tested target; SDK-update notices are not compatibility checks.
+        disable += setOf("GradleDependency", "AndroidGradlePluginVersion", "OldTargetApi")
     }
     testOptions { animationsDisabled = false }
 }
