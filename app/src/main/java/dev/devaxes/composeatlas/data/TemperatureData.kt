@@ -23,6 +23,15 @@ enum class Scenario(
 
 enum class MotionMode { TWEEN, SPRING }
 
+enum class PlaybackSpeed(
+    val label: String,
+    val multiplier: Float,
+) {
+    NORMAL("1×", 1f),
+    HALF("0.5×", 0.5f),
+    QUARTER("0.25×", 0.25f),
+}
+
 enum class Series { STUDIO, GALLERY }
 
 data class Sample(
@@ -160,9 +169,10 @@ data class ExperimentState(
     val gallery: Boolean = true,
     val mode: MotionMode = MotionMode.TWEEN,
     val duration: Int = 600,
-    val damping: Float = 0.8f,
+    val damping: Float = 0.45f,
     val stiffness: Float = 200f,
     val animate: Boolean = true,
+    val speed: PlaybackSpeed = PlaybackSpeed.NORMAL,
 ) {
     val data: TemperatureSet get() = TemperatureData.load(period, scenario)
     val sample: Sample? get() = data.samples.getOrNull(selected)

@@ -31,6 +31,7 @@ fun TemperatureChart(
     state: ExperimentState,
     modifier: Modifier = Modifier,
     progress: Float = 1f,
+    replaying: Boolean = false,
     onSelect: (Int) -> Unit = {},
     onInspect: () -> Unit = {},
     interactive: Boolean = true,
@@ -164,7 +165,7 @@ fun TemperatureChart(
             if (state.studio) trace(samples.map { it.studio }, Instrument.Lime, false)
             if (state.gallery) trace(samples.map { it.gallery }, Instrument.Cyan, true)
         }
-        if (progress >= 0.999f) {
+        if (!replaying) {
             val sample = samples.getOrNull(state.selected) ?: return@Canvas
             drawLine(
                 Instrument.Amber,

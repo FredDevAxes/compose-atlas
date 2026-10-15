@@ -85,3 +85,23 @@ comparison remains **71.03%**, below its **72%** threshold, and the final review
 disposition remains **fix** for that open gate. See the
 [native adaptation record](design/native-adaptations.md). This milestone does not
 claim a full visual approval or exact reproduction of the generated reference.
+
+
+## Motion comparison follow-up
+
+The 0.1.0 screenshots above are historical milestone evidence. The motion follow-up
+adds two diagnostic lanes and 1×/0.5×/0.25× playback. Additional instrumented tests
+check visible spring overshoot while the selected chart still reports replay,
+normal/quarter-speed curve equivalence, completion, speed restoration and reset.
+App-level motion-off also checks that both markers finish at 100%.
+
+Local verification on 15 October 2026: ktlint, Android Lint, debug assembly,
+7 JVM tests and all 8 instrumented tests passed on API 36 ARM64. This follow-up
+uses the same AVD with host GPU rendering. A preliminary software-rendered run
+was interrupted after device timeouts; an old replay test was also corrected to
+scroll before freezing the test clock. Neither interrupted run is counted as a pass.
+
+Confirmation captures: [quarter-speed overshoot](images/motion-quarter-overshoot.png),
+[Understand](images/motion-understand.png), [large text](images/motion-large-understand.png),
+and [landscape window](images/motion-landscape-understand.png). The selected flow
+passed at normal size, font scale 1.3 and the 2400 × 1080 window override.

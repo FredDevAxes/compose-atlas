@@ -142,8 +142,17 @@ fun ControlPanel(
                         Modifier.weight(1f),
                     )
                 }
-                Text("Transition", style = MaterialTheme.typography.labelLarge, color = Instrument.Muted)
+                Text("Chart transition", style = MaterialTheme.typography.labelLarge, color = Instrument.Muted)
                 ChoiceRow(listOf("Tween", "Spring"), state.mode.ordinal, { onState(state.copy(mode = MotionMode.entries[it])) })
+                Text(
+                    if (state.mode == MotionMode.TWEEN) {
+                        "Fixed duration. Eases into the target without overshoot."
+                    } else {
+                        "A spring settles around its target. Lower damping makes the bounce stronger."
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Instrument.Muted,
+                )
                 if (state.mode == MotionMode.TWEEN) {
                     LabeledSlider("Duration", state.duration.toString() + " ms", state.duration.toFloat(), 200f..1600f) {
                         onState(state.copy(duration = ((it / 50).roundToInt() * 50)))
@@ -151,7 +160,7 @@ fun ControlPanel(
                 } else {
                     LabeledSlider(
                         "Damping",
-                        "%.1f".format(java.util.Locale.US, state.damping),
+                        "%.2f".format(java.util.Locale.US, state.damping),
                         state.damping,
                         0.3f..1f,
                     ) { onState(state.copy(damping = it)) }
@@ -189,7 +198,7 @@ fun ControlPanel(
                     ) {
                         Icon(Icons.Default.PlayArrow, null, Modifier.size(20.dp))
                         Spacer(Modifier.width(8.dp))
-                        Text("Replay transition", style = MaterialTheme.typography.labelLarge)
+                        Text("Replay both", style = MaterialTheme.typography.labelLarge)
                     }
                 }
                 HorizontalDivider(color = Instrument.Outline)
@@ -329,6 +338,26 @@ private fun UnderstandContent(
 ) {
     val uri = LocalUriHandler.current
     Column(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.padding(top = 8.dp)) {
+        Text("Tween vs Spring", style = MaterialTheme.typography.titleMedium)
+        Explanation(
+            "Tween: a timed arrival",
+            "The marker follows FastOutSlowIn easing and reaches 100% at the chosen duration. It does not overshoot.",
+        )
+        Explanation(
+            "Spring: a settling motion",
+            "The marker can cross 100%, reverse direction and settle. Lower damping gives more bounce; higher stiffness makes the response faster. At damping 1 there is no bounce.",
+        )
+        Explanation(
+            "Slow the clock, not the spring",
+            "Both markers start together. At 0.5× they take twice as long; at 0.25×, four times as long. The easing, damping and stiffness stay unchanged. Android's animation scale still applies; disabling animations jumps to the target.",
+        )
+        Text("What moves?", style = MaterialTheme.typography.titleMedium)
+        Text(
+            "The two lanes show animation position, not temperature. The selected mode reveals the chart, whose edge is clipped at 100%; the lanes keep spring overshoot visible. The readout waits until the selected animation settles. Inspecting completes both movements; temperatures never change.",
+            color = Instrument.Muted,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        HorizontalDivider(color = Instrument.Outline)
         PointControls(state, {
             onInspect()
             onState(state.select(it))
@@ -338,14 +367,8 @@ private fun UnderstandContent(
         Explanation("Read both series", "The cursor and values share the same sample index. A gap stays missing, never zero.")
         Explanation("Move the cursor", "Drag the chart or use Previous point and Next point. Values remain available as text.")
         HorizontalDivider(color = Instrument.Outline)
-        Text("What moves?", style = MaterialTheme.typography.titleMedium)
         Text(
-            "Tween or Spring reveals the existing trace. Values do not morph into invented measurements. During replay the readout waits; inspecting completes the reveal.",
-            color = Instrument.Muted,
-            style = MaterialTheme.typography.bodyMedium,
-        )
-        Text(
-            "Canvas · drawPath · pointerInput · Animatable · rememberSaveable",
+            "Canvas · drawPath · pointerInput · Animatable · MotionDurationScale · rememberSaveable",
             color = Instrument.Cyan,
             style = MaterialTheme.typography.bodySmall,
         )

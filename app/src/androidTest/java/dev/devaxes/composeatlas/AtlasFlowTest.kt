@@ -8,6 +8,8 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -16,6 +18,8 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipe
 import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
@@ -104,8 +108,9 @@ class AtlasFlowTest {
     @Test
     fun replayUsesTestClockAndMotionCanBeDisabled() {
         open()
+        rule.onNodeWithTag("replay").performScrollTo()
         rule.mainClock.autoAdvance = false
-        rule.onNodeWithTag("replay").performScrollTo().performClick()
+        rule.onNodeWithTag("replay").performClick()
         rule.mainClock.advanceTimeBy(32)
         rule.onNodeWithText("Replaying trace…").assertExists()
         rule.mainClock.advanceTimeBy(1000)
@@ -115,6 +120,60 @@ class AtlasFlowTest {
         rule.onNodeWithTag("replay").performScrollTo().performClick()
         rule.onNodeWithText("Replaying trace…").assertDoesNotExist()
         rule.onNodeWithText("14:00").assertExists()
+        assertEquals(1f, position("tween"), 0.001f)
+        assertEquals(1f, position("spring"), 0.001f)
+    }
+
+    private fun position(mode: String): Float =
+        rule
+            .onNodeWithTag("motion-" + mode)
+            .fetchSemanticsNode()
+            .config[SemanticsProperties.ProgressBarRangeInfo]
+            .current
+
+    @Test
+    fun slowMotionShowsOvershootAndRestoresSpeed() {
+        open()
+        rule.onNode(hasText("Spring") and hasClickAction()).performScrollTo().performClick()
+        rule.onNodeWithText("0.25×").performClick()
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("compare-replay").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.mainClock.advanceTimeBy(960)
+        assertTrue("Spring crosses its target", position("spring") > 1.1f)
+        assertTrue("Quarter-speed Tween is still approaching", position("tween") in 0.1f..0.9f)
+        rule.onNodeWithText("Replaying trace…").assertExists()
+        capture("motion-quarter-overshoot")
+        rule.mainClock.advanceTimeBy(5000)
+        assertEquals(1f, position("tween"), 0.001f)
+        assertEquals(1f, position("spring"), 0.001f)
+        rule.onNodeWithText("14:00").assertExists()
+        rule.mainClock.autoAdvance = true
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithText("0.25×").assertIsSelected()
+        rule.onNodeWithTag("reset").performScrollTo().performClick()
+        rule.onNodeWithText("1×").assertIsSelected()
+        capture("motion-controls")
+    }
+
+    @Test
+    fun normalAndQuarterSpeedFollowTheSameCurve() {
+        open()
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("compare-replay").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.mainClock.advanceTimeBy(160)
+        val normalTween = position("tween")
+        val normalSpring = position("spring")
+        rule.mainClock.autoAdvance = true
+        rule.onNodeWithText("0.25×").performClick()
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("compare-replay").performClick()
+        rule.mainClock.advanceTimeBy(32)
+        rule.mainClock.advanceTimeBy(640)
+        assertEquals(normalTween, position("tween"), 0.07f)
+        assertEquals(normalSpring, position("spring"), 0.09f)
+        rule.mainClock.autoAdvance = true
     }
 
     @Test

@@ -12,8 +12,8 @@ backend. Device performance has not been measured. The original code is [MIT](LI
 
 <p>
   <img src="docs/images/phone-home.png" width="230" alt="Explore gallery on the native Android build">
-  <img src="docs/images/phone-controls.png" width="230" alt="Temperature chart and Adjust controls">
-  <img src="docs/images/phone-understand.png" width="230" alt="Understand explains the chart interaction">
+  <img src="docs/images/motion-quarter-overshoot.png" width="230" alt="Temperature chart and Adjust controls">
+  <img src="docs/images/motion-understand.png" width="230" alt="Understand explains the chart interaction">
 </p>
 
 ## Run it
@@ -69,6 +69,10 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
 - **Change periods:** Day, Week and Month use distinct deterministic fixtures.
 - **Adjust:** choose Tween with duration, or Spring with damping and stiffness.
   Replay reveals the existing trace; it never invents intermediate measurements.
+- **Compare motion:** Replay both starts two markers together. The amber line is the
+  100% target; Spring can overshoot it while Tween stops at it. Choose 1×, 0.5× or
+  0.25× to slow playback without changing the curves. The highlighted lane drives
+  the chart. The spring defaults to damping 0.45 so its bounce is visible.
 - **Understand:** read the mapping from touch to values, inspect the relevant APIs,
   and follow View source.
 - **Break the happy path:** choose Empty, Gaps or Long labels. Gaps break the path
@@ -114,6 +118,8 @@ See [verification](docs/verification.md) for actual runs and remaining limits.
   deterministic fixtures, state transitions and gap-preserving segments.
 - [Canvas](app/src/main/java/dev/devaxes/composeatlas/ui/TemperatureChart.kt):
   shared coordinates for traces, markers and pointer input.
+- [Motion comparison](app/src/main/java/dev/devaxes/composeatlas/ui/MotionComparison.kt):
+  parallel markers and playback speed composed with Android animation scale.
 - [Screen state and layout](app/src/main/java/dev/devaxes/composeatlas/ui/AtlasApp.kt):
   saved settings, replay and gallery navigation.
 - [Controls and explanations](app/src/main/java/dev/devaxes/composeatlas/ui/ControlPanel.kt):

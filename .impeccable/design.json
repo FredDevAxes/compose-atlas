@@ -182,7 +182,8 @@
       "rampProvenance": "Synthesized OKLCH documentation swatches; not implemented palette variants.",
       "layoutCondition": "Available height < 600dp or font scale > 1.25 selects whole-content scrolling.",
       "previewLimit": "Illustrative HTML/CSS documentation only. No native runtime or screenshot equivalence.",
-      "visualGate": "Strict raw score 71.03%, below 72%; native adaptations separately reviewed."
+      "visualGate": "Strict raw score 71.03%, below 72%; native adaptations separately reviewed.",
+      "motionComparison": "Two horizontal lanes expose raw animation position with an amber 100% target and space to 150%. Selected mode is lime, other marker is the text color. Playback speed 1x/0.5x/0.25x scales time while retaining Android motion-off. This is an experiment diagnostic, not temperature data."
     }
   },
   "components": [
@@ -235,7 +236,7 @@
       "name": "Selection readout",
       "kind": "custom",
       "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
-      "html": "<div class=\"ds-readout\"><time>12:00</time><span>Studio 23.0\u00b0C</span><span>Gallery 22.0\u00b0C</span></div>",
+      "html": "<div class=\"ds-readout\"><time>12:00</time><span>Studio 23.0°C</span><span>Gallery 22.0°C</span></div>",
       "css": ".ds-readout{display:flex;gap:8px;padding:10px;border-radius:8px;background:#112523;font:500 12px Roboto,sans-serif}.ds-readout time{color:#E9B965;font-family:monospace}.ds-readout span{color:#B9EE77}.ds-readout span:last-child{color:#6FBDCB}",
       "refersTo": "readout"
     }

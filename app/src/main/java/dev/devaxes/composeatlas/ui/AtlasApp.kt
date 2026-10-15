@@ -1,9 +1,6 @@
 package dev.devaxes.composeatlas.ui
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -60,6 +57,7 @@ import dev.devaxes.composeatlas.data.ChartMath
 import dev.devaxes.composeatlas.data.ExperimentState
 import dev.devaxes.composeatlas.data.MotionMode
 import dev.devaxes.composeatlas.data.Period
+import dev.devaxes.composeatlas.data.PlaybackSpeed
 import dev.devaxes.composeatlas.data.Scenario
 import kotlinx.coroutines.launch
 
@@ -77,6 +75,7 @@ private val experimentSaver =
                 it.damping,
                 it.stiffness,
                 it.animate,
+                it.speed.ordinal,
             )
         },
         restore = {
@@ -91,6 +90,7 @@ private val experimentSaver =
                 it[7] as Float,
                 it[8] as Float,
                 it[9] as Boolean,
+                PlaybackSpeed.entries[it.getOrNull(10) as? Int ?: 0],
             )
         },
     )
@@ -101,22 +101,19 @@ fun AtlasApp() {
     var state by rememberSaveable(stateSaver = experimentSaver) { mutableStateOf(ExperimentState()) }
     var panelOpen by rememberSaveable { mutableStateOf(true) }
     var understand by rememberSaveable { mutableStateOf(false) }
-    val progress = remember { Animatable(1f) }
+    val motion = remember { MotionPlayback() }
+    val progress = if (state.mode == MotionMode.TWEEN) motion.tween else motion.spring
     var replay by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
-    LaunchedEffect(detail, replay, state.period, state.scenario, state.animate) {
+    LaunchedEffect(detail, replay, state.period, state.scenario, state.animate, state.mode, state.speed) {
         if (detail && state.animate && state.data.samples.isNotEmpty()) {
-            progress.snapTo(0f)
-            progress.animateTo(1f, if (state.mode == MotionMode.TWEEN) tween(state.duration) else spring(state.damping, state.stiffness))
+            motion.replay(state)
         } else {
-            progress.snapTo(1f)
+            motion.finish()
         }
     }
     val inspect = {
-        scope.launch {
-            progress.stop()
-            progress.snapTo(1f)
-        }
+        scope.launch { motion.finish() }
         Unit
     }
     BackHandler(detail) {
@@ -161,6 +158,15 @@ fun AtlasApp() {
                                 { state = state.select(it) },
                                 inspect,
                                 Modifier.padding(horizontal = 10.dp).height(chartHeight),
+                                replaying = progress.isRunning || progress.value < 0.999f,
+                            )
+                            MotionComparison(
+                                state = state,
+                                tweenPosition = motion.tween.value,
+                                springPosition = motion.spring.value,
+                                onSpeed = { state = state.copy(speed = it) },
+                                onReplay = { replay++ },
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                             )
                             if (panelOpen) {
                                 ControlPanel(
@@ -253,6 +259,7 @@ private fun ChartCard(
     onSelect: (Int) -> Unit,
     onInspect: () -> Unit,
     modifier: Modifier = Modifier,
+    replaying: Boolean = false,
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -273,14 +280,21 @@ private fun ChartCard(
                     }
                 }
             } else {
-                TemperatureChart(state, modifier = Modifier.weight(1f), progress = progress, onSelect = onSelect, onInspect = onInspect)
+                TemperatureChart(
+                    state,
+                    modifier = Modifier.weight(1f),
+                    progress = progress,
+                    replaying = replaying,
+                    onSelect = onSelect,
+                    onInspect = onInspect,
+                )
             }
             Surface(
                 color = Instrument.Surface,
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth().testTag("selection-readout"),
             ) {
-                if (progress < 0.999f && state.data.samples.isNotEmpty()) {
+                if (replaying && state.data.samples.isNotEmpty()) {
                     Text("Replaying trace…", Modifier.padding(12.dp), color = Instrument.Amber, style = MaterialTheme.typography.bodySmall)
                 } else {
                     Row(
