@@ -31,7 +31,7 @@ android {
         warningsAsErrors = true
         disable += setOf("GradleDependency", "AndroidGradlePluginVersion")
     }
-    testOptions { animationsDisabled = true }
+    testOptions { animationsDisabled = false }
 }
 kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
 ktlint { version.set("1.7.1") }
