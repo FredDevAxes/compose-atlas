@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T01:05:09.195692+00:00",
+  "title": "Design System: Compose Atlas",
+  "extensions": {
+    "colorMeta": {
+      "lime": {
+        "role": "primary",
+        "displayName": "Lime",
+        "tonalRamp": [
+          "oklch(15.00% 0.15881 129.01)",
+          "oklch(26.43% 0.15881 129.01)",
+          "oklch(37.86% 0.15881 129.01)",
+          "oklch(49.29% 0.15881 129.01)",
+          "oklch(60.71% 0.15881 129.01)",
+          "oklch(72.14% 0.15881 129.01)",
+          "oklch(83.57% 0.15881 129.01)",
+          "oklch(95.00% 0.15881 129.01)"
+        ]
+      },
+      "cyan": {
+        "role": "secondary",
+        "displayName": "Cyan",
+        "tonalRamp": [
+          "oklch(15.00% 0.07945 210.29)",
+          "oklch(26.43% 0.07945 210.29)",
+          "oklch(37.86% 0.07945 210.29)",
+          "oklch(49.29% 0.07945 210.29)",
+          "oklch(60.71% 0.07945 210.29)",
+          "oklch(72.14% 0.07945 210.29)",
+          "oklch(83.57% 0.07945 210.29)",
+          "oklch(95.00% 0.07945 210.29)"
+        ]
+      },
+      "amber": {
+        "role": "tertiary",
+        "displayName": "Amber",
+        "tonalRamp": [
+          "oklch(15.00% 0.11623 79.93)",
+          "oklch(26.43% 0.11623 79.93)",
+          "oklch(37.86% 0.11623 79.93)",
+          "oklch(49.29% 0.11623 79.93)",
+          "oklch(60.71% 0.11623 79.93)",
+          "oklch(72.14% 0.11623 79.93)",
+          "oklch(83.57% 0.11623 79.93)",
+          "oklch(95.00% 0.11623 79.93)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Background",
+        "tonalRamp": [
+          "oklch(15.00% 0.02078 190.19)",
+          "oklch(26.43% 0.02078 190.19)",
+          "oklch(37.86% 0.02078 190.19)",
+          "oklch(49.29% 0.02078 190.19)",
+          "oklch(60.71% 0.02078 190.19)",
+          "oklch(72.14% 0.02078 190.19)",
+          "oklch(83.57% 0.02078 190.19)",
+          "oklch(95.00% 0.02078 190.19)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.02637 187.37)",
+          "oklch(26.43% 0.02637 187.37)",
+          "oklch(37.86% 0.02637 187.37)",
+          "oklch(49.29% 0.02637 187.37)",
+          "oklch(60.71% 0.02637 187.37)",
+          "oklch(72.14% 0.02637 187.37)",
+          "oklch(83.57% 0.02637 187.37)",
+          "oklch(95.00% 0.02637 187.37)"
+        ]
+      },
+      "outline": {
+        "role": "neutral",
+        "displayName": "Outline",
+        "tonalRamp": [
+          "oklch(15.00% 0.03020 172.79)",
+          "oklch(26.43% 0.03020 172.79)",
+          "oklch(37.86% 0.03020 172.79)",
+          "oklch(49.29% 0.03020 172.79)",
+          "oklch(60.71% 0.03020 172.79)",
+          "oklch(72.14% 0.03020 172.79)",
+          "oklch(83.57% 0.03020 172.79)",
+          "oklch(95.00% 0.03020 172.79)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Text",
+        "tonalRamp": [
+          "oklch(15.00% 0.00826 157.09)",
+          "oklch(26.43% 0.00826 157.09)",
+          "oklch(37.86% 0.00826 157.09)",
+          "oklch(49.29% 0.00826 157.09)",
+          "oklch(60.71% 0.00826 157.09)",
+          "oklch(72.14% 0.00826 157.09)",
+          "oklch(83.57% 0.00826 157.09)",
+          "oklch(95.00% 0.00826 157.09)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.02356 168.57)",
+          "oklch(26.43% 0.02356 168.57)",
+          "oklch(37.86% 0.02356 168.57)",
+          "oklch(49.29% 0.02356 168.57)",
+          "oklch(60.71% 0.02356 168.57)",
+          "oklch(72.14% 0.02356 168.57)",
+          "oklch(83.57% 0.02356 168.57)",
+          "oklch(95.00% 0.02356 168.57)"
+        ]
+      },
+      "selected": {
+        "role": "primary",
+        "displayName": "Selected",
+        "tonalRamp": [
+          "oklch(15.00% 0.06972 138.54)",
+          "oklch(26.43% 0.06972 138.54)",
+          "oklch(37.86% 0.06972 138.54)",
+          "oklch(49.29% 0.06972 138.54)",
+          "oklch(60.71% 0.06972 138.54)",
+          "oklch(72.14% 0.06972 138.54)",
+          "oklch(83.57% 0.06972 138.54)",
+          "oklch(95.00% 0.06972 138.54)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-small": {
+        "displayName": "display-small",
+        "purpose": "DisplaySmall / Explore"
+      },
+      "headline-small": {
+        "displayName": "headline-small",
+        "purpose": "HeadlineSmall / experiment card"
+      },
+      "title-large": {
+        "displayName": "title-large",
+        "purpose": "TitleLarge / screen and panel headings"
+      },
+      "title-medium": {
+        "displayName": "title-medium",
+        "purpose": "TitleMedium / subsection headings"
+      },
+      "title-small": {
+        "displayName": "title-small",
+        "purpose": "TitleSmall / explanation steps"
+      },
+      "body-large": {
+        "displayName": "body-large",
+        "purpose": "BodyLarge / Explore introduction"
+      },
+      "body-medium": {
+        "displayName": "body-medium",
+        "purpose": "BodyMedium / explanations"
+      },
+      "body-small": {
+        "displayName": "body-small",
+        "purpose": "BodySmall / supporting copy"
+      },
+      "label-large": {
+        "displayName": "label-large",
+        "purpose": "LabelLarge / controls"
+      },
+      "label-medium": {
+        "displayName": "label-medium",
+        "purpose": "LabelMedium / readout and point controls"
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [],
+    "native": {
+      "platform": "Android / Jetpack Compose / Material 3",
+      "units": "dp for layout; sp for text. Browser previews approximate logical units with CSS pixels.",
+      "rampProvenance": "Synthesized OKLCH documentation swatches; not implemented palette variants.",
+      "layoutCondition": "Available height < 600dp or font scale > 1.25 selects whole-content scrolling.",
+      "previewLimit": "Illustrative HTML/CSS documentation only. No native runtime or screenshot equivalence.",
+      "visualGate": "Strict raw score 71.03%, below 72%; native adaptations separately reviewed."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<button class=\"ds-button\">Replay transition</button>",
+      "css": ".ds-button{font:500 14px Roboto,sans-serif;padding:12px 20px;border-radius:12px;border:0;background:#B9EE77;color:#0B1A19;min-height:48px}.ds-button:hover{filter:brightness(1.08)}.ds-button:focus-visible{outline:2px solid #6FBDCB;outline-offset:3px}.ds-button:active{filter:brightness(.9)}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Outlined inspection action",
+      "kind": "button",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<button class=\"ds-outline\">Next point</button>",
+      "css": ".ds-outline{font:500 12px Roboto,sans-serif;padding:12px 20px;min-height:48px;border:1px solid #2D433C;border-radius:28px;background:#112523;color:#B9EE77}.ds-outline:hover{background:#20382D}.ds-outline:focus-visible{outline:2px solid #6FBDCB;outline-offset:3px}.ds-outline:active{background:#395630}"
+    },
+    {
+      "name": "Reset text action",
+      "kind": "button",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<button class=\"ds-reset\">Reset</button>",
+      "css": ".ds-reset{font:500 14px Roboto,sans-serif;min-height:48px;padding:12px;background:transparent;border:0;border-radius:24px;color:#B9EE77}.ds-reset:hover{background:#112523}.ds-reset:focus-visible{outline:2px solid #6FBDCB}.ds-reset:active{background:#395630}"
+    },
+    {
+      "name": "Panel choice",
+      "kind": "nav",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<div class=\"ds-choice\"><button aria-pressed=\"true\">Adjust</button><button aria-pressed=\"false\">Understand</button></div>",
+      "css": ".ds-choice{display:flex}.ds-choice button{flex:1;min-height:48px;border:1px solid #2D433C;color:#EEF4F0;background:#0B1A19;font:500 14px Roboto,sans-serif;padding:8px 16px}.ds-choice button:first-child{border-radius:24px 0 0 24px}.ds-choice button:last-child{border-radius:0 24px 24px 0}.ds-choice button[aria-pressed=\"true\"]{background:#395630}.ds-choice button:hover{filter:brightness(1.2)}.ds-choice button:focus-visible{outline:2px solid #6FBDCB;outline-offset:2px}",
+      "refersTo": "choice-selected"
+    },
+    {
+      "name": "Labeled duration slider",
+      "kind": "input",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<label class=\"ds-slider\">Duration <span>800 ms</span><input aria-label=\"Duration\" type=\"range\" min=\"200\" max=\"1600\" value=\"800\"></label>",
+      "css": ".ds-slider{display:block;background:#112523;color:#B0C3BB;font:12px Roboto,sans-serif;padding:16px}.ds-slider span{float:right;color:#EEF4F0}.ds-slider input{display:block;width:100%;height:48px;accent-color:#B9EE77}.ds-slider input:hover{filter:brightness(1.1)}.ds-slider input:focus-visible{outline:2px solid #6FBDCB}"
+    },
+    {
+      "name": "Gallery card",
+      "kind": "card",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<article class=\"ds-card\"><h3>Temperature study</h3><p>Inspect two series. Change the timeline.</p></article>",
+      "css": ".ds-card{padding:20px;border:1px solid #2D433C;border-radius:16px;background:#112523;color:#EEF4F0;font:16px Roboto,sans-serif}.ds-card h3{font-size:24px;font-weight:500;margin:0 0 16px}.ds-card p{color:#B0C3BB;margin:0}",
+      "refersTo": "gallery-card"
+    },
+    {
+      "name": "Selection readout",
+      "kind": "custom",
+      "description": "Illustrative documentation preview of a native Compose component; not runtime implementation.",
+      "html": "<div class=\"ds-readout\"><time>12:00</time><span>Studio 23.0\u00b0C</span><span>Gallery 22.0\u00b0C</span></div>",
+      "css": ".ds-readout{display:flex;gap:8px;padding:10px;border-radius:8px;background:#112523;font:500 12px Roboto,sans-serif}.ds-readout time{color:#E9B965;font-family:monospace}.ds-readout span{color:#B9EE77}.ds-readout span:last-child{color:#6FBDCB}",
+      "refersTo": "readout"
+    }
+  ],
+  "narrative": {
+    "northStar": "Instrument",
+    "overview": "Instrument is a measuring surface where changes can be inspected, replayed and understood. Green-black fields hold clear measurements, solid lime and dashed cyan traces, and an amber selection cursor. Material 3 provides native Android interaction and text scaling.\n\nThis records the implemented dark-only system, extracted from InstrumentTheme.kt, AtlasApp.kt, ControlPanel.kt and TemperatureChart.kt under app/src/main/java/dev/devaxes/composeatlas/ui. PRODUCT.md establishes the offline, synthetic-data scope. The approved surface brief selects composition B with C explanations; it is not a requirement that future experiments repeat this exact screen.",
+    "keyCharacteristics": [
+      "Tonal green-black surfaces with restrained outlines.",
+      "Series identity carried by color, line pattern and names.",
+      "Native controls and readable, scalable text.",
+      "One working experiment in an evolving gallery."
+    ],
+    "rules": [
+      {
+        "name": "The Trace Identity Rule",
+        "body": "Keep Studio solid lime and Gallery dashed cyan wherever these series appear; pair the traces with explicit names.",
+        "section": "colors"
+      },
+      {
+        "name": "The Native Type Rule",
+        "body": "Use Material typography roles and system font scaling; the timestamp alone uses monospace.",
+        "section": "typography"
+      },
+      {
+        "name": "The Reachable Controls Rule",
+        "body": "Preserve the scroll fallback when the available height is short or the system font size is enlarged.",
+        "section": "layout"
+      },
+      {
+        "name": "The Tonal Separation Rule",
+        "body": "Separate the plot, readout and control surface with tone and fine outlines, without adding decorative shadows.",
+        "section": "elevation & depth"
+      },
+      {
+        "name": "The Honest Measurement Rule",
+        "body": "A gap stays missing, never zero; replay reveals the existing trace instead of fabricating measurements.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do use native Material controls with semantic labels and visible state.",
+      "Do retain text readouts and Previous point / Next point alongside chart gestures.",
+      "Do preserve system insets and scalable text.",
+      "Do present only implemented gallery experiments as available."
+    ],
+    "donts": [
+      "Don't replace native text or charts with reference-image rasters.",
+      "Don't rely on color alone to distinguish the two series.",
+      "Don't imply light-theme, dynamic-color or tablet two-pane support exists in this milestone."
+    ]
+  }
+}

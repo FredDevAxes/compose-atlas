@@ -1,0 +1,87 @@
+# Milestone 1 verification
+
+This record belongs to the Instrument milestone. The screenshots show the native
+Android build, not the generated design references. All temperatures are synthetic.
+
+## Environment
+
+- Local host: macOS, Apple Silicon.
+- Java: Oracle JDK 17.0.11+7-LTS-207.
+- Gradle 8.13, Android Gradle Plugin 8.12.0, Kotlin 2.2.10.
+- Compile / target API 36, Build Tools 36.0.0; minimum API 26.
+- Emulator: ComposeAtlas_API_36, Pixel 6 profile, Android 16 / API 36,
+  Google APIs ARM64 image revision 7, emulator 35.6.11 (build 13610412),
+  software graphics.
+- Normal viewport: 1080 × 2400 px, density 420 dpi, font scale 1.0.
+- Additional configurations: 1.3 font scale and a 2400 × 1080 px landscape window.
+  Landscape captures use a window-size override, not a sensor-rotation test. The design comparison
+  uses 851 × 1848 px at 320 dpi. These are different configurations of one emulator,
+  not evidence from multiple physical devices.
+
+## Automated checks
+
+Run the commands from [the README](../README.md). Seven JVM tests cover fixtures,
+coordinate mapping, selection boundaries, null-gap segmentation and state changes.
+Six instrumented tests cover the main user flows, recreation, selection, series
+visibility, empty/incomplete data and deterministic replay with the Compose test clock.
+
+The animation test advances 32 ms into replay, then beyond its duration, and checks
+that disabling motion makes the readout immediately available. It does not measure
+frame timing or rendering performance. Activity recreation is tested; OS process
+termination and cold-launch restoration are not claimed.
+
+Captures are produced by the instrumented test helper after Compose settles and
+the emulator compositor presents the frame. Gradle may uninstall test applications
+after connected tests, so collect capture files before uninstalling when reproducing.
+
+## Scope and limits
+
+- No physical-device smoothness, energy or haptic claim.
+- API 26 is the declared minimum and lint compatibility target, not a tested image.
+- The app provides readable selected values and previous/next semantics. A complete
+  manual TalkBack session and accessibility certification have not been performed.
+- English and the Instrument dark theme are the first milestone's supported content.
+- Landscape and enlarged text scroll vertically; no tablet-specific two-pane claim.
+- Distinct day, week and month fixtures are authored examples, not statistical
+  aggregations of one underlying measurement series.
+- Empty and gaps are local scenarios. There is no simulated network loading or
+  network-error state because this experiment has no remote data dependency.
+- Release output is unsigned and has not been distributed through a store.
+
+## Recorded local results — 2026-10-15
+
+Application source: `303509b614298f83fbed57ce977fca23d04bc100`. The following
+build-script change excludes only the `OldTargetApi` SDK-update notice from the
+pinned API 36 milestone; functional source and captures are unchanged.
+
+| Check | Result |
+| --- | --- |
+| ktlint, Android Lint, debug assembly | Passed |
+| JVM unit tests | 7 passed |
+| API 36 ARM64 instrumented suite | 6 passed |
+| Enlarged-text and landscape-window navigation checks | Passed |
+| Minified release assembly (R8) | Passed; unsigned APK |
+
+The API 36 x86_64 emulator completed all six tests successfully in
+[run 38663599253](https://github.com/FredDevAxes/compose-atlas/actions/runs/38663599253).
+That run's separate checks job failed on the `OldTargetApi` notice; it is not an
+overall CI pass. [Run 38664049394](https://github.com/FredDevAxes/compose-atlas/actions/runs/38664049394)
+checks the corrected build configuration. Its GitHub status is the authoritative
+result; later documentation-only commits use the same application source.
+
+## Native visual evidence
+
+[Explore](images/phone-home.png), [Adjust](images/phone-controls.png),
+[Understand](images/phone-understand.png), [empty data](images/phone-empty.png),
+[gaps](images/phone-gaps.png), [long labels](images/phone-long-labels.png),
+[large text](images/large-controls.png), [large-text explanation](images/large-understand.png),
+[landscape chart](images/landscape-controls.png) and
+[landscape panel](images/landscape-understand.png) are native captures with embedded
+origin metadata. Some controls require scrolling in the short-window layout.
+
+The independent review resolved its native visual and semantic corrections and
+found no material regression in this capture set. The strict reference-image
+comparison remains **71.03%**, below its **72%** threshold, and the final review
+disposition remains **fix** for that open gate. See the
+[native adaptation record](design/native-adaptations.md). This milestone does not
+claim a full visual approval or exact reproduction of the generated reference.
