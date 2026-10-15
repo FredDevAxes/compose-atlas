@@ -3,7 +3,11 @@ package dev.devaxes.composeatlas
 import android.graphics.Bitmap
 import android.os.SystemClock
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -62,6 +66,7 @@ class AtlasFlowTest {
         rule.onNodeWithText("Understand").performScrollTo().performClick()
         rule.onNodeWithTag("scenario-empty").performScrollTo().performClick()
         rule.onNodeWithText("No samples to display").assertExists()
+        rule.onNodeWithTag("scenario-empty").assertIsSelected()
         capture("phone-empty")
         rule.onNodeWithTag("scenario-gaps").performScrollTo().performClick()
         capture("phone-gaps")
@@ -76,6 +81,8 @@ class AtlasFlowTest {
         open()
         rule.onNodeWithTag("series-studio").performScrollTo().performClick()
         rule.onNodeWithTag("series-gallery").assertIsNotEnabled()
+        rule.onNodeWithTag("series-studio").assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Hidden"))
+        rule.onNodeWithTag("series-gallery").assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Shown"))
         rule.onNodeWithText("Studio 21.4 °C").assertDoesNotExist()
         rule.onNodeWithTag("series-studio").performScrollTo().performClick()
         rule.onNodeWithText("Studio 21.4 °C").assertExists()

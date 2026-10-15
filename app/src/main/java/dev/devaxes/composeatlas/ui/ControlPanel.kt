@@ -41,7 +41,9 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.devaxes.composeatlas.data.ExperimentState
@@ -212,7 +214,7 @@ private fun SeriesButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.testTag("series-" + label.lowercase()),
+        modifier = modifier.semantics { stateDescription = if (checked) "Shown" else "Hidden" }.testTag("series-" + label.lowercase()),
         enabled = canToggle || !checked,
         shape = RoundedCornerShape(10.dp),
         border = BorderStroke(1.dp, Instrument.Outline),
@@ -272,7 +274,11 @@ private fun ScenarioControls(
                 OutlinedButton(
                     onClick = { onState(state.changeScenario(scenario)) },
                     modifier =
-                        Modifier.weight(1f).testTag("scenario-" + scenario.name.lowercase()),
+                        Modifier
+                            .weight(
+                                1f,
+                            ).semantics { selected = scenario == state.scenario }
+                            .testTag("scenario-" + scenario.name.lowercase()),
                     border =
                         BorderStroke(
                             1.dp,
@@ -292,7 +298,11 @@ private fun ScenarioControls(
                 OutlinedButton(
                     onClick = { onState(state.changeScenario(scenario)) },
                     modifier =
-                        Modifier.weight(1f).testTag("scenario-" + scenario.name.lowercase()),
+                        Modifier
+                            .weight(
+                                1f,
+                            ).semantics { selected = scenario == state.scenario }
+                            .testTag("scenario-" + scenario.name.lowercase()),
                     border =
                         BorderStroke(
                             1.dp,

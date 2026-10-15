@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 object Instrument {
-    val Background = Color(0xFF0C1715)
-    val Surface = Color(0xFF12231F)
+    val Background = Color(0xFF0B1A19)
+    val Surface = Color(0xFF112523)
     val Outline = Color(0xFF2D433C)
     val Text = Color(0xFFEEF4F0)
     val Muted = Color(0xFFB0C3BB)
