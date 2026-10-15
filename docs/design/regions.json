@@ -1,0 +1,222 @@
+{
+  "regions": [
+    {
+      "id": "status",
+      "kind": "chrome",
+      "box": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 1.0,
+        "h": 0.03787878787878788
+      },
+      "note": "Android system status bar"
+    },
+    {
+      "id": "title",
+      "kind": "text",
+      "box": {
+        "x": 0.17038777908343125,
+        "y": 0.047619047619047616,
+        "w": 0.5170387779083431,
+        "h": 0.025974025974025976
+      },
+      "note": "Temperature study screen title"
+    },
+    {
+      "id": "subtitle",
+      "kind": "text",
+      "box": {
+        "x": 0.17038777908343125,
+        "y": 0.07575757575757576,
+        "w": 0.3525264394829612,
+        "h": 0.01948051948051948
+      },
+      "note": "Synthetic data subtitle"
+    },
+    {
+      "id": "back",
+      "kind": "control",
+      "box": {
+        "x": 0.03525264394829612,
+        "y": 0.048701298701298704,
+        "w": 0.08225616921269095,
+        "h": 0.04329004329004329
+      },
+      "note": "Android Back icon"
+    },
+    {
+      "id": "period",
+      "kind": "control",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.10497835497835498,
+        "w": 0.9130434782608695,
+        "h": 0.04004329004329004
+      },
+      "note": "Day Week Month segmented control"
+    },
+    {
+      "id": "chart",
+      "kind": "control",
+      "box": {
+        "x": 0.023501762632197415,
+        "y": 0.15638528138528138,
+        "w": 0.9529964747356052,
+        "h": 0.26515151515151514
+      },
+      "container": true,
+      "note": "Interactive chart drawn from runtime synthetic data and axes",
+      "codeDrawn": true
+    },
+    {
+      "id": "readout",
+      "kind": "text",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.4301948051948052,
+        "w": 0.9130434782608695,
+        "h": 0.0367965367965368
+      },
+      "note": "Selected time and two numeric temperature values"
+    },
+    {
+      "id": "panel-title",
+      "kind": "text",
+      "box": {
+        "x": 0.052878965922444184,
+        "y": 0.5140692640692641,
+        "w": 0.6345475910693302,
+        "h": 0.024350649350649352
+      },
+      "note": "Experiment controls heading"
+    },
+    {
+      "id": "close",
+      "kind": "control",
+      "box": {
+        "x": 0.8754406580493537,
+        "y": 0.5086580086580087,
+        "w": 0.0799059929494712,
+        "h": 0.035173160173160176
+      },
+      "note": "Close settings panel icon"
+    },
+    {
+      "id": "tabs",
+      "kind": "control",
+      "box": {
+        "x": 0.045828437132784956,
+        "y": 0.5541125541125541,
+        "w": 0.9106933019976499,
+        "h": 0.04220779220779221
+      },
+      "note": "Adjust Understand tabs"
+    },
+    {
+      "id": "series-label",
+      "kind": "text",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.6130952380952381,
+        "w": 0.3290246768507638,
+        "h": 0.01893939393939394
+      },
+      "note": "Visible series"
+    },
+    {
+      "id": "series",
+      "kind": "control",
+      "box": {
+        "x": 0.045828437132784956,
+        "y": 0.6374458874458875,
+        "w": 0.9130434782608695,
+        "h": 0.04816017316017316
+      },
+      "note": "Two series selection controls"
+    },
+    {
+      "id": "transition-label",
+      "kind": "text",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.7034632034632035,
+        "w": 0.3290246768507638,
+        "h": 0.01948051948051948
+      },
+      "note": "Transition"
+    },
+    {
+      "id": "transition",
+      "kind": "control",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.7267316017316018,
+        "w": 0.9118683901292597,
+        "h": 0.040584415584415584
+      },
+      "note": "Tween Spring segmented selector"
+    },
+    {
+      "id": "duration",
+      "kind": "control",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.7813852813852814,
+        "w": 0.9118683901292597,
+        "h": 0.046536796536796536
+      },
+      "note": "Duration slider and numeric value"
+    },
+    {
+      "id": "animate",
+      "kind": "control",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.8354978354978355,
+        "w": 0.9118683901292597,
+        "h": 0.040584415584415584
+      },
+      "note": "Animate changes switch"
+    },
+    {
+      "id": "actions",
+      "kind": "control",
+      "box": {
+        "x": 0.04465334900117509,
+        "y": 0.8874458874458875,
+        "w": 0.9118683901292597,
+        "h": 0.05411255411255411
+      },
+      "note": "Reset and Replay transition actions"
+    },
+    {
+      "id": "gesture",
+      "kind": "chrome",
+      "box": {
+        "x": 0.3290246768507638,
+        "y": 0.9729437229437229,
+        "w": 0.3407755581668625,
+        "h": 0.021645021645021644
+      },
+      "note": "Android system gesture handle"
+    },
+    {
+      "id": "overflow",
+      "kind": "control",
+      "grid": "J0:J0",
+      "note": "Overflow menu"
+    },
+    {
+      "id": "panel-header",
+      "kind": "chrome",
+      "grid": "A5:J5",
+      "note": "Panel heading strip and tabs"
+    },
+    {
+      "id": "footer-actions",
+      "kind": "chrome",
+      "grid": "A9:J9",
+      "note": "Bottom action strip and system gesture area"
+    }
+  ]
+}
