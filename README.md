@@ -1,20 +1,31 @@
 # Compose Atlas
 
-An Android lab for trying Jetpack Compose in a working interface, then inspecting how it behaves.
+**Try the interaction. Change its behavior. Understand the Compose behind it.**
 
-Five experiments turn Compose APIs into things you can try: a chart, a fictional
-audio player, an object collection, a form and a custom timeline. Change a setting,
-observe the result, then open **Understand** for the mechanism behind it.
-All content is synthetic; the player makes no sound and the form sends nothing.
+An Android lab that makes Jetpack Compose tangible through five small, working
+interfaces. Compare a spring with a timed animation, fold a fictional audio player,
+reorder a collection, validate a form or rearrange a timeline. Each experiment
+pairs hands-on controls with an **Understand** tab.
 
-This is a small, evolving lab. It does not read sensors, need an account, or call a
-backend. Device performance has not been measured. The original code is [MIT](LICENSE).
+[![Android checks](https://github.com/FredDevAxes/compose-atlas/actions/workflows/android.yml/badge.svg)](https://github.com/FredDevAxes/compose-atlas/actions/workflows/android.yml)
+[![MIT license](https://img.shields.io/badge/license-MIT-395630)](LICENSE)
 
 <p>
-  <img src="docs/images/gallery-home.png" width="230" alt="Explore gallery on the native Android build">
-  <img src="docs/images/gallery-player.png" width="230" alt="Fictional audio player with waveform artwork and playback controls">
-  <img src="docs/images/gallery-agenda.png" width="230" alt="Custom agenda with overlapping sessions and adjustable time geometry">
+  <img src="docs/images/gallery-player.png" width="230" alt="Quiet frequency: fictional audio player with waveform artwork and playback controls">
+  <img src="docs/images/gallery-collection.png" width="230" alt="Object collection: searchable grid with categories and saved objects">
+  <img src="docs/images/gallery-agenda.png" width="230" alt="Spatial agenda: overlapping sessions positioned on a custom timeline">
 </p>
+
+*Native Android captures from [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0):
+player, collection and agenda. The [visual tour](docs/visual-tour.md) covers all five experiments.*
+
+**Status:** an evolving, offline lab, verified on API 36 emulators. All data is
+synthetic. The player makes no sound and the form sends nothing. No account,
+backend or paid service is needed. Hardware performance has not been measured.
+
+[Run locally](#run-it) · [Choose an experiment](#choose-an-experiment) ·
+[Visual tour](docs/visual-tour.md) · [Capability map](docs/coverage.md) ·
+[Verification](docs/verification.md)
 
 ## Run it
 
@@ -47,6 +58,9 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
    ./gradlew assembleDebug
    ```
 
+   Gradle downloads the pinned dependencies on the first build; no separate package
+   installation command is needed. Internet access is needed for this initial setup.
+
    The APK is `app/build/outputs/apk/debug/app-debug.apk`. Windows users can replace
    `./gradlew` with `gradlew.bat`.
 
@@ -58,8 +72,9 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
    adb shell am start -n dev.devaxes.composeatlas/.MainActivity
    ```
 
-   Use `adb -s DEVICE_ID` when more than one device is connected. Open
-   any experiment from Explore.
+   Keep one target connected for `installDebug`, or install the APK explicitly with
+   `adb -s DEVICE_ID install -r app/build/outputs/apk/debug/app-debug.apk`. Use the
+   same `-s DEVICE_ID` for launch. The app opens Explore with five experiments.
 
 ## Choose an experiment
 
@@ -71,34 +86,15 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
 | Spatial agenda | Overlap sessions, zoom, move Motion workshop | Time-driven placement and columns for overlapping events |
 | Temperature study | Replay Tween and Spring at 0.25× | Duration-based easing versus spring overshoot |
 
-Every scene has an **Understand** tab. Changes survive activity recreation.
+Every scene has an **Understand** tab. Scene inputs and settings survive activity recreation;
+transient animation progress does not.
 Returning to the player restores its position paused. The agenda uses a list in
 narrow windows or with enlarged text; the normal phone shows a custom timeline.
 The [coverage map](docs/coverage.md) lists implemented capabilities and candidates
 for later milestones.
 
-### Explore the temperature chart
-
-- **Inspect:** drag or tap the chart. Previous point and Next point provide the same
-  selection without requiring a precise gesture.
-- **Compare:** show Studio, Gallery, or both. The last visible series cannot be hidden.
-- **Change periods:** Day, Week and Month use distinct deterministic fixtures.
-- **Adjust:** choose Tween with duration, or Spring with damping and stiffness.
-  Replay reveals the existing trace; it never invents intermediate measurements.
-- **Compare motion:** Replay both starts two markers together. The amber line is the
-  100% target; Spring can overshoot it while Tween stops at it. Choose 1×, 0.5× or
-  0.25× to slow playback without changing the curves. The highlighted lane drives
-  the chart. The spring defaults to damping 0.45 so its bounce is visible.
-- **Understand:** read the mapping from touch to values, inspect the relevant APIs,
-  and follow View source.
-- **Break the happy path:** choose Empty, Gaps or Long labels. Gaps break the path
-  and read as “No sample”; they do not become zero.
-- **Reset:** restore the default fixture, time, series and animation settings.
-- **Return:** system Back first closes the panel, then returns to Explore.
-
-The panel scrolls independently while the chart remains visible on a normal portrait
-phone. Short windows and large fonts use a vertically scrollable layout. Activity recreation
-restores the selected sample and settings.
+Follow the [guided visual tour](docs/visual-tour.md) for a short scenario in each
+scene, including empty states, animation controls and keyboard behavior.
 
 ## Check it
 
@@ -127,7 +123,22 @@ GitHub Actions runs the same checks on every push and PR, with a separate API 36
 x86_64 emulator job. Workflow actions are pinned to commit SHAs. Local tests use an
 ARM64 emulator; these are different execution environments.
 
-See [verification](docs/verification.md) for actual runs and remaining limits.
+The [v0.2.0 CI run](https://github.com/FredDevAxes/compose-atlas/actions/runs/38670901824)
+passed both jobs. Locally, **13 unit tests and 14 instrumented tests** passed on
+API 36 ARM64; navigation was also checked with enlarged text and a wide window.
+See [verification](docs/verification.md) for environments, scope and remaining limits.
+
+## How the lab grows
+
+| Milestone | Working scope |
+| --- | --- |
+| [v0.1.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.1.0) | First Canvas chart, inspection, settings and synthetic edge cases |
+| [Motion comparison](https://github.com/FredDevAxes/compose-atlas/commit/84238116c4653854273217cf12cc1278b49f82a7) | Parallel Tween/Spring markers and 1× / 0.5× / 0.25× playback |
+| [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0) | Five experiments, independent scene state and per-scene explanations |
+
+The [capability map](docs/coverage.md) separates implemented APIs from candidates
+such as rich text, adaptive navigation, advanced gestures, themes and View interop.
+This lab aims to explore Compose progressively; it does not cover every API today.
 
 ## Source map
 
@@ -139,6 +150,8 @@ See [verification](docs/verification.md) for actual runs and remaining limits.
   [agenda](app/src/main/java/dev/devaxes/composeatlas/ui/AgendaExperience.kt):
   self-contained scenes and their explanations.
 
+- [Gallery data and algorithms](app/src/main/java/dev/devaxes/composeatlas/data/GalleryData.kt):
+  filtering, local validation and overlap lanes.
 - [Data and chart math](app/src/main/java/dev/devaxes/composeatlas/data/TemperatureData.kt):
   deterministic fixtures, state transitions and gap-preserving segments.
 - [Canvas](app/src/main/java/dev/devaxes/composeatlas/ui/TemperatureChart.kt):

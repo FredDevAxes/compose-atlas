@@ -2,7 +2,9 @@
 
 ## State drives the interface
 
-A single Android application is split into data/math and small Compose surfaces.
+A single Android application contains five scenes, a shared shell and pure data/math
+helpers. The [gallery state model](#a-gallery-with-independent-scene-state) gives each
+scene independent saved state. The following chart sections explain the first experiment.
 The data layer has no Android dependency. `ExperimentState` is immutable; controls
 request a new state, and the chart, readout and explanations consume it. A saveable
 state holder is sufficient for this local, synchronous experiment. There is no

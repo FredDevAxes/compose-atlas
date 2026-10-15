@@ -1,4 +1,18 @@
-# Milestone 1 verification
+# Verification record
+
+## Current milestone: v0.2.0
+
+The [gallery milestone](#gallery-milestone--020) is commit
+[`133b1c1`](https://github.com/FredDevAxes/compose-atlas/commit/133b1c18103fc49b5f11273a9942a1fa6a74e7fe),
+tagged [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0).
+Its [GitHub Actions run](https://github.com/FredDevAxes/compose-atlas/actions/runs/38670901824)
+passed both checks and the API 36 x86_64 instrumented job. Local verification passed
+13 unit tests and 14 instrumented tests on API 36 ARM64.
+
+The sections below retain each stage's environment and limits. The
+[visual tour](visual-tour.md) is the quickest way to inspect the current experiments.
+
+## Historical milestone: v0.1.0
 
 This record belongs to the Instrument milestone. The screenshots show the native
 Android build, not the generated design references. All temperatures are synthetic.
@@ -66,8 +80,8 @@ The API 36 x86_64 emulator completed all six tests successfully in
 [run 38663599253](https://github.com/FredDevAxes/compose-atlas/actions/runs/38663599253).
 That run's separate checks job failed on the `OldTargetApi` notice; it is not an
 overall CI pass. [Run 38664049394](https://github.com/FredDevAxes/compose-atlas/actions/runs/38664049394)
-checks the corrected build configuration. Its GitHub status is the authoritative
-result; later documentation-only commits use the same application source.
+passed with the corrected build configuration; later documentation-only commits
+use the same application source.
 
 ## Native visual evidence
 
@@ -166,3 +180,17 @@ full-surface or hardware validation. The historical chart reproduction gate
 No real audio, network delivery, hardware performance, complete TalkBack session,
 tablet-specific layout, light theme or exhaustive Compose API coverage is claimed.
 The remaining experiments are tracked in [capability coverage](coverage.md).
+
+
+## Documentation reproduction check — 15 October 2026
+
+A fresh Git clone of `133b1c1` passed `./gradlew ktlintCheck lintDebug
+testDebugUnitTest assembleDebug`: 60 tasks executed, including all 13 unit tests.
+The check reused the installed JDK 17 and Android SDK plus the host dependency
+cache; it was not a fresh operating-system or SDK installation. No local.properties
+or existing build output was copied. The subsequent presentation changes affect
+Markdown only; application source and the v0.2.0 tag remain unchanged.
+
+The README, visual tour, architecture, coverage, design records and dependency
+notices were reviewed together. Local documentation links and image paths were
+checked. Native captures are reused unchanged with their existing provenance.

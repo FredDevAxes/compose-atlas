@@ -1,10 +1,11 @@
-# Native adaptation record
+# Native adaptation record — first chart milestone
 
 The selected design is Instrument, composition B with the explanation content of C
 inside Understand. The original planning record identified generated numeric
 geometry, spacing and some legend colors as intentions rather than exact data
 specifications. The first milestone uses native Android controls and one working
-experiment.
+experiment. This is a historical record; [v0.2.0 gallery adaptations](gallery-brief.md)
+cover the four later scenes and five-entry gallery.
 
 ## Preserved
 
