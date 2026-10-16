@@ -1,196 +1,212 @@
 package dev.devaxes.composeatlas
 
-import android.graphics.Bitmap
-import android.os.SystemClock
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.assertIsSelected
-import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.click
+import androidx.compose.ui.test.doubleClick
+import androidx.compose.ui.test.hasAnyDescendant
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.pinch
 import androidx.compose.ui.test.swipe
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert.assertEquals
+import androidx.compose.ui.test.swipeLeft
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-import java.io.File
 
+/** User paths for the objects that changed in the eight-scene playground. */
 class AtlasFlowTest {
     @get:Rule
     val rule = createAndroidComposeRule<MainActivity>()
 
-    private fun open() {
-        rule.onNodeWithTag("open-experiment").performScrollTo().performClick()
-        rule.waitForIdle()
-    }
+    private fun open(scene: String) = rule.onNodeWithTag("open-$scene").performScrollTo().performClick()
 
-    private fun capture(name: String) {
-        rule.waitForIdle()
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val directory = File(instrumentation.targetContext.getExternalFilesDir(null), "evidence")
-        directory.mkdirs()
-        // Let the emulator compositor present the settled Compose frame.
-        instrumentation.waitForIdleSync()
-        SystemClock.sleep(500)
-        val screenshot = instrumentation.uiAutomation.takeScreenshot()
-        File(directory, name + ".png").outputStream().use { screenshot.compress(Bitmap.CompressFormat.PNG, 100, it) }
-        screenshot.recycle()
-    }
+    private fun click(tag: String) = rule.onNodeWithTag(tag).performScrollTo().performClick()
 
     @Test
-    fun exploreAdjustUnderstandAndRestoreSelection() {
-        capture("phone-home")
-        open()
-        capture("phone-controls")
-        rule.onNodeWithText("Understand").performScrollTo().performClick()
-        capture("phone-understand")
-        rule.onNodeWithText("From touch to value").performScrollTo()
-        capture("phone-explanation")
-        rule.onNodeWithTag("next-point").performScrollTo().performClick()
-        rule.onNodeWithText("15:00").assertExists()
+    fun musicTransportSeeksChangesTrackAndRestoresPaused() {
+        open("music")
+        rule.onNodeWithText("Sidewalk radio").assertExists()
+        click("music-fold")
+        rule.onNodeWithText("Expand").assertExists()
+        rule.onNodeWithTag("music-seek").performSemanticsAction(SemanticsActions.SetProgress) { it(60f) }
+        rule.onNodeWithText("1:00").assertExists()
+        click("music-play")
+        rule.onNodeWithText("Pause").assertExists()
         rule.activityRule.scenario.recreate()
-        rule.onNodeWithText("15:00").assertExists()
-        rule.onNodeWithText("Understand").assertExists()
-        rule.onNodeWithTag("back-to-explore").performClick()
-        rule.onNodeWithTag("open-experiment").assertExists()
+        rule.onNodeWithText("Play").assertExists()
+        rule.onNodeWithText("Expand").assertExists()
+        assertTrue(
+            rule
+                .onNodeWithTag("music-seek")
+                .fetchSemanticsNode()
+                .config[SemanticsProperties.ProgressBarRangeInfo]
+                .current >= 60f,
+        )
+        rule.onNodeWithContentDescription("Next track").performScrollTo().performClick()
+        rule.onNodeWithText("After the rain").assertExists()
+        rule.onNodeWithText("0:00").assertExists()
+        rule.onNodeWithContentDescription("Previous track").performClick()
+        rule.onNodeWithText("Sidewalk radio").assertExists()
     }
 
     @Test
-    fun emptyAndGapsCanBeInspectedAndReset() {
-        open()
-        rule.onNodeWithText("Understand").performScrollTo().performClick()
-        rule.onNodeWithTag("scenario-empty").performScrollTo().performClick()
-        rule.onNodeWithText("No samples to display").assertExists()
-        rule.onNodeWithTag("scenario-empty").assertIsSelected()
-        capture("phone-empty")
-        rule.onNodeWithTag("scenario-gaps").performScrollTo().performClick()
-        capture("phone-gaps")
-        rule.onNodeWithText("Adjust").performScrollTo().performClick()
-        rule.onNodeWithTag("reset").performScrollTo().performClick()
-        rule.onNodeWithText("14:00").assertExists()
-        rule.onNodeWithText("Studio 21.4 °C").assertExists()
+    fun shopQuantityBagAndSharedElementBackSurviveRecreation() {
+        open("shop")
+        click("shop-object-0")
+        rule.onNodeWithContentDescription("Decrease quantity").assertIsNotEnabled()
+        rule.onNodeWithContentDescription("Increase quantity").performScrollTo().performClick()
+        rule.onNodeWithText("Add · €178").assertExists()
+        click("shop-add")
+        rule.onNodeWithText("Bag (2)").assertExists()
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithText("Add · €178").assertExists()
+        rule.onNodeWithText("2 objects in your bag · €178").assertExists()
+        rule.activityRule.scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
+        rule.onNodeWithTag("shop-object-0").assertExists()
+        rule.onNodeWithTag("shop-object-1").assertExists()
+        rule.onNodeWithText("Bag (2)").assertExists()
+        click("shop-object-1")
+        rule.onNodeWithText("Add · €65").assertExists()
+        click("shop-back")
+        rule.onNodeWithTag("shop-object-1").assertExists()
     }
 
     @Test
-    fun lastVisibleSeriesCannotBeHidden() {
-        open()
-        rule.onNodeWithTag("series-studio").performScrollTo().performClick()
-        rule.onNodeWithTag("series-gallery").assertIsNotEnabled()
-        rule.onNodeWithTag("series-studio").assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Hidden"))
-        rule.onNodeWithTag("series-gallery").assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, "Shown"))
-        rule.onNodeWithText("Studio 21.4 °C").assertDoesNotExist()
-        rule.onNodeWithTag("series-studio").performScrollTo().performClick()
-        rule.onNodeWithText("Studio 21.4 °C").assertExists()
-    }
-
-    @Test
-    fun dragClampsSelectionAndPeriodChangesUseDifferentFixtures() {
-        open()
-        rule.onNodeWithTag("temperature-chart").performTouchInput {
-            swipe(Offset(width * 0.25f, height * 0.5f), Offset(width.toFloat(), height * 0.5f))
-        }
-        rule.onNodeWithText("24:00").assertExists()
-        rule.onNodeWithText("Week").performClick()
-        rule.onNodeWithText("Sun").assertExists()
-        rule.onNodeWithText("Month").performClick()
-        rule.onNodeWithText("Sep 30").assertExists()
-    }
-
-    @Test
-    fun replayUsesTestClockAndMotionCanBeDisabled() {
-        open()
-        rule.onNodeWithTag("replay").performScrollTo()
-        rule.mainClock.autoAdvance = false
-        rule.onNodeWithTag("replay").performClick()
-        rule.mainClock.advanceTimeBy(32)
-        rule.onNodeWithText("Replaying trace…").assertExists()
-        rule.mainClock.advanceTimeBy(1000)
-        rule.onNodeWithText("14:00").assertExists()
-        rule.mainClock.autoAdvance = true
-        rule.onNodeWithTag("animate-switch").performScrollTo().performClick()
-        rule.onNodeWithTag("replay").performScrollTo().performClick()
-        rule.onNodeWithText("Replaying trace…").assertDoesNotExist()
-        rule.onNodeWithText("14:00").assertExists()
-        assertEquals(1f, position("tween"), 0.001f)
-        assertEquals(1f, position("spring"), 0.001f)
-    }
-
-    private fun position(mode: String): Float =
+    fun ticketValidatesMovesImeFocusConfirmsAndRestores() {
+        open("ticket")
+        click("make-ticket")
+        rule.onNodeWithText("Enter at least two characters.").assertExists()
+        rule.onNodeWithText("Use an address such as alex@example.com.").assertExists()
+        rule.onNodeWithTag("ticket-name").performScrollTo().performTextInput("Rae Chen")
+        rule.onNodeWithTag("ticket-name").performImeAction()
+        rule.onNodeWithTag("ticket-email").assertIsFocused()
+        rule.onNodeWithTag("ticket-email").performTextInput("rae@example.com")
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithTag("ticket-name").assertTextContains("Rae Chen")
         rule
-            .onNodeWithTag("motion-" + mode)
-            .fetchSemanticsNode()
-            .config[SemanticsProperties.ProgressBarRangeInfo]
-            .current
-
-    @Test
-    fun slowMotionShowsOvershootAndRestoresSpeed() {
-        open()
-        rule.onNode(hasText("Spring") and hasClickAction()).performScrollTo().performClick()
-        rule.onNodeWithText("0.25×").performClick()
-        rule.mainClock.autoAdvance = false
-        rule.onNodeWithTag("compare-replay").performClick()
-        rule.mainClock.advanceTimeBy(32)
-        rule.mainClock.advanceTimeBy(960)
-        assertTrue("Spring crosses its target", position("spring") > 1.1f)
-        assertTrue("Quarter-speed Tween is still approaching", position("tween") in 0.1f..0.9f)
-        rule.onNodeWithText("Replaying trace…").assertExists()
-        capture("motion-quarter-overshoot")
-        rule.mainClock.advanceTimeBy(5000)
-        assertEquals(1f, position("tween"), 0.001f)
-        assertEquals(1f, position("spring"), 0.001f)
-        rule.onNodeWithText("14:00").assertExists()
-        rule.mainClock.autoAdvance = true
+            .onNodeWithTag("ticket-email")
+            .performScrollTo()
+            .performClick()
+            .performImeAction()
+        rule.onNodeWithText("Your preview is ready.").assertExists()
+        rule.onNodeWithTag("ticket-attendee", useUnmergedTree = true).assertTextEquals("Rae Chen")
         rule.activityRule.scenario.recreate()
-        rule.onNodeWithText("0.25×").assertIsSelected()
-        rule.onNodeWithTag("reset").performScrollTo().performClick()
-        rule.onNodeWithText("1×").assertIsSelected()
-        capture("motion-controls")
+        rule.onNodeWithText("Your preview is ready.").assertExists()
+        click("edit-ticket")
+        rule.onNodeWithTag("ticket-name").assertTextContains("Rae Chen")
+        rule.onNodeWithTag("ticket-email").assertTextContains("rae@example.com")
     }
 
     @Test
-    fun normalAndQuarterSpeedFollowTheSameCurve() {
-        open()
-        rule.mainClock.autoAdvance = false
-        rule.onNodeWithTag("compare-replay").performClick()
-        rule.mainClock.advanceTimeBy(32)
-        rule.mainClock.advanceTimeBy(160)
-        val normalTween = position("tween")
-        val normalSpring = position("spring")
-        rule.mainClock.autoAdvance = true
-        rule.onNodeWithText("0.25×").performClick()
-        rule.mainClock.autoAdvance = false
-        rule.onNodeWithTag("compare-replay").performClick()
-        rule.mainClock.advanceTimeBy(32)
-        rule.mainClock.advanceTimeBy(640)
-        assertEquals(normalTween, position("tween"), 0.07f)
-        assertEquals(normalSpring, position("spring"), 0.09f)
-        rule.mainClock.autoAdvance = true
+    fun energyInspectionPreservesMissingReadingAcrossDaysAndRecreation() {
+        open("energy")
+        rule.onNodeWithTag("energy-value").assertTextEquals("2.8 kWh")
+        repeat(3) { click("energy-earlier") }
+        rule.onNodeWithTag("energy-time").assertTextEquals("12:00")
+        rule.onNodeWithTag("energy-value").assertTextEquals("No reading")
+        rule.onNodeWithContentDescription("Energy chart. 12:00: no reading. Use Earlier or Later to inspect.").assertExists()
+        click("energy-day")
+        rule.onNodeWithTag("energy-time").assertTextEquals("12:00")
+        rule.onNodeWithTag("energy-value").assertTextEquals("0.7 kWh")
+        click("energy-day")
+        rule.onNodeWithTag("energy-value").assertTextEquals("No reading")
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithTag("energy-value").assertTextEquals("No reading")
+        rule.onNodeWithTag("energy-chart").performScrollTo().performTouchInput { click(Offset(1f, height / 2f)) }
+        rule.onNodeWithTag("energy-time").assertTextEquals("00:00")
+        rule.onNodeWithTag("energy-earlier").assertIsNotEnabled()
+        rule.onNodeWithTag("energy-chart").performTouchInput { swipe(Offset(width * .2f, height / 2f), Offset(width - 1f, height / 2f)) }
+        rule.onNodeWithTag("energy-time").assertTextEquals("22:00")
+        rule.onNodeWithTag("energy-later").assertIsNotEnabled()
     }
 
     @Test
-    fun longLabelsAndSystemBackRemainUsable() {
-        open()
-        rule.onNodeWithText("Understand").performScrollTo().performClick()
-        rule.onNodeWithTag("scenario-long_labels").performScrollTo().performClick()
-        capture("phone-long-labels")
-        rule.activityRule.scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
-        rule.waitForIdle()
-        rule.onNodeWithTag("close-panel").assertDoesNotExist()
-        rule.onNodeWithText("Experiment controls").performClick()
-        rule.onNodeWithTag("close-panel").assertExists()
-        rule.activityRule.scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
-        rule.waitForIdle()
-        rule.activityRule.scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
-        rule.waitForIdle()
-        rule.onNodeWithTag("open-experiment").assertExists()
+    fun posterButtonsAndPinchHaveResetAndRestoration() {
+        open("photo")
+        rule.onNodeWithText("Zoom +").performScrollTo().performClick()
+        rule.onNodeWithText("Rotate", substring = false).performClick()
+        posterState("Zoom 125 percent. Rotation 15 degrees.")
+        rule.activityRule.scenario.recreate()
+        posterState("Zoom 125 percent. Rotation 15 degrees.")
+        rule.onNodeWithText("Zoom −").performScrollTo().performClick()
+        posterState("Zoom 100 percent. Rotation 15 degrees.")
+        rule.onNodeWithTag("poster-canvas").performScrollTo().performTouchInput {
+            pinch(
+                Offset(width * .4f, height * .5f),
+                Offset(width * .6f, height * .5f),
+                Offset(width * .2f, height * .5f),
+                Offset(width * .8f, height * .5f),
+            )
+        }
+        val zoomed = rule.onNodeWithTag("poster-canvas").fetchSemanticsNode().config[SemanticsProperties.StateDescription]
+        assertTrue(zoomed.substringAfter("Zoom ").substringBefore(" percent").toInt() > 100)
+        rule.onNodeWithTag("poster-canvas").performTouchInput { doubleClick(center) }
+        posterState("Zoom 100 percent. Rotation 0 degrees.")
+        rule.onNodeWithText("Rotate", substring = false).performScrollTo().performClick()
+        rule.onNodeWithText("Reset", substring = false).performScrollTo().performClick()
+        posterState("Zoom 100 percent. Rotation 0 degrees.")
+    }
+
+    private fun posterState(expected: String) =
+        rule.onNodeWithTag("poster-canvas").assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, expected))
+
+    @Test
+    fun inboxSwipeUndoRestoresSettledRowThenCanArchiveAgain() {
+        open("inbox")
+        val first =
+            rule.onNode(
+                SemanticsMatcher.keyIsDefined(SemanticsActions.CustomActions) and hasAnyDescendant(hasText("Rae Chen")),
+            )
+        first.performScrollTo().performTouchInput { swipeLeft() }
+        rule.onNodeWithText("3 messages").assertExists()
+        rule.onNodeWithText("Rae Chen").assertDoesNotExist()
+        rule.onNodeWithText("Undo").performClick()
+        rule.onNodeWithText("4 messages").assertExists()
+        rule.onNodeWithText("Rae Chen").assertIsDisplayed()
+        // Advancing beyond the dismissal animation catches a restored row re-archiving itself.
+        rule.mainClock.advanceTimeBy(1200)
+        rule.onNodeWithText("4 messages").assertExists()
+        rule.onNodeWithText("Rae Chen").assertIsDisplayed()
+        click("inbox-archive-1")
+        rule.onNodeWithText("3 messages").assertExists()
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithText("Rae Chen").assertDoesNotExist()
+        rule.onNodeWithText("Restore all messages").performScrollTo().performClick()
+        rule.onNodeWithText("4 messages").assertExists()
+    }
+
+    @Test
+    fun agendaMovesCoffeeAndRetainsTheChangedSchedule() {
+        open("agenda")
+        rule.onNodeWithTag("agenda-status").assertTextEquals("One overlap")
+        click("agenda-move")
+        rule.onNodeWithTag("agenda-status").assertTextEquals("Room for everyone")
+        rule.onNodeWithText("11:00 – 11:45").assertExists()
+        rule.activityRule.scenario.recreate()
+        rule.onNodeWithTag("agenda-status").assertTextEquals("Room for everyone")
+        rule.onNodeWithTag("back-to-explore").performClick()
+        open("agenda")
+        rule.onNodeWithTag("agenda-status").assertTextEquals("Room for everyone")
+        click("agenda-move")
+        rule.onNodeWithTag("agenda-status").assertTextEquals("One overlap")
+        rule.onNodeWithText("09:30 – 10:15").assertExists()
     }
 }

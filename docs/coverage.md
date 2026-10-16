@@ -1,44 +1,62 @@
-# Capability coverage
+# Capability map
 
-Compose Atlas grows through working interfaces. This is a coverage map, not a claim
-to implement every Compose API. All five experiments are available offline.
+This map describes the eight reachable scenes in the local redesign. It connects
+Compose patterns to a task and a source file; it does not claim every Compose API
+is implemented. A capability present in source is distinct from verified behavior.
+Current execution evidence is recorded in [verification](verification.md).
 
-| Experience | Compose capabilities | Reproducible checks |
+## Implemented in the local source
+
+All scene links below point to
+[`ui/scenes/`](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/).
+
+| Scene | Mechanisms | What to inspect |
 | --- | --- | --- |
-| Temperature study | Canvas, paths, pointer input, Animatable, Tween/Spring, MotionDurationScale, custom semantics | Select an edge; inspect a gap; compare overshoot at 0.25×; restore settings |
-| Quiet frequency | AnimatedContent, AnimatedVisibility, animateContentSize, vertical drag, Slider, LaunchedEffect, DisposableEffect | Seek to the end; change track; compact/expand; empty queue; restore paused |
-| Object collection | LazyColumn, adaptive LazyVerticalGrid, stable keys, animateItem, FlowRow, dialog | Save an object; reverse; filter; change layout; inspect empty results; recreate |
-| Session builder | TextField state, FocusRequester, IME actions, keyboard type, error semantics, animated confirmation | Submit empty input; Next moves focus; Done validates; edit confirmation; recreate |
-| Spatial agenda | Custom Layout, one-pass measurement, Canvas grid, BoxWithConstraints, animated size/placement | Overlap sessions; zoom; move by 15 minutes; clamp to day; open event; recreate |
-| Shared shell | State hoisting, rememberSaveable, SaveableStateHolder, Material theme, insets, system Back | Leave/re-enter a scene; scroll with large text or a short window; inspect Understand |
+| [Pocket DJ](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/MusicScene.kt) | `AnimatedContent`, `SizeTransform`, spring size animation, `Canvas`, `Slider`, `LaunchedEffect`, lifecycle observation | Fold the sleeve; change title; seek to the end; leave and restore paused |
+| [Little shop](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/ShopScene.kt) | Experimental `SharedTransitionLayout`, `sharedElement`, stable content identity, animated totals, polite live regions | Open each object; return with Back; change quantity; add to a local bag |
+| [On its way](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/DeliveryScene.kt) | `Canvas`, `Path`, `PathMeasure`, finite `Animatable`, derived status | Start, inspect intermediate stages, finish, replay and compare global motion modes |
+| [Energy story](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/EnergyScene.kt) | `Canvas`, animated values, tap/drag input, text semantics and equivalent selection buttons | Select the peak and missing reading; compare days; use Earlier/Later at boundaries |
+| [Your ticket](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/TicketScene.kt) | Text fields, `FocusRequester`, IME actions, error state, `AnimatedContent`, custom `Shape` | Submit empty input; Next changes focus; Done validates; edit a local confirmation |
+| [Poster studio](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/PhotoScene.kt) | `transformable`, multi-touch, `graphicsLayer`, cancellable animation, custom accessibility actions | Zoom, rotate, pan and reset; interrupt a button animation with a gesture |
+| [Inbox zero](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/InboxScene.kt) | `LazyColumn`, stable keys, `animateItem`, `SwipeToDismissBox`, snackbar undo | Swipe or press Archive; Undo; restore all; inspect the empty inbox |
+| [Make room](../app/src/main/java/dev/devaxes/composeatlas/ui/scenes/AgendaScene.kt) | Custom `Layout`, one-pass child measurement, pure overlap lanes, animated offsets/widths, `Canvas` grid | Move coffee; compare overlap lanes; enlarge system text for the list adaptation |
+| [Shared shell](../app/src/main/java/dev/devaxes/composeatlas/ui/ExperimentGallery.kt) | `rememberSaveable`, `SaveableStateHolder`, state-driven routes, `BackHandler`, responsive columns, insets and keyboard padding | Return from settings; recreate activity; revisit a scene; expand How it works |
+| [Theme and motion](../app/src/main/java/dev/devaxes/composeatlas/ui/AtlasTheme.kt) | Material 3, system light/dark, `CompositionLocal`, tween/spring/snap policy | Compare themes and Normal/Slow/Off with Android's animation scale |
 
-## Evidence and source
+`SharedTransitionLayout` requires an experimental opt-in in pinned Compose 1.9.0.
+The gallery illustrates patterns used in production interfaces; it supplies none
+of the backend, business or operational guarantees of those products.
 
-- [Chart state/math](../app/src/main/java/dev/devaxes/composeatlas/data/TemperatureData.kt)
-  and [chart tests](../app/src/test/java/dev/devaxes/composeatlas/TemperatureDataTest.kt).
-- [Gallery fixtures, filtering, validation and interval layout](../app/src/main/java/dev/devaxes/composeatlas/data/GalleryData.kt)
-  and [pure tests](../app/src/test/java/dev/devaxes/composeatlas/GalleryDataTest.kt).
-- [Chart UI flows](../app/src/androidTest/java/dev/devaxes/composeatlas/AtlasFlowTest.kt)
-  and [gallery UI flows](../app/src/androidTest/java/dev/devaxes/composeatlas/GalleryFlowTest.kt).
-- [Recorded runs and native captures](verification.md). A listed test describes its
-  scope; screenshots and emulator tests do not establish hardware performance.
+## Evidence boundaries
 
-## Next experiments
+The test sources under [`app/src/test`](../app/src/test) and
+[`app/src/androidTest`](../app/src/androidTest) describe automated scenarios.
+Only recorded executions verify a revision; old test counts must not stand in for
+the redesign. Native screenshots show specific visual states, not animation timing,
+TalkBack traversal or frame performance.
 
-These are candidates for later milestones, not inactive buttons in the app.
+Text labels, focus actions, content descriptions, custom actions and non-gesture
+controls are implemented in relevant scenes. Full screen-reader testing and
+accessibility certification require separate evidence. The large-text gallery and
+agenda adaptations do not establish complete tablet, foldable or desktop coverage.
 
-| Candidate | What it would add | Boundary to define |
+## Future scope
+
+These areas are not implemented by the eight-scene gallery. They are candidates,
+not disabled controls or promised roadmap commitments.
+
+| Family | A useful next experiment | Evidence needed |
 | --- | --- | --- |
-| Reading room | Rich text, selection, links, typography, accessibility traversal | Text fixtures and manual TalkBack scenarios |
-| Adaptive inbox | Navigation back stack, list/detail panes, window classes, shared transitions | Phone, tablet and foldable emulator profiles |
-| Gesture studio | Draggable anchors, nested scroll, transforms, multi-touch, fling | Pointer arbitration and equivalent accessible actions |
-| Theme workshop | Light/dark, dynamic color, contrast, composition locals | Explicit color policy and screenshot variants |
-| Drawing desk | drawWithCache, graphicsLayer, blend modes, custom modifiers | Export behavior and bounded rendering workload |
-| Interop bench | AndroidView, ComposeView, lifecycle boundaries | A small View-based control with a meaningful comparison |
-| Performance bench | Recomposition observation, stability, tracing, Macrobenchmark, baseline profiles | A repeatable protocol; hardware for performance claims |
+| View interoperability | A meaningful `AndroidView` / `ComposeView` boundary | Lifecycle, disposal, input and saved-state behavior |
+| Asynchronous data | Loading, retry, pagination and Flow-backed state | Controlled repository fixtures, cancellation and recovery tests |
+| Production navigation | List/detail panes, deep links and multiple back stacks | Window profiles, route restoration and Back behavior |
+| Rich text | Selection, links and reading order | Text fixtures, keyboard and TalkBack checks |
+| Advanced drawing | Cached drawing, blending or custom modifier nodes | A bounded rendering task and visual correctness checks |
+| System integration | Media3 playback, location or calendar access | Permissions, lifecycle, failure cases and actual service boundaries |
+| Performance tooling | Tracing, Macrobenchmark and baseline profiles | Repeatable protocol, raw measurements and physical-device runs |
+| Broader adaptation | Dedicated tablets/foldables, dynamic color and input devices | Explicit supported profiles and visual/interaction checks |
 
-Loading, pagination, Flow/ViewModel integration and asynchronous error recovery
-need a separate data-driven experiment. Media3 audio, services and permissions are
-Android integrations, not capabilities demonstrated by the fictional player.
-No shared-element, custom Modifier.Node, production navigation, haptic, audio,
-tablet-specific or light-theme coverage is claimed in the current build.
+No hardware smoothness, battery use, audio quality, haptic behavior or real-world
+service performance is inferred from emulator tests. Earlier Temperature study
+experiments are documented in the [historical record](archive/verification-v0.2.0.md),
+not counted as a ninth current scene.
