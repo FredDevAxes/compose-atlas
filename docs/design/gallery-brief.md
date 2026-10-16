@@ -1,5 +1,7 @@
 # Gallery expansion
 
+> Historical v0.2.0 design record. The local redesign is governed by [the new direction contract](redesign/brief.md) and [DESIGN.md](../../DESIGN.md).
+
 Mode: Experience in the gallery and scenes; Operate for controls; Read in Understand.
 This is an extension of Instrument, not a replacement visual world.
 

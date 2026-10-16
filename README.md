@@ -1,46 +1,64 @@
 # Compose Atlas
 
-**Try the interaction. Change its behavior. Understand the Compose behind it.**
+**Eight familiar app moments. Touch one to see how it works.**
 
-An Android lab that makes Jetpack Compose tangible through five small, working
-interfaces. Compare a spring with a timed animation, fold a fictional audio player,
-reorder a collection, validate a form or rearrange a timeline. Each experiment
-pairs hands-on controls with an **Understand** tab.
+Fold a record player, follow a parcel across town, turn a name into a ticket or
+watch a crowded morning make room. Compose Atlas is an offline Android lab of
+small, working interfaces. Each scene starts with an ordinary task; **How it
+works** explains the Compose mechanism, where it fits in a real app and its limits.
 
-[![Android checks](https://github.com/FredDevAxes/compose-atlas/actions/workflows/android.yml/badge.svg)](https://github.com/FredDevAxes/compose-atlas/actions/workflows/android.yml)
-[![MIT license](https://img.shields.io/badge/license-MIT-395630)](LICENSE)
+![Compose Atlas v0.3.0: four real Android screens showing the player, shop, delivery and ticket](docs/presentation/cover.png)
 
-<p>
-  <img src="docs/images/gallery-player.png" width="230" alt="Quiet frequency: fictional audio player with waveform artwork and playback controls">
-  <img src="docs/images/gallery-collection.png" width="230" alt="Object collection: searchable grid with categories and saved objects">
-  <img src="docs/images/gallery-agenda.png" width="230" alt="Spatial agenda: overlapping sessions positioned on a custom timeline">
-</p>
+**v0.3.0 — eight hands-on Compose experiences.** Follow the [visual tour](docs/visual-tour.md)
+for actions to try, or browse the [screen presentation](docs/presentation/README.md).
+The [verification record](docs/verification.md) links local checks and the publication
+record. The earlier five-scene gallery remains available at [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0).
 
-*Native Android captures from [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0):
-player, collection and agenda. The [visual tour](docs/visual-tour.md) covers all five experiments.*
+Everything runs with fictional local data and original geometric artwork. The
+player is silent; the shop charges nothing; no parcel, email or ticket is sent.
+No account, backend or paid service is needed. Emulator results do not establish
+hardware performance or accessibility certification.
 
-**Status:** an evolving, offline lab, verified on API 36 emulators. All data is
-synthetic. The player makes no sound and the form sends nothing. No account,
-backend or paid service is needed. Hardware performance has not been measured.
+[Run locally](#run-locally) · [Visual tour](docs/visual-tour.md) ·
+[Capability map](docs/coverage.md) · [Architecture](docs/architecture.md)
 
-[Run locally](#run-it) · [Choose an experiment](#choose-an-experiment) ·
-[Visual tour](docs/visual-tour.md) · [Capability map](docs/coverage.md) ·
-[Verification](docs/verification.md)
+## Choose a moment
 
-## Run it
+| Scene | Try it | A real application of the pattern |
+| --- | --- | --- |
+| Pocket DJ | Play, change track, seek and fold the sleeve | Persistent music or podcast player |
+| Little shop | Open an object, change quantity and add it to the demo bag | Catalog-to-detail continuity with shared elements |
+| On its way | Send a parcel and follow its progress | A route, onboarding journey or delivery status |
+| Energy story | Find the evening peak; inspect the missing noon reading | A chart with consistent touch and text inspection |
+| Your ticket | Submit empty fields, then make a local ticket preview | Registration, booking and confirmation |
+| Poster studio | Pinch, rotate, drag or use the zoom and rotation buttons | Image inspection or a lightweight visual editor |
+| Inbox zero | Archive a message, undo it, then clear the inbox | A list with stable identity and reversible actions |
+| Make room | Move coffee to 11:00 and watch the schedule reflow | Time-based layout and overlap handling |
 
-You need JDK 17, Android SDK Platform 36, Build Tools 36.0.0, platform-tools, and an
-Android 8.0/API 26 or newer emulator or device. Initial verification targets an API
-36 emulator; API 26 compatibility is checked by lint, not a device run.
+The settings screen offers one motion preference: **Normal**, **Slow motion** or
+**Off**. There are no per-scene technical controls. Slow stretches authored tweens
+and softens springs; Off takes authored transitions to their final state. Android's
+animation scale still applies. Direct gestures continue to follow your fingers.
+Light and dark themes follow the system.
 
-1. Clone the repository.
+## Run locally
 
-   ```sh
-   git clone https://github.com/FredDevAxes/compose-atlas.git
-   cd compose-atlas
-   ```
+Clone the repository and select the verified milestone:
 
-2. Point your environment at JDK 17 and the Android SDK. On macOS, a typical setup is:
+```sh
+git clone https://github.com/FredDevAxes/compose-atlas.git
+cd compose-atlas
+git switch --detach v0.3.0
+```
+
+Run all following commands from the repository root. To follow ongoing development,
+use `git switch main` instead of the milestone checkout.
+
+You need JDK 17, Android SDK Platform 36, Build Tools 36.0.0, platform-tools and
+an Android 8.0/API 26 or newer emulator or device. The configured instrumented
+CI target is API 36; a minimum API declaration does not prove a device test passed.
+
+1. Point your environment at JDK 17 and the Android SDK. On macOS:
 
    ```sh
    export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
@@ -48,23 +66,21 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
    export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
    ```
 
-   On Linux or Windows, use your installed JDK 17 and SDK paths. Android Studio can
-   also create an ignored `local.properties` with `sdk.dir`. No keys are required.
+   Use your installed paths on Linux or Windows. Android Studio can instead create
+   an ignored `local.properties` with `sdk.dir`. No credentials are required.
 
-3. Install the SDK packages, accept the Android SDK licenses if needed, and build.
+2. Install the SDK packages, accept the SDK licenses if prompted, and build:
 
    ```sh
    sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
    ./gradlew assembleDebug
    ```
 
-   Gradle downloads the pinned dependencies on the first build; no separate package
-   installation command is needed. Internet access is needed for this initial setup.
+   Gradle downloads the pinned dependencies on the first build. Initial setup needs
+   internet access; running the app does not. The APK is
+   `app/build/outputs/apk/debug/app-debug.apk`. On Windows use `gradlew.bat`.
 
-   The APK is `app/build/outputs/apk/debug/app-debug.apk`. Windows users can replace
-   `./gradlew` with `gradlew.bat`.
-
-4. Start an emulator from Android Studio Device Manager, then install and launch.
+3. Start one emulator in Android Studio Device Manager, then install and launch:
 
    ```sh
    adb devices
@@ -72,112 +88,64 @@ Android 8.0/API 26 or newer emulator or device. Initial verification targets an 
    adb shell am start -n dev.devaxes.composeatlas/.MainActivity
    ```
 
-   Keep one target connected for `installDebug`, or install the APK explicitly with
-   `adb -s DEVICE_ID install -r app/build/outputs/apk/debug/app-debug.apk`. Use the
-   same `-s DEVICE_ID` for launch. The app opens Explore with five experiments.
+   The app opens the eight-scene gallery. With multiple connected targets, use
+   `adb -s DEVICE_ID install -r app/build/outputs/apk/debug/app-debug.apk` and
+   `adb -s DEVICE_ID shell am start -n dev.devaxes.composeatlas/.MainActivity`.
 
-## Choose an experiment
-
-| Scene | Try this | What to watch |
-| --- | --- | --- |
-| Quiet frequency | Play, seek, change track, compact the player | Title transitions, size animation, gesture ownership and a cancellable clock |
-| Object collection | Save Arc lamp, reverse, filter, switch Grid/List | Stable item identity, reordering motion and restored favorites |
-| Session builder | Submit empty input, then use Next and Done on the keyboard | Error feedback, focus movement and a local confirmation |
-| Spatial agenda | Overlap sessions, zoom, move Motion workshop | Time-driven placement and columns for overlapping events |
-| Temperature study | Replay Tween and Spring at 0.25× | Duration-based easing versus spring overshoot |
-
-Every scene has an **Understand** tab. Scene inputs and settings survive activity recreation;
-transient animation progress does not.
-Returning to the player restores its position paused. The agenda uses a list in
-narrow windows or with enlarged text; the normal phone shows a custom timeline.
-The [coverage map](docs/coverage.md) lists implemented capabilities and candidates
-for later milestones.
-
-Follow the [guided visual tour](docs/visual-tour.md) for a short scenario in each
-scene, including empty states, animation controls and keyboard behavior.
-
-## Check it
+## Check the work
 
 ```sh
 ./gradlew ktlintCheck lintDebug testDebugUnitTest assembleDebug
 ./gradlew connectedDebugAndroidTest
 ```
 
-The second command needs one running emulator. Keep the system Animator duration
-scale at 1× for the test that examines intermediate animation frames; motion-off
-behavior is tested separately. The UI also respects the system motion scale.
+The second command needs one running emulator. Keep system Animator duration scale
+at 1× for tests that inspect intermediate frames; motion-off is a separate behavior.
+Reports are written under `app/build/reports/`.
 
-`ktlintCheck` covers the Kotlin source and Gradle Kotlin scripts in the app project.
-Use `./gradlew ktlintFormat` before checking, not concurrently with checks. Android
-Lint treats warnings as errors; update-availability notices are excluded because
-the toolchain and tested API 36 target are intentionally pinned. `OldTargetApi` is
-an excluded update notice; Android API usage compatibility checks remain enabled.
+ktlint 1.7.1 checks Kotlin source and app Gradle Kotlin scripts. Run
+`./gradlew ktlintFormat` before checks, never concurrently. Android Lint treats
+warnings as errors; dependency and target-update notices are excluded because this
+toolchain is pinned. API compatibility checks remain enabled.
 
-Unit tests exercise chart coordinates, nearest-sample boundaries, gap segmentation,
-distinct fixtures, filtering, validation and interval placement. Instrumented tests
-cover all five scenes, navigation, state recreation, playback completion, keyboard
-actions, scenarios and controlled chart animation time.
-Reports are under `app/build/reports/`.
+The [workflow](.github/workflows/android.yml) configures the same checks for every
+push and PR, with a separate API 36 x86_64 emulator job and actions pinned to commit
+SHAs. Results and the scope of the tests belong in [verification](docs/verification.md);
+older green runs do not verify a later revision.
 
-GitHub Actions runs the same checks on every push and PR, with a separate API 36
-x86_64 emulator job. Workflow actions are pinned to commit SHAs. Local tests use an
-ARM64 emulator; these are different execution environments.
+## Read and reuse the code
 
-The [v0.2.0 CI run](https://github.com/FredDevAxes/compose-atlas/actions/runs/38670901824)
-passed both jobs. Locally, **13 unit tests and 14 instrumented tests** passed on
-API 36 ARM64; navigation was also checked with enlarged text and a wide window.
-See [verification](docs/verification.md) for environments, scope and remaining limits.
+One Gradle application contains the gallery, eight scene files and deterministic
+helpers. State stays close to the interaction; saveable values preserve scene
+choices, while effects end when their scene leaves composition. There is no
+asynchronous repository or backend to justify a ViewModel/DI layer in this lab.
 
-## How the lab grows
+- [Scene catalog](app/src/main/java/dev/devaxes/composeatlas/data/AtlasScene.kt):
+  invitations, explanations, production use cases and boundaries.
+- [Gallery and navigation](app/src/main/java/dev/devaxes/composeatlas/ui/ExperimentGallery.kt):
+  saved routes, independent scene state, insets and explanations.
+- [Theme and motion](app/src/main/java/dev/devaxes/composeatlas/ui/AtlasTheme.kt):
+  system light/dark palettes and the shared authored-motion policy.
+- [Scene implementations](app/src/main/java/dev/devaxes/composeatlas/ui/scenes):
+  interaction state, Material components and runtime Canvas artwork.
+- [Architecture and reuse notes](docs/architecture.md), [capability map](docs/coverage.md)
+  and [design record](DESIGN.md).
 
-| Milestone | Working scope |
-| --- | --- |
-| [v0.1.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.1.0) | First Canvas chart, inspection, settings and synthetic edge cases |
-| [Motion comparison](https://github.com/FredDevAxes/compose-atlas/commit/84238116c4653854273217cf12cc1278b49f82a7) | Parallel Tween/Spring markers and 1× / 0.5× / 0.25× playback |
-| [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0) | Five experiments, independent scene state and per-scene explanations |
+Little shop opts into `SharedTransitionLayout`, experimental in pinned Compose
+1.9.0. That opt-in and its version need review when extracting the scene. The
+[capability map](docs/coverage.md) distinguishes working patterns from future areas
+such as View interop, asynchronous data and hardware profiling. This is not a
+catalog of every Compose API or a complete production application.
 
-The [capability map](docs/coverage.md) separates implemented APIs from candidates
-such as rich text, adaptive navigation, advanced gestures, themes and View interop.
-This lab aims to explore Compose progressively; it does not cover every API today.
+## Reproduction and licensing
 
-## Source map
+Gradle 8.13 has a distribution checksum. Android Gradle Plugin 8.12.0, Kotlin 2.2.10,
+Compose UI/Foundation/Animation 1.9.0, Material 3 1.3.2 and ktlint 1.7.1 are pinned;
+resolved application dependencies are in `app/gradle.lockfile`. No dependency was
+added for the redesign. JDK patches, SDK package revisions, emulator system images
+and hosted runners are not fully locked by Gradle; record them when comparing runs.
+The release build is unsigned.
 
-- [Gallery and shared shell](app/src/main/java/dev/devaxes/composeatlas/ui/ExperimentGallery.kt):
-  five destinations with saved scene state.
-- [Player](app/src/main/java/dev/devaxes/composeatlas/ui/PlayerExperience.kt),
-  [collection](app/src/main/java/dev/devaxes/composeatlas/ui/CollectionExperience.kt),
-  [form](app/src/main/java/dev/devaxes/composeatlas/ui/FormExperience.kt), and
-  [agenda](app/src/main/java/dev/devaxes/composeatlas/ui/AgendaExperience.kt):
-  self-contained scenes and their explanations.
-
-- [Gallery data and algorithms](app/src/main/java/dev/devaxes/composeatlas/data/GalleryData.kt):
-  filtering, local validation and overlap lanes.
-- [Data and chart math](app/src/main/java/dev/devaxes/composeatlas/data/TemperatureData.kt):
-  deterministic fixtures, state transitions and gap-preserving segments.
-- [Canvas](app/src/main/java/dev/devaxes/composeatlas/ui/TemperatureChart.kt):
-  shared coordinates for traces, markers and pointer input.
-- [Motion comparison](app/src/main/java/dev/devaxes/composeatlas/ui/MotionComparison.kt):
-  parallel markers and playback speed composed with Android animation scale.
-- [Screen state and layout](app/src/main/java/dev/devaxes/composeatlas/ui/AtlasApp.kt):
-  saved chart settings and replay.
-- [Controls and explanations](app/src/main/java/dev/devaxes/composeatlas/ui/ControlPanel.kt):
-  Adjust / Understand and reproducible scenarios.
-- [Architecture and tradeoffs](docs/architecture.md), [design](DESIGN.md), and
-  [capability coverage](docs/coverage.md).
-
-One Gradle application is enough for this milestone. Additional experiences can
-introduce module boundaries when there is a concrete need to share or isolate code.
-
-## Reproduction boundaries
-
-Gradle 8.13 has a distribution checksum; Android Gradle Plugin 8.12.0, Kotlin 2.2.10,
-Compose UI/Foundation/Animation 1.9.0, Material 3 1.3.2 and ktlint 1.7.1 are pinned.
-Resolved app dependencies are recorded in `app/gradle.lockfile`. JDK patches, SDK
-package revisions, emulator system images and hosted-runner images are not fully
-locked by Gradle. Record them when comparing runs.
-
-The release build is unsigned. There is no store publication, analytics, account,
-or production service. No real-device smoothness, energy use or accessibility
-certification is claimed.
-
-[Third-party notices](NOTICE.md) retain their original licenses.
+Original code is [MIT licensed](LICENSE). [Third-party notices](NOTICE.md) retain
+dependency licenses and artwork provenance. Historical checks for the previous
+public gallery are [archived separately](docs/archive/verification-v0.2.0.md).

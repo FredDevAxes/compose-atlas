@@ -1,123 +1,130 @@
-# Architecture and decisions
+# Architecture and reuse
 
-## State drives the interface
+Compose Atlas is one Android application, with eight local scenes and a small shared
+shell. A visitor acts first and can open an explanation afterward. The architecture
+follows that boundary: each scene owns a comprehensible interaction; the shell owns
+navigation, saved scene scopes, theme and the global motion preference.
 
-A single Android application contains five scenes, a shared shell and pure data/math
-helpers. The [gallery state model](#a-gallery-with-independent-scene-state) gives each
-scene independent saved state. The following chart sections explain the first experiment.
-The data layer has no Android dependency. `ExperimentState` is immutable; controls
-request a new state, and the chart, readout and explanations consume it. A saveable
-state holder is sufficient for this local, synchronous experiment. There is no
-network repository, dependency-injection container or ViewModel with no work to do.
+## Find the mechanism
 
-`rememberSaveable` preserves period, scenario, sample index, visible series, animation
-settings, panel visibility and selected explanation tab through activity recreation.
-Replay progress is transient and restarts on screen re-entry.
+| File | Responsibility |
+| --- | --- |
+| `data/AtlasScene.kt` | Scene catalog, UI copy, mechanism, production use and boundaries |
+| `ui/ExperimentGallery.kt` | Gallery, one-level routes, settings, explanation and scene host |
+| `ui/AtlasTheme.kt` | System light/dark theme and `LocalAtlasMotion` |
+| `ui/scenes/MusicScene.kt` | Simulated transport, coordinated title and sleeve motion |
+| `ui/scenes/ShopScene.kt` | Shared-element catalog/detail journey and local bag totals |
+| `ui/scenes/DeliveryScene.kt` | Finite journey, path geometry and status |
+| `ui/scenes/EnergyScene.kt` | Deterministic readings, selection and chart drawing |
+| `ui/scenes/TicketScene.kt` | Input, focus, local validation and shaped confirmation |
+| `ui/scenes/PhotoScene.kt` | Direct transforms, button-driven transforms and artwork |
+| `ui/scenes/InboxScene.kt` | Stable message identity, archive, undo and empty state |
+| `ui/scenes/AgendaScene.kt` | Time-driven layout and list adaptation for large text |
+| `data/GalleryData.kt` | Pure validation and interval-placement helpers |
 
-## Numeric integrity
+Paths above are relative to
+[`app/src/main/java/dev/devaxes/composeatlas/`](../app/src/main/java/dev/devaxes/composeatlas/).
+Earlier temperature/chart implementations and unused collection helpers have been
+removed from the active application. Historical chart behavior and its verification
+belong to [v0.2.0](archive/verification-v0.2.0.md).
 
-All series use the fixed 18–26 °C domain. Hiding one series does not silently
-rescale the other. Canvas, hit testing and markers use the same normalized
-coordinates. Sample selection clamps at the edges and uses the closest supplied
-sample; a single sample sits at the midpoint. Missing values split a path into
-segments, including isolated points.
+## State and lifetime
 
-Day has 25 hourly samples from 00:00 through 24:00. The default sample at 14:00 is
-21.4 °C for Studio and 23.1 °C for Gallery. Week has seven independent synthetic
-daily values; Month has thirty synthetic daily values for September. The latter
-fixtures are not inferred aggregations of Day. All fixture data is deterministic.
+`AtlasApp` stores the current route, return route for settings and motion preference
+with `rememberSaveable`. `SaveableStateHolder` gives each route its own saved scope.
+Leaving a scene removes its composition and cancels composition-scoped work; saved
+input and choices can return with it. These values support activity recreation,
+not durable storage across a fresh application installation or a force stop.
 
-## What the animation means
+Scene state is local and changes through explicit events. Values such as a selected
+product, attendee input, archived IDs and chart selection are saveable. Playback
+itself is deliberately transient: Pocket DJ restores its position paused. Its
+`LaunchedEffect` advances a simulated clock and `DisposableEffect` attaches a
+lifecycle observer that pauses playback on `ON_STOP`. This clock is not an audio
+engine or a timing benchmark.
 
-The milestone animates a horizontal reveal of existing traces. A clipped Spring
-progress can overshoot internally, but the revealed area is clamped and does not
-change any temperature value. The cursor and readout appear once the selected animation settles, including
-its overshoot and return. Beginning an inspection stops replay and reveals the complete chart
-before displaying the selected value.
+The delivery stores completed progress and resumes a finite journey when its scene
+is composed again. Inbox undo uses a composition-scoped coroutine and a Material
+snackbar; a later archive replaces the pending undo. Restoring an item resets its
+swipe state so the restored row does not immediately dismiss itself again.
 
-This intentionally replaces the proposed period morph with a trace reveal: the
-fixtures have different cardinalities, and interpolating them without a defined
-resampling rule would suggest measurements that do not exist. Period changes use
-a new fixture and a fresh reveal, with correctly labeled axes from the start.
-Continuous morphing remains a possible future experiment with its own semantics.
+A ViewModel, asynchronous repository and dependency-injection container would add
+indirection without owning meaningful external work here. A real application with
+network requests, durable data or cross-screen business state should introduce
+those boundaries for that work; the lab does not demonstrate them.
 
-## Comparing motion and slowing time
+## Navigation and native layout
 
-Two `Animatable` values start in sibling coroutines on the same frame clock. Tween
-uses explicit FastOutSlowIn easing and the selected duration. Spring uses the
-selected damping and stiffness, with a normalized visibility threshold of 0.001.
-The comparison lanes show raw animation position, including values above 100%;
-the chart still clips its reveal at the plot boundary. Default damping is 0.45.
-These markers are animation diagnostics, not temperature samples.
+The gallery has one level of scene routes and a settings return route. System Back
+returns from settings to its originating screen and from a scene to the gallery.
+Little shop handles Back from product detail before the scene exits. This is a
+small explicit state machine, not a demonstration of a general navigation library,
+multiple back stacks, deep links or predictive Back transitions.
 
-Playback speed is saved with experiment state. A local `MotionDurationScale`
-divides the inherited system scale by 1, 0.5 or 0.25. It reads the inherited scale
-dynamically, so system motion-off remains zero. This stretches time for both
-animations without modifying stiffness, damping or easing. Replay starts both
-from zero; inspecting the chart stops both and snaps them to their targets.
-Changing the selected mode or speed replays immediately; slider settings apply on
-Replay. There is no continuous loop or global Android-setting change.
+Material 3 app bars, buttons, fields, sliders and snackbars supply familiar Android
+interaction. Scaffold insets protect system bars; `imePadding` keeps form content
+within the keyboard-adjusted scrollable page. Scene content is capped at 640 dp.
+The gallery varies its column count with width and font scale; the agenda uses a
+chronological list above font scale 1.2. These are local adaptations, not a complete
+foldable or multi-pane tablet design. Theme palettes follow system light/dark;
+dynamic color is not implemented.
 
-References: [animation specifications](https://developer.android.com/develop/ui/compose/animation/customize)
-and [MotionDurationScale](https://developer.android.com/reference/kotlin/androidx/compose/ui/MotionDurationScale).
+## One motion policy
 
-## Native behavior
+`LocalAtlasMotion` carries Normal, Slow motion or Off. Authored tweens use a shared
+easing and triple their base duration in Slow motion. Authored springs reduce
+stiffness from 315 to 35 with the same damping; this makes them slower, but it is
+not a uniform time-scale transform. Off uses zero-duration tweens and snapped
+spring targets. A lifecycle-scoped `ContentObserver` observes Android animator scale
+changes, including scale zero while the app stays in the foreground. Compose also
+applies the nonzero system scale.
 
-Instrument uses Android Material controls and system typography, a compact header,
-a Canvas chart and a non-modal settings surface. Understand carries the explanation
-from the approved guided composition. The panel is independently scrollable;
-short windows and enlarged text switch to a page scroll. System Back closes the
-panel before leaving the detail.
+The policy controls authored transitions, not elapsed media time, direct gesture
+tracking or every animation internal to a Material component. Scene controls alter
+the task itself: Play, Fold, Move coffee or Archive. There are no damping sliders,
+per-scene speed controls or separate technical control panels.
 
-Selection can be changed through touch, explicit point buttons and custom
-accessibility actions. Labels and dash patterns complement color. The readout
-exposes the values as text; drawing pixels is not the only way to inspect data.
-The project remains dark-only for this first Instrument milestone.
+## Geometry and identity
 
-## Official references
+Little shop uses `SharedTransitionLayout` and stable shared-content keys to carry
+the same Canvas object between its collection and detail. Surrounding content uses
+`AnimatedContent`. Shared transitions are experimental in Compose 1.9.0; extracting
+this pattern requires retaining the opt-in and checking its API on an upgrade.
 
-Consulted on 15 October 2026:
+On its way draws a route, measures it with `PathMeasure` and derives both the
+revealed trail and courier position from distance along that same path. Its map
+is original geometry, with no mapping SDK or location permission.
 
-- [Compose architecture](https://developer.android.com/develop/ui/compose/architecture)
-- [Graphics in Compose](https://developer.android.com/develop/ui/compose/graphics/draw/overview)
-- [Compose testing](https://developer.android.com/develop/ui/compose/testing)
-- [Animation testing](https://developer.android.com/develop/ui/compose/animation/testing)
+Energy story shares a fixed 0–3 kWh scale between bars and uses the same slot
+calculation for tap and drag selection. Text inspection always reports fixture
+values, not intermediate animated bar heights. The missing noon reading is a
+visible gap and reads “No reading”; it is never presented as zero. Today and
+yesterday are separate illustrative fixtures, not imported meter records.
 
-The implementation is original; reference examples were not copied into the app.
+Poster studio updates scale, rotation and translation from `transformable`.
+`graphicsLayer` applies the visual transform without changing the artwork's layout
+size. Button animations are cancellable when a new gesture takes over. Zoom,
+rotation and reset also have explicit controls and accessibility actions; directional
+custom actions expose panning without a drag.
 
+Inbox keeps archived state by message ID rather than row position. Stable lazy
+keys preserve identity while `animateItem` moves neighboring rows; undo restores
+the original order. The agenda computes overlap lanes in pure data code, measures
+each event once in `Layout` and positions it from time and duration. Its grid and
+event positions share the same displayed morning range.
 
-## A gallery with independent scene state
+## Copy a pattern with its boundaries
 
-The root uses a saveable route and SaveableStateHolder. Each scene owns its state;
-leaving a scene removes its effects from composition while retaining saveable
-values for re-entry. This small local gallery does not need a navigation dependency
-or a production back stack. Experiment and Understand keep independent scroll
-positions. The new scene body is capped at 600 dp in wide windows for readable
-copy and controls. Android Back returns to Explore; the chart first
-closes its control panel, and native dialogs handle their own dismissal.
+Start with the scene file, then inspect its imports and the helpers above. Replace
+synthetic fixtures and the shared motion provider deliberately. Extract state and
+event parameters when a scene needs to participate in a larger application; do
+not copy a simulated transport or local bag and imply it performs backend work.
 
-Quiet frequency uses a cancellable coroutine ticking every 100 ms. Its clock is
-a simulation, not an audio clock or performance benchmark. A lifecycle observer
-pauses on ON_STOP. Playback itself is transient; position and track are saveable.
-Vertical dragging belongs only to the title, leaving normal page scrolling free.
+Canvas illustrations, ticket outlines and thumbnails are original runtime geometry.
+No generated bitmap, remote artwork, custom font or photo-library permission is
+needed. Ticket validation is local format validation; its decorative barcode is
+not scannable admission proof. No scene uses analytics, payment, dispatch, email,
+audio decoding or a remote service.
 
-The collection hoists favorite IDs out of lazy items. Both layouts use stable
-keys and animateItem, so reordered items keep their identity. Search and category
-filters combine with the saved-only filter. Its controls live inside the lazy
-container, avoiding an inaccessible results pane with a short window or large font.
-
-The form derives validation from input state and only displays errors after a
-submission attempt. IME Next requests the email focus; Done runs the same submit
-action as the button. Confirmation is local. Input and confirmation are saveable.
-
-The agenda's pure overlap algorithm groups connected intervals, assigning the
-first free lane and a consistent lane count within each group. Its custom Layout
-measures each child exactly once from duration and lane width, then places it from
-start time. The Canvas hour grid shares the same pixels-per-minute scale.
-Narrow windows or font scale above 1.2 use a chronological list, preserving readable
-event content. Timeline zoom is disabled in that list with a visible explanation. Time changes clamp the entire event within the displayed day.
-
-References: [lazy lists and keys](https://developer.android.com/develop/ui/compose/lists),
-[custom layouts](https://developer.android.com/develop/ui/compose/layouts/custom),
-[text-field focus](https://developer.android.com/develop/ui/compose/touch-input/focus/focus-in-text-fields),
-and [animation composables](https://developer.android.com/develop/ui/compose/animation/composables-modifiers).
+See [coverage](coverage.md) for implemented APIs and deferred families, and
+[verification](verification.md) for evidence rather than inferred guarantees.

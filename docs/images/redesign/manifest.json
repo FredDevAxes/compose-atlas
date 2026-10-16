@@ -1,0 +1,148 @@
+{
+  "captured_at": "2026-10-16",
+  "source_commit": "888c913",
+  "branch": "codex/compose-atlas-playground",
+  "device": "Android 16 API36 ARM64 emulator",
+  "phone": {
+    "pixels": [
+      1080,
+      2400
+    ],
+    "density_dpi": 420,
+    "font_scale": 1.0
+  },
+  "large": {
+    "font_scale": 1.3
+  },
+  "wide": {
+    "pixels": [
+      1600,
+      1000
+    ],
+    "density_dpi": 160
+  },
+  "method": "Native Android instrumentation screenshots; raw captures unchanged. overview.png is a labeled montage.",
+  "limits": "Emulator evidence, not hardware performance, TalkBack or pixel-fidelity certification.",
+  "files": [
+    {
+      "file": "phone-home.png",
+      "source": "light/00-home.png",
+      "sha256": "aa505003f525278d9dd7fe82868c3fc6a627a6e07797f159c31b18960be9c742"
+    },
+    {
+      "file": "phone-music.png",
+      "source": "light/01-music.png",
+      "sha256": "e6632fca7521ad7ec52f6ab4b3fe6ce88168f2b53cfcd39b293fef57a2c7e48f"
+    },
+    {
+      "file": "phone-music-folded.png",
+      "source": "light/02-music-folded-next-track.png",
+      "sha256": "3e4fe01edb3f4dd5d7c91aca5ebfacf9ed7d135607f58b09a4d12307bc5cbdb4"
+    },
+    {
+      "file": "phone-shop.png",
+      "source": "light/03-shop.png",
+      "sha256": "3b4e8316d8adc96bc3cf9cbb6b78318ae857afffda1f0f4135d50beaeac90b5f"
+    },
+    {
+      "file": "phone-shop-detail.png",
+      "source": "light/04-shop-bag.png",
+      "sha256": "8204b552d85d06af6de342379dcb6853bfedce15523a219d2aa89d5629d5906e"
+    },
+    {
+      "file": "phone-delivery.png",
+      "source": "light/05-delivery.png",
+      "sha256": "e8ed1231020b034c6716323ee730cac67d769adb2bddd347ea8b97131d815518"
+    },
+    {
+      "file": "phone-delivery-arrived.png",
+      "source": "light/06-delivery-arrived.png",
+      "sha256": "9cd86d3824d6d3fafebeed0bbf00336d58847122a163816a73a8a91f0fb8084a"
+    },
+    {
+      "file": "phone-energy.png",
+      "source": "light/07-energy.png",
+      "sha256": "b27d69742922c89b758aa54df7fe356d7a9bd04c2da11cd6d639ae3fb21460a0"
+    },
+    {
+      "file": "phone-energy-missing-reading.png",
+      "source": "light/08-energy-missing-reading.png",
+      "sha256": "fd7256edf7c2d882faa580ed09899933afc2b9f517035b381671f6cc7e7b5c9e"
+    },
+    {
+      "file": "phone-ticket.png",
+      "source": "light/09-ticket.png",
+      "sha256": "39839f6db0423c5d3639e777d1094bc79077b0df3696076937a274ceb0a12104"
+    },
+    {
+      "file": "phone-ticket-confirmed.png",
+      "source": "light/10-ticket-ready.png",
+      "sha256": "1c9a6ca5b3ade12ededa7aa19f01901d6bc77efd5abb54bd4d672c1b7eb34060"
+    },
+    {
+      "file": "phone-photo.png",
+      "source": "light/11-poster.png",
+      "sha256": "cbc2af1c4baeccbdc1d388d566cf22c6292544ee1e2c8a0497e5acefcafb7109"
+    },
+    {
+      "file": "phone-photo-transformed.png",
+      "source": "light/12-poster-transformed.png",
+      "sha256": "3515808dde45abc8a0d4e697c1f6950b2c37fbc8c817e1306c32bf076a962f33"
+    },
+    {
+      "file": "phone-inbox.png",
+      "source": "light/13-inbox.png",
+      "sha256": "eaf0e103f6eba2072e2d26d275759dadacf9669961d8841d4997ad6539290438"
+    },
+    {
+      "file": "phone-inbox-undo.png",
+      "source": "light/14-inbox-undo.png",
+      "sha256": "b857cad1e0471dc4a1acc8d4bca412cf7e50c9271662d2eded182674ef04b629"
+    },
+    {
+      "file": "phone-inbox-restored.png",
+      "source": "light/15-inbox-restored.png",
+      "sha256": "eaf0e103f6eba2072e2d26d275759dadacf9669961d8841d4997ad6539290438"
+    },
+    {
+      "file": "phone-agenda.png",
+      "source": "light/16-agenda.png",
+      "sha256": "ae0c83c21029e911ce4da8d4d6817b602c5ae59c4e13a93f14a69df2e59170f3"
+    },
+    {
+      "file": "phone-agenda-moved.png",
+      "source": "light/17-agenda-moved.png",
+      "sha256": "cea8ba4d31fc85b346cab8fc0cd131b3c34007cd34487445b4c021ad0284bc97"
+    },
+    {
+      "file": "phone-explanation.png",
+      "source": "light/18-explanation.png",
+      "sha256": "5c40526549275ca4f686d1a26a737475bd01e579a7403e721eb6e19510110498"
+    },
+    {
+      "file": "phone-motion.png",
+      "source": "light/19-global-motion.png",
+      "sha256": "c2142c2418088db9cae2f23e632d5e17fae8d2de55f99bb976f1453e05be95e2"
+    },
+    {
+      "file": "dark-home.png",
+      "source": "dark/00-home.png",
+      "sha256": "27c8b5166d3d74bf71510404ac024272ef8c9ce2abf229b1f705c15dc5aa3c41"
+    },
+    {
+      "file": "large-agenda.png",
+      "source": "large/16-agenda.png",
+      "sha256": "24d69ee3ce560d4f2bd596339750d3b6db5e24d5d7ef36e7273ceaf6d12f3ca4"
+    },
+    {
+      "file": "wide-home.png",
+      "source": "wide/00-home.png",
+      "sha256": "c6ca2ad0cba7eb5c029210d298f1f99de160e037b2d2c9ebef3bae272507c1fa"
+    },
+    {
+      "file": "wide-motion.png",
+      "source": "wide/19-global-motion.png",
+      "sha256": "6328b88e1981346f302f470d888783d342938d183bfd6a7ffb5a7f7043d8e5d0"
+    }
+  ]
+}

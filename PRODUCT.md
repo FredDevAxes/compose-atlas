@@ -1,30 +1,27 @@
-# Product
+# Compose Atlas
 
-<!-- impeccable:product-schema 1 -->
+Compose Atlas is an offline Android gallery of eight working, visual demonstrations
+of Jetpack Compose. Visitors recognize an everyday app task, interact immediately,
+and optionally read a concise explanation of its implementation and production use.
 
-## Platform
+## Current experiences
 
-android
+Pocket DJ, Little shop, On its way, Poster studio, Your ticket, Inbox zero,
+Energy story and Make room. No per-experiment technical settings. Global motion
+controls apply to authored animations; Android's system animation policy still wins.
+Native Material 3 interaction, system Back, edge-to-edge insets, scalable text,
+accessible alternatives to gestures, light/dark themes and saved scene state.
 
-## Stack
+## Truth and limits
 
-Kotlin, Jetpack Compose, Gradle. Offline application, MIT-licensed original code.
+All data and artwork are synthetic and original. Fully offline; no accounts,
+backend, analytics, real playback, payment, dispatch or issued tickets. This is a
+lab of production UI patterns, not a production service or complete Compose API
+catalog. Emulator evidence is not hardware performance or accessibility certification.
 
-## Purpose
+## Delivery
 
-Explore Compose through practical, reproducible scenes with adjustable behavior and explanations.
-
-## First milestone
-
-Temperature study with synthetic data, Canvas inspection and a non-modal Adjust / Understand panel. Instrument direction and composition B with C explanations were approved on 15 October 2026. Initial verification is on emulators only.
-
-## Gallery milestone
-
-Five working experiments: Temperature study, Quiet frequency (simulated audio),
-Object collection, Session builder and Spatial agenda. Each exposes a practical
-Compose mechanism and an Understand tab. The Instrument design system is retained.
-The broader API coverage roadmap is in docs/coverage.md; coverage is progressive.
-
-## Constraints
-
-English repository and UI. No backend, credentials, client data, or real-device performance claims. Scope is agreed per milestone without a global time cap.
+On 16 October 2026, the user approved merging this redesign into main and pushing
+it to GitHub. The v0.3.0 milestone presents the eight-scene replacement.
+The earlier local-only restriction remains part of the design history.
+Repository and UI are English. Original code is MIT. Keep pinned dependencies.

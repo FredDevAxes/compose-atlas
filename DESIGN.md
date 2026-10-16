@@ -1,58 +1,159 @@
 ---
 name: Compose Atlas
-description: Native Android instruments for practical Compose experiments.
+description: A native Android exhibit of eight hands-on Compose experiences.
 colors:
-  lime: "#B9EE77"
-  cyan: "#6FBDCB"
-  amber: "#E9B965"
-  background: "#0B1A19"
-  surface: "#112523"
-  outline: "#2D433C"
-  text: "#EEF4F0"
-  muted: "#B0C3BB"
-  selected: "#395630"
+  light-primary: "#4F46C8"
+  light-on-primary: "#FFFFFF"
+  light-primary-container: "#E5E1FF"
+  light-on-primary-container: "#252052"
+  light-secondary: "#536172"
+  light-on-secondary: "#FFFFFF"
+  light-secondary-container: "#E0E9F6"
+  light-on-secondary-container: "#172434"
+  light-tertiary: "#9A3D2B"
+  light-on-tertiary: "#FFFFFF"
+  light-background: "#F6F7FC"
+  light-on-background: "#202436"
+  light-surface: "#F6F7FC"
+  light-on-surface: "#202436"
+  light-surface-container: "#EBEDF5"
+  light-surface-container-low: "#F0F1F8"
+  light-surface-container-high: "#E5E7F0"
+  light-surface-container-highest: "#DFE1EA"
+  light-on-surface-variant: "#535869"
+  light-outline: "#767B8C"
+  light-outline-variant: "#D1D4E1"
+  dark-primary: "#C5BFFF"
+  dark-on-primary: "#282064"
+  dark-primary-container: "#40358E"
+  dark-on-primary-container: "#E5E1FF"
+  dark-secondary: "#BAC8DC"
+  dark-on-secondary: "#243244"
+  dark-secondary-container: "#39465A"
+  dark-on-secondary-container: "#E0E9F6"
+  dark-tertiary: "#FFB4A3"
+  dark-on-tertiary: "#5D170B"
+  dark-background: "#141622"
+  dark-on-background: "#E6E7F3"
+  dark-surface: "#141622"
+  dark-on-surface: "#E6E7F3"
+  dark-surface-container: "#212431"
+  dark-surface-container-low: "#1B1E2A"
+  dark-surface-container-high: "#2B2E3D"
+  dark-surface-container-highest: "#363949"
+  dark-on-surface-variant: "#C2C5D6"
+  dark-outline: "#8D92A5"
+  dark-outline-variant: "#424658"
+  gallery-music: "#FF9A86"
+  gallery-shop: "#E1DBFF"
+  gallery-delivery: "#C7E4FC"
+  gallery-energy: "#C6EEDC"
+  gallery-ticket: "#FFEAB0"
+  gallery-poster: "#E7DBEF"
+  gallery-inbox: "#FFEDBE"
+  gallery-agenda: "#E1DEF4"
+  object-ink: "#182443"
+  record-coral: "#FF8D79"
+  record-cream: "#FFE7BC"
+  shop-lavender: "#D6CBFF"
+  shop-peach: "#FFC8AF"
+  delivery-cyan: "#007A87"
+  delivery-ground: "#E5F7F7"
+  energy-ink: "#163D31"
+  energy-bar: "#61A988"
+  ticket-coral: "#FFA38C"
+  ticket-gold: "#FFD875"
+  inbox-yellow: "#FFD968"
+  poster-violet: "#7754CF"
+  poster-peach: "#FFC1AA"
+  poster-ground: "#EDE6FF"
+  agenda-review: "#DCD3FA"
+  agenda-coffee: "#FFD6C5"
+  agenda-build: "#C8E8DA"
 typography:
   display-small:
-    fontFamily: "Roboto, sans-serif"
-    fontWeight: 600
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "36sp"
+    fontWeight: 400
+    lineHeight: "44sp"
+    letterSpacing: "0sp"
+  headline-large:
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "32sp"
+    fontWeight: 400
+    lineHeight: "40sp"
+    letterSpacing: "0sp"
+  headline-medium:
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "28sp"
+    fontWeight: 400
+    lineHeight: "36sp"
+    letterSpacing: "0sp"
   headline-small:
-    fontFamily: "Roboto, sans-serif"
-    fontWeight: 500
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "24sp"
+    fontWeight: 400
+    lineHeight: "32sp"
+    letterSpacing: "0sp"
   title-large:
-    fontFamily: "Roboto, sans-serif"
-    fontWeight: 500
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "22sp"
+    fontWeight: 400
+    lineHeight: "28sp"
+    letterSpacing: "0sp"
   title-medium:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "16sp"
     fontWeight: 500
+    lineHeight: "24sp"
+    letterSpacing: "0.15sp"
   title-small:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "14sp"
     fontWeight: 500
+    lineHeight: "20sp"
+    letterSpacing: "0.1sp"
   body-large:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "16sp"
     fontWeight: 400
+    lineHeight: "24sp"
+    letterSpacing: "0.5sp"
   body-medium:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "14sp"
     fontWeight: 400
+    lineHeight: "20sp"
+    letterSpacing: "0.25sp"
   body-small:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "12sp"
     fontWeight: 400
+    lineHeight: "16sp"
+    letterSpacing: "0.4sp"
   label-large:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "14sp"
     fontWeight: 500
+    lineHeight: "20sp"
+    letterSpacing: "0.1sp"
   label-medium:
-    fontFamily: "Roboto, sans-serif"
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
+    fontSize: "12sp"
     fontWeight: 500
-  readout-time:
-    fontFamily: "monospace"
-  chart-axis:
-    fontFamily: "sans-serif"
+    lineHeight: "16sp"
+    letterSpacing: "0.5sp"
+  label-small:
+    fontFamily: "Android default sans-serif (Roboto on the reviewed emulator)"
     fontSize: "11sp"
+    fontWeight: 500
+    lineHeight: "16sp"
+    letterSpacing: "0.5sp"
 rounded:
-  readout: "8dp"
-  series: "10dp"
-  chart-and-action: "12dp"
-  gallery-card: "16dp"
-  panel-top: "20dp"
+  event: "12dp"
+  row-and-choice: "16dp"
+  gallery-and-product: "20dp"
+  working-object: "24dp"
 spacing:
   step-4: "4dp"
   step-6: "6dp"
@@ -63,130 +164,173 @@ spacing:
   step-20: "20dp"
   step-24: "24dp"
 components:
-  button-primary:
-    backgroundColor: "{colors.lime}"
-    textColor: "{colors.background}"
-    rounded: "{rounded.chart-and-action}"
-  choice-selected:
-    backgroundColor: "{colors.selected}"
-    textColor: "{colors.text}"
-  choice-unselected:
-    backgroundColor: "{colors.background}"
-    textColor: "{colors.text}"
-  gallery-card:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.gallery-card}"
+  button-primary-light:
+    backgroundColor: "{colors.light-primary}"
+    textColor: "{colors.light-on-primary}"
+    typography: "{typography.label-large}"
+  button-primary-dark:
+    backgroundColor: "{colors.dark-primary}"
+    textColor: "{colors.dark-on-primary}"
+    typography: "{typography.label-large}"
+  gallery-card-music:
+    backgroundColor: "{colors.gallery-music}"
+    textColor: "{colors.light-on-surface}"
+    rounded: "{rounded.gallery-and-product}"
+    padding: "16dp"
+  gallery-card-shop:
+    backgroundColor: "{colors.gallery-shop}"
+    textColor: "{colors.light-on-surface}"
+    rounded: "{rounded.gallery-and-product}"
+    padding: "16dp"
+  motion-choice-selected-light:
+    backgroundColor: "{colors.light-primary-container}"
+    rounded: "{rounded.row-and-choice}"
+    padding: "12dp"
+  motion-choice-selected-dark:
+    backgroundColor: "{colors.dark-primary-container}"
+    rounded: "{rounded.row-and-choice}"
+    padding: "12dp"
+  energy-surface:
+    backgroundColor: "{colors.gallery-energy}"
+    textColor: "{colors.energy-ink}"
+    rounded: "{rounded.working-object}"
     padding: "20dp"
-  chart:
-    backgroundColor: "{colors.background}"
-    rounded: "{rounded.chart-and-action}"
-    padding: "10dp"
-  readout:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.readout}"
-    padding: "10dp"
+  poster-stage:
+    backgroundColor: "{colors.poster-ground}"
+    rounded: "{rounded.working-object}"
+    height: "294dp"
 ---
 
 # Design System: Compose Atlas
 
 ## Overview
 
-**Creative North Star: "Instrument"**
+**Creative North Star: "Hands-on exhibit"**
 
-Instrument is a measuring surface where changes can be inspected, replayed and understood. Green-black fields hold clear measurements, solid lime and dashed cyan traces, and an amber selection cursor. Material 3 provides native Android interaction and text scaling.
+Hands-on exhibit makes a familiar app object the first invitation: a record, a lamp, a parcel, a chart, a ticket, a poster, an envelope or a morning schedule. Broad pastel fields and clear dark silhouettes make each experience recognizable. The surrounding Android interface stays quiet, with indigo actions, native type and a direct route back to the gallery.
 
-This records the implemented dark-only system, extracted from InstrumentTheme.kt, ExperimentGallery.kt, AtlasApp.kt, ControlPanel.kt, TemperatureChart.kt and the Player, Collection, Form and Agenda experience files under app/src/main/java/dev/devaxes/composeatlas/ui. PRODUCT.md establishes the offline, synthetic-data scope. The approved surface brief selects composition B with C explanations for Temperature study; the gallery extension retains Instrument with a shared native scene frame rather than repeating the chart composition.
+The working object and ordinary action lead; technical explanations unfold afterward. Object continuity supplies the signature: a shop object keeps its identity as it moves from the collection into its detail view. Other transitions explain a concrete state change through folding, travel, placement, reveal or transformation. All artwork is original runtime Canvas or Compose geometry; no concept bitmap, photograph or remote artwork ships in the app.
+
+This is a scan of the local implementation in `AtlasTheme.kt`, `ExperimentGallery.kt` and `ui/scenes/`, following `PRODUCT.md` and `docs/design/redesign/brief.md`. The generated concept in `.impeccable/mocks/playground-concept.png` is a composition reference selected by the orchestrator under the user's autonomous mandate. It is not a user-approved pixel contract. The former Instrument system is superseded for these eight scenes. This document records implementation, not publication, performance or accessibility certification.
 
 **Key Characteristics:**
-- Tonal green-black surfaces with restrained outlines.
-- Series identity carried by color, line pattern and names.
-- Native controls and readable, scalable text.
-- Five working experiments in an evolving gallery: Quiet frequency, Temperature study, Object collection, Session builder and Spatial agenda.
+- Eight working scenes: Pocket DJ, Little shop, On its way, Energy story, Your ticket, Poster studio, Inbox zero and Make room.
+- Light and dark native shells with scene artwork retaining its own purposeful palette.
+- Material 3 controls, Android Back, scalable text, system insets and alternatives to gestures.
+- One global authored-motion policy: Normal, Slow motion and Off, subordinate to Android animation settings.
 
 ## Colors
 
-The palette is a cool green-black instrument field with three functional accents. Exact values are in the frontmatter and come from InstrumentTheme.kt.
+The shell moves between cool blue-white and midnight, while warm and cool scene fields preserve object identity in both themes. Frontmatter values are the extracted native tokens; Kotlin remains the runtime source of truth. Theme-prefixed names document the two explicit Material color schemes, not an in-app theme selector or dynamic-color support.
 
 ### Primary
-- **Lime:** primary action and Studio trace; background is the on-primary color.
-- **Selected green:** active segmented controls and primary container.
+
+- **Indigo / Pale indigo** (`light-primary`, `dark-primary`) carry primary actions, text actions and selected controls. Their matching on-primary colors provide the label contrast.
+- **Soft indigo / Deep indigo containers** carry selected Motion choices, with Material retaining its native state treatment.
 
 ### Secondary
-- **Cyan:** Gallery trace and supporting API text.
+
+- **Slate blue** theme roles support tonal secondary actions such as the energy day switch.
+- **Scene fields** identify records in coral, objects in lavender, delivery in blue, energy in mint, tickets in cream-gold, posters in lilac, inbox in warm cream and agenda in pale lavender. The actual working object may use a stronger related color than its gallery tile.
 
 ### Tertiary
-- **Amber:** chart cursor, selected time and replay status. This is a direct Instrument token, not an override of Material's tertiary role.
+
+- **Terracotta / Soft coral** are explicit Material tertiary roles. Strong coral, golden yellow, violet and cyan also belong to particular scene objects; they do not replace the shell's indigo actions.
 
 ### Neutral
-- **Background:** screen and plot field.
-- **Surface:** experiment card, readout and controls panel.
-- **Text / Muted:** primary information / supporting copy and axis labels.
-- **Outline:** container borders, dividers and chart grid.
 
-**The Trace Identity Rule.** Keep Studio solid lime and Gallery dashed cyan wherever these series appear; pair the traces with explicit names.
+- **Blue-white / Midnight** backgrounds and surfaces hold native reading and controls.
+- **Ink / Pale text** are the corresponding foregrounds; surface-variant foregrounds carry supporting copy.
+- **Tonal surface containers** separate inbox rows, agenda and motion choices. Outline roles serve fields, dividers and outlined controls.
+- **Object ink** is paired with the fixed pastel art rather than inherited from dark-mode shell text. Energy, ticket and poster objects use their own explicit dark inks in code.
 
 ## Typography
 
-Roboto is supplied through the unchanged Material 3 typography scale. The source uses displaySmall, headlineSmall, titleLarge/Medium/Small, bodyLarge/Medium/Small and labelLarge/Medium; frontmatter records their observed weights without inventing custom size tokens. DisplaySmall is semibold on Explore; the original chart explicitly uses medium headlineSmall and titleLarge. New gallery cards use the library headlineSmall weight; scene content also uses headlineMedium and labelSmall where implemented. Native Material role sizes, line heights and spacing remain library-owned. The chart axis uses an explicit sp size converted through LocalDensity. Readout time uses the platform monospace face with labelMedium sizing.
+**Display and body font:** Android's default sans-serif through the default Material 3 `Typography`; the reviewed emulator resolves it as Roboto. There is no bundled display family or custom type scale. The frontmatter records the library's default roles in scalable pixels. Local `Bold`, `Black` and `SemiBold` overrides strengthen scene headings and selected content without changing the role scale.
 
-**The Native Type Rule.** Use Material typography roles and system font scaling; the timestamp alone uses monospace.
+### Hierarchy
 
-The system face is an explicit native Android adaptation. The current Explore display treatment is recorded as source evidence, not promoted into a custom brand display face for future surfaces.
+- **Display small** is the gallery invitation, inbox greeting and energy value. Prominent uses apply Bold.
+- **Headline large / medium / small** introduce familiar tasks, track titles, event artwork and scene headings. Object lettering can use Black; ordinary headings use Bold.
+- **Title large / medium / small** label navigation, gallery rows, products, weekdays and agenda events.
+- **Body large / medium / small** carry tasks, descriptions, production explanations and the offline boundary copy.
+- **Label large / medium / small** serve actions, times, status, form-adjacent information and compact object details. Uppercase is confined to intentional artwork labels such as SIDE A and ADMIT ONE.
+
+**The Native Type Rule.** Use Material typography roles and Android font scaling; allow text to wrap and content to scroll instead of shrinking copy into an illustration.
 
 ## Layout
 
-The current implementation is one vertical column. Explore uses the outer spacing step of 24dp; its card has 20dp content padding. The experiment header uses system safe-drawing insets. Period controls and panel content use 16dp horizontal padding; common control gaps are 8dp. The panel has 8dp vertical padding and rounded top corners.
+The app uses a one-level saved route stack: gallery, scene and global Motion settings, with system Back and an app-bar back action. Shop detail consumes Back before leaving its scene. `Scaffold` supplies app-bar insets; scene pages also account for the IME. The gallery scrolls as a page with a centered maximum width of 1000dp, 20dp horizontal padding, 12dp vertical padding and 20dp vertical groups. A full-width Pocket DJ feature leads the inventory. Other tiles use 12dp gutters.
 
-Within Temperature study’s detail content area, height below 600dp or font scale above 1.25 selects a whole-content scroll with a 240dp chart card. Otherwise the chart card is 31% of available height, clamped to 210–290dp, and the remaining panel scrolls independently. These are height/font-scale conditions, not tablet breakpoints. Explore now presents text-led cards with descriptions, cyan mechanism labels and full-width opening actions; the former chart preview is absent. No tablet-specific two-pane layout is implemented.
+The gallery chooses three columns at available widths of at least 840dp. Below that threshold, it uses one column when the width is below 340dp or font scale exceeds 1.35; otherwise it uses two. The expanded-width branch takes precedence over font scale. Feature artwork is 150dp high; other thumbnails are 112dp high. Cards use 16dp padding and a 6dp inner gap.
 
-The four added scenes share ExperimentFrame: a compact back header, Experiment / Understand selector, system safe-drawing and keyboard insets. The selector and body are centered and capped at 600dp in wide windows; the body has 20dp padding and 16dp gaps. Experiment and Understand retain separate scroll positions. Player, form and agenda scroll as pages; collection delegates Experiment scrolling to its lazy grid/list, including its controls, while Understand remains a scrolling page. LabSurface reuses the 16dp rounded outlined surface with 20dp padding and 16dp gaps.
+Scene bodies scroll vertically and are centered at a maximum width of 640dp, with 20dp horizontal and 12dp vertical outer padding. Main content groups use 16dp gaps; local scenes also use 8dp, 10dp, 12dp and 20dp where the object or controls require them. Motion settings share the 640dp maximum with 24dp padding and 16dp groups. Wide screens preserve these reading widths instead of stretching controls across the device.
 
-Spatial agenda uses time geometry only when its available content width is at least 360dp and font scale is at most 1.2. Otherwise it shows events in chronological list order. Timeline zoom is disabled in that list mode with an explanatory message; event details and 15-minute move actions remain available.
+Agenda uses a 330dp timeline and a measured event layout at ordinary font scale; above 1.2 it presents chronological full-width event blocks. Inbox uses a finite lazy-list viewport inside the scrolling scene: 300dp normally, 440dp above font scale 1.3, and 180dp when empty. At larger text sizes its Archive action moves below message text. Undo waits for the restored provider to reach layout and scrolls the restored message into view.
 
-**The Reachable Controls Rule.** Preserve the scroll fallback when the available height is short or the system font size is enlarged.
+Poster stage height is 294dp. Its working paper is limited by both width and a 210dp cap. The thumbnail fits its rotated geometry within both axes and clips to its preview bounds. Delivery thumbnail labels are omitted to preserve a clean small-scale route; the full working map retains endpoint labels.
 
 ## Elevation & Depth
 
-Custom surfaces are flat and separated by tone and 1dp outlines. Material components retain their library state treatments; there is no custom shadow vocabulary. The controls panel is a non-modal surface in the layout, with a close action, rather than a draggable sheet.
-
-**The Tonal Separation Rule.** Separate the plot, readout and control surface with tone and fine outlines, without adding decorative shadows.
+The interface is flat at rest: tone, spacing and clipping distinguish objects and controls. There is no app-wide card-shadow vocabulary. The transformed poster is an intentional exception, using native `graphicsLayer` shadow elevation (12dp) to lift the paper above its lilac stage. Small drawn shadows under shop silhouettes and the parcel marker belong to the Canvas artwork, not to reusable UI elevation. Material controls retain their library-provided state, ripple, focus and elevation behavior.
 
 ## Shapes
 
-Rounded containers use the source radii in frontmatter: small readout, series buttons, chart/action, gallery card and panel top corners. The panel's bottom corners are square. Native segmented controls use Material item shapes; standard outlined/text/icon buttons, outlined text fields, filter chips, sliders and switches retain Material shape and interaction defaults. Icons are Material vector assets, not text glyphs.
+Large working stages use softly rounded corners (24dp); gallery tiles and shop artwork use 20dp. Motion choices and swipe rows use 16dp, while agenda blocks use 12dp. These explicit native radii are in the frontmatter. Pill buttons, radio buttons, sliders, fields and native feedback keep Material component defaults unless code supplies an override. Record transport uses a circular/pill silhouette.
+
+The admission ticket uses a true custom outline with rounded outer corners (up to 16dp) and side cutouts (up to 11dp) aligned to the measured footer split. The notches reveal whichever parent surface is behind them in either theme; they are not painted background-colored circles. Perforation and barcode are decorative geometry; the barcode is explicitly not scannable.
 
 ## Components
 
-- **Primary buttons:** lime on green-black. Open experiment and Replay transition use the chart-and-action radius. Replay is disabled without a selected sample; the panel-reopen button retains its Material default shape.
-- **Secondary actions:** native outlined buttons for point inspection, scenarios and View source; a text button resets. Point buttons disable at data boundaries. Scenario selection changes its outline to lime and exposes selected semantics.
-- **ChoiceRow:** Material single-choice segments for period, panel tab and transition mode. Selected green marks the active choice; both states use text and outline roles. No decorative leading check icon is supplied.
-- **SeriesButton:** outlined controls with a checkbox, a miniature solid/dashed trace and a name. Shown/Hidden semantics describe their state. The last visible series cannot be hidden.
-- **LabeledSlider and Switch:** Material inputs with text labels and current values. Slider tracks use outline for the inactive portion and a 48dp layout height. Duration, damping and stiffness appear according to transition mode. The new scenes also use native text fields and filter chips as described below.
-- **Gallery cards:** five available experiments, each with a title, short description, cyan mechanism label and full-width opening action. No Canvas preview remains in the gallery.
-- **Outlined text fields:** native full-width, single-line Material fields for collection search and session Name / Email. Material owns their shape, focus outline, label and error treatments. Name advances focus with Next; Email uses the email keyboard and validates on Done. Validation errors appear as supporting text after an attempted submission. Search Done clears focus.
-- **Filter chips:** native Material FilterChip for collection categories, Saved only and agenda overlap. Selected chips use the theme’s selected container and text roles; unselected chips retain the outlined native treatment. Collection filters wrap in FlowRow with 8dp horizontal gaps. Labels and selected semantics communicate state without a decorative leading icon.
-- **Shared scene frame:** four added scenes use a back header and Experiment / Understand ChoiceRow. The body and tab selector follow the 600dp cap and scroll ownership described in Layout. Quiet frequency simulates playback without sound; Object collection offers twelve fictional objects, filters and grid/list views; Session builder transitions between labeled fields and a local confirmation; Spatial agenda offers time placement, overlap lanes and a chronological fallback. Object and event details use dismissible native dialogs.
-- **Chart and readout:** 2dp traces, dashed Gallery pattern 6dp/5dp, amber 1dp cursor with 5dp/4dp dashes, 5dp markers with 2dp background centers. Grid strokes are 1dp with 3dp/3dp dashes. The readout carries time and named series values; replay temporarily shows its status until the trace reveal completes. Empty data has an explicit text state. Touch and accessibility actions inspect the same sample.
-- **Motion comparison:** two horizontal lanes share a 100% amber target and reserve space up to 150% for overshoot. The selected chart mode uses lime; the other marker uses the text color. Raw percentages turn amber beyond the target. Replay both and the three speed segments stay next to this diagram. This is animation position, not a third temperature series.
-- **Controls panel:** Adjust exposes series, animation and scenario controls. Understand explains the mechanism and provides a source link. System Back closes the panel before returning to Explore; the header back action returns directly to Explore.
+### Actions and native controls
 
-**The Honest Measurement Rule.** A gap stays missing, never zero; replay reveals the existing trace instead of fabricating measurements.
+Primary `Button`, `OutlinedButton`, `FilledTonalButton`, `TextButton`, `IconButton`, `Slider` and `RadioButton` retain native Material semantics and feedback. Main transactional demonstrations commonly use a minimum 52dp action height; poster and quantity alternatives use at least 48dp, and music transport uses 56dp. Preserve the local constraints in code rather than imposing one new global button size. Music transport uses shell foreground/background colors instead of indigo, giving Play a strong dark silhouette in light mode and the corresponding reversed pairing in dark mode.
 
-Animation is the experiment: Animatable reveals a clipped trace using the selected Tween or Spring. Inspection completes the reveal before presenting a selected point. This is not a decorative motion token for unrelated UI.
+### Outlined fields
 
-The sidecar's HTML/CSS snippets are illustrative documentation previews of these native components, not runtime implementations or exact Android renderings. Native controls own pressed, disabled, focus and accessibility behavior.
+Your ticket uses native single-line Name and Email fields with persistent labels, IME Next/Done, supporting validation errors and focus on the first invalid field. The keyboard and button share the same validation. Successful submission creates a local preview; Edit my details returns to the retained form. Error styling comes from Material, including roles not explicitly overridden by AtlasTheme.
 
-Review limit: docs/design/native-adaptations.md retains the strict fixed-coordinate comparison at 71.03%, below its 72% gate. Native adaptations are reviewed separately; this document does not assert an automated visual pass. Emulator evidence does not establish hardware performance or accessibility certification.
+### Gallery cards and navigation
+
+Entire tiles are clickable rounded `Surface`s with a fixed art field, title and forward arrow. The featured tile includes a short invitation; smaller tiles rely on recognizable art and their title. The app bar uses standard Android icon buttons for back and settings. Do not introduce a bottom navigation bar or resurrect the former experiment-tab shell.
+
+### Working objects and explanations
+
+**The Object and Action Rule.** Keep the working object recognizable and its main action available before the optional implementation explanation.
+
+- **Pocket DJ:** a coral sleeve holds original vinyl geometry. Fold/Expand springs its artwork height between 230dp and 100dp. Track changes animate title content; the native seek slider and transport update a local, silent simulation. Playback stops when the app backgrounds; leaving the scene cancels its clock.
+- **Little shop:** original lamp and stool silhouettes share their actual artwork element between collection and detail using `SharedTransitionLayout`. Quantity and bag totals are functional local state, with polite announcements; no checkout occurs.
+- **On its way:** the courier and revealed trail use distance along one curved `PathMeasure` path. Preparing, On the way and At your door are explicit text states with a polite description. Send becomes a disabled progress action, then Replay delivery.
+- **Energy story:** bar heights animate between synthetic day datasets, with a selected dot and readout. Tap/drag and Earlier/Later inspect the same indexed values. The day switch is a tonal action.
+- **Your ticket:** event artwork becomes a measured, notched ticket preview with retained attendee details and decorative barcode. The preview semantics state that it is not an issued admission ticket.
+- **Poster studio:** pinch, turn and drag directly manipulate original paper artwork. Visible Zoom −, Zoom +, Rotate and Reset actions plus custom accessibility actions provide alternatives. Programmatic changes animate; direct gestures track the fingers. Pan is bounded, zoom is clamped and reset restores the full composition.
+- **Inbox zero:** stable message IDs drive swipe archive and placement animation. A visible Archive action and custom accessibility action provide alternatives; snackbar Undo restores a settled row and brings it into view. Restore all / Bring them back recovers all synthetic messages.
+- **Make room:** one button moves coffee and reflows the morning. Event identity keys preserve position and width animation across sorting. The enlarged-text fallback retains event names, times and the same move action.
+
+Every scene ends with a divider and a full-width How it works text action. Its expanding/fading explanation contains a mechanism heading, concise implementation explanation, an In a real app use case, limitations and a source-file pointer. It is initially closed and saved with the route state.
+
+**The Honest Reading Rule.** A missing energy sample remains a visible gap with a No reading readout and a textual explanation; it never becomes a measured zero.
+
+### Global motion
+
+**The System Motion Rule.** Every authored transition consumes AtlasMotion. Off and Android animation scale zero show final state immediately; observe system changes while the app remains open.
+
+`AtlasMotion` is supplied once through a composition local. Normal uses authored durations; Slow motion multiplies tween durations by three; Off uses zero-duration tweens and snapped springs. Default tweens use 400ms with `FastOutSlowInEasing`; scenes select smaller or longer finite durations for the event they illustrate. Springs use medium-bouncy damping and stiffness 315 normally, 35 in Slow mode. Spring timing is physics-based, so the three-times description is approximate for these transitions. Delivery uses a finite 6400ms normal journey scaled to remaining progress; chart bars use 650ms and agenda positions/widths use 700ms before policy scaling.
+
+A `ContentObserver` watches `Settings.Global.ANIMATOR_DURATION_SCALE` and updates the policy while the app is in the foreground. A zero system value disables authored motion even when the saved preference is Normal or Slow. Nonzero Android duration scaling is still applied by Compose. Native component interactions keep their platform motion behavior. Motion preferences are global and saved; there are no per-scene technical tuning panels.
 
 ## Do's and Don'ts
 
 ### Do:
-- Do use native Material controls with semantic labels and visible state.
-- Do retain text readouts and Previous point / Next point alongside chart gestures.
-- Do preserve system insets and scalable text.
-- Do present only implemented gallery experiments as available.
+- Do build on native Material 3 controls, semantic labels, visible state and Android Back.
+- Do use the current light/dark role pairs for shell text and actions; keep scene artwork colors paired with their explicit inks.
+- Do retain touch-independent chart inspection, poster actions, visible Archive and undo/restore paths.
+- Do keep the working object, explanatory copy and global motion controls reachable with enlarged text.
+- Do render original artwork as runtime geometry and document only implemented behavior.
 
 ### Don't:
-- Don't replace native text or charts with reference-image rasters.
-- Don't rely on color alone to distinguish the two series.
-- Don't imply light-theme, dynamic-color or tablet two-pane support exists in this milestone.
+- Don't ship the generated concept image as a screen, thumbnail or functional UI.
+- Don't restore the obsolete dark-only Instrument palette, per-scene tuning panels or Experiment / Understand tabs.
+- Don't rely on color or a gesture alone to communicate a state change or permit an action.
+- Don't claim real playback, purchases, dispatch, issued admission tickets or real-device performance from this offline lab.
+- Don't treat the concept reference, documentation previews or emulator captures as user-approved pixel equivalence or accessibility certification.

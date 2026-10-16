@@ -1,0 +1,203 @@
+# Archived verification: through v0.2.0
+
+This is the historical record of the published five-scene application. Its test
+counts, screenshots and design comparison do not verify the eight-scene local
+redesign. Paths and links below reflect that earlier repository state; use the
+[v0.2.0 tree](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0) to inspect it.
+
+# Verification record
+
+## Published milestone: v0.2.0
+
+The [gallery milestone](#gallery-milestone--020) is commit
+[`133b1c1`](https://github.com/FredDevAxes/compose-atlas/commit/133b1c18103fc49b5f11273a9942a1fa6a74e7fe),
+tagged [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0).
+Its [GitHub Actions run](https://github.com/FredDevAxes/compose-atlas/actions/runs/38670901824)
+passed both checks and the API 36 x86_64 instrumented job. Local verification passed
+13 unit tests and 14 instrumented tests on API 36 ARM64.
+
+The sections below retain each stage's environment and limits. The
+[visual tour](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/visual-tour.md) is the quickest way to inspect the current experiments.
+
+## Historical milestone: v0.1.0
+
+This record belongs to the Instrument milestone. The screenshots show the native
+Android build, not the generated design references. All temperatures are synthetic.
+
+## Environment
+
+- Local host: macOS, Apple Silicon.
+- Java: Oracle JDK 17.0.11+7-LTS-207.
+- Gradle 8.13, Android Gradle Plugin 8.12.0, Kotlin 2.2.10.
+- Compile / target API 36, Build Tools 36.0.0; minimum API 26.
+- Emulator: ComposeAtlas_API_36, Pixel 6 profile, Android 16 / API 36,
+  Google APIs ARM64 image revision 7, emulator 35.6.11 (build 13610412),
+  software graphics.
+- Normal viewport: 1080 × 2400 px, density 420 dpi, font scale 1.0.
+- Additional configurations: 1.3 font scale and a 2400 × 1080 px landscape window.
+  Landscape captures use a window-size override, not a sensor-rotation test. The design comparison
+  uses 851 × 1848 px at 320 dpi. These are different configurations of one emulator,
+  not evidence from multiple physical devices.
+
+## Automated checks
+
+Run the commands from [the README](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/README.md). Seven JVM tests cover fixtures,
+coordinate mapping, selection boundaries, null-gap segmentation and state changes.
+Six instrumented tests cover the main user flows, recreation, selection, series
+visibility, empty/incomplete data and deterministic replay with the Compose test clock.
+
+The animation test advances 32 ms into replay, then beyond its duration, and checks
+that disabling motion makes the readout immediately available. It does not measure
+frame timing or rendering performance. Activity recreation is tested; OS process
+termination and cold-launch restoration are not claimed.
+
+Captures are produced by the instrumented test helper after Compose settles and
+the emulator compositor presents the frame. Gradle may uninstall test applications
+after connected tests, so collect capture files before uninstalling when reproducing.
+
+## Scope and limits
+
+- No physical-device smoothness, energy or haptic claim.
+- API 26 is the declared minimum and lint compatibility target, not a tested image.
+- The app provides readable selected values and previous/next semantics. A complete
+  manual TalkBack session and accessibility certification have not been performed.
+- English and the Instrument dark theme are the first milestone's supported content.
+- Landscape and enlarged text scroll vertically; no tablet-specific two-pane claim.
+- Distinct day, week and month fixtures are authored examples, not statistical
+  aggregations of one underlying measurement series.
+- Empty and gaps are local scenarios. There is no simulated network loading or
+  network-error state because this experiment has no remote data dependency.
+- Release output is unsigned and has not been distributed through a store.
+
+## Recorded local results — 2026-10-15
+
+Application source: `303509b614298f83fbed57ce977fca23d04bc100`. The following
+build-script change excludes only the `OldTargetApi` SDK-update notice from the
+pinned API 36 milestone; functional source and captures are unchanged.
+
+| Check | Result |
+| --- | --- |
+| ktlint, Android Lint, debug assembly | Passed |
+| JVM unit tests | 7 passed |
+| API 36 ARM64 instrumented suite | 6 passed |
+| Enlarged-text and landscape-window navigation checks | Passed |
+| Minified release assembly (R8) | Passed; unsigned APK |
+
+The API 36 x86_64 emulator completed all six tests successfully in
+[run 38663599253](https://github.com/FredDevAxes/compose-atlas/actions/runs/38663599253).
+That run's separate checks job failed on the `OldTargetApi` notice; it is not an
+overall CI pass. [Run 38664049394](https://github.com/FredDevAxes/compose-atlas/actions/runs/38664049394)
+passed with the corrected build configuration; later documentation-only commits
+use the same application source.
+
+## Native visual evidence
+
+[Explore](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/phone-home.png), [Adjust](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/phone-controls.png),
+[Understand](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/phone-understand.png), [empty data](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/phone-empty.png),
+[gaps](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/phone-gaps.png), [long labels](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/phone-long-labels.png),
+[large text](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/large-controls.png), [large-text explanation](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/large-understand.png),
+[landscape chart](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/landscape-controls.png) and
+[landscape panel](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/landscape-understand.png) are native captures with embedded
+origin metadata. Some controls require scrolling in the short-window layout.
+
+The independent review resolved its native visual and semantic corrections and
+found no material regression in this capture set. The strict reference-image
+comparison remains **71.03%**, below its **72%** threshold, and the final review
+disposition remains **fix** for that open gate. See the
+[native adaptation record](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/design/native-adaptations.md). This milestone does not
+claim a full visual approval or exact reproduction of the generated reference.
+
+
+## Motion comparison follow-up
+
+The 0.1.0 screenshots above are historical milestone evidence. The motion follow-up
+adds two diagnostic lanes and 1×/0.5×/0.25× playback. Additional instrumented tests
+check visible spring overshoot while the selected chart still reports replay,
+normal/quarter-speed curve equivalence, completion, speed restoration and reset.
+App-level motion-off also checks that both markers finish at 100%.
+
+Local verification on 15 October 2026: ktlint, Android Lint, debug assembly,
+7 JVM tests and all 8 instrumented tests passed on API 36 ARM64. This follow-up
+uses the same AVD with host GPU rendering. A preliminary software-rendered run
+was interrupted after device timeouts; an old replay test was also corrected to
+scroll before freezing the test clock. Neither interrupted run is counted as a pass.
+
+Confirmation captures: [quarter-speed overshoot](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/motion-quarter-overshoot.png),
+[Understand](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/motion-understand.png), [large text](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/motion-large-understand.png),
+and [landscape window](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/motion-landscape-understand.png). The selected flow
+passed at normal size, font scale 1.3 and the 2400 × 1080 window override.
+
+
+## Gallery milestone — 0.2.0
+
+The gallery adds Quiet frequency, Object collection, Session builder and Spatial
+agenda alongside Temperature study. The native captures below belong to the
+0.2.0 source. Earlier chart captures remain historical evidence for their sections.
+
+Local verification on 15 October 2026 used the same API 36 Google APIs ARM64 AVD,
+1080 × 2400 at density 420, host GPU rendering, JDK 17.0.11 and the pinned toolchain.
+
+| Check | Result |
+| --- | --- |
+| ktlint, Android Lint, debug app and test APK assembly | Passed |
+| Minified release assembly (R8) | Passed; unsigned APK |
+| JVM unit tests | 13 passed |
+| Complete instrumented suite | 14 passed, none skipped |
+| New-scene navigation and Understand at font scale 1.3 | Passed |
+| New-scene navigation and Understand at 2400 × 1080 window override | Passed |
+| Public image origin metadata | 24 rasters, none missing |
+| Secret scan | Passed, no findings |
+
+The six gallery tests include four functional scene flows, a player gesture/back
+flow and a capture/navigation flow. They check playback completion and seeking,
+paused restoration, empty queue recovery, favorite identity through filtering and
+layout changes, empty search, IME focus and submission, local notes confirmation,
+agenda time changes, overlap, zoom and recreation. The eight existing chart tests
+also pass. Pure tests cover filtering, validation, interval lanes, clamped movement,
+clock labels and existing chart math.
+
+The first gallery run exposed a missing IME action in collection search. The
+corrected search declares Done and clears focus. The visual pass also corrected
+tab scroll sharing and clarified disabled timeline zoom in list mode. Failed
+preliminary runs are not counted as successful verification.
+
+### Native evidence
+
+- [Gallery](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-home.png)
+- [Player](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-player.png) and [compact player](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-player-compact.png)
+- [Collection](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-collection.png)
+- [Form](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-form.png) and [local confirmation](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-form-confirmation.png)
+- [Overlapping agenda](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-agenda.png)
+- [Understand](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-understand.png)
+- [Large-text agenda list](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-large-agenda.png)
+- [Landscape Understand](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/images/gallery-landscape-understand.png)
+
+The large-text and landscape runs exercise scene navigation, scrolling and opening
+Understand. They are not repeats of every functional scenario at every size.
+The landscape evidence uses a window-size override, not a sensor-rotation test.
+The displayed objects, waveform artwork, sessions and chart values are synthetic.
+
+The independent extension review found the native visual direction consistent
+with Instrument. Its sole material finding was stale design-system documentation.
+The documenter updated DESIGN.md and its sidecar; the reviewer scored that fix
+**resolved**, with disposition **ship** for that persistence fix. This is not a new
+full-surface or hardware validation. The historical chart reproduction gate
+(71.03% versus 72%) remains unchanged and outside this extension.
+
+No real audio, network delivery, hardware performance, complete TalkBack session,
+tablet-specific layout, light theme or exhaustive Compose API coverage is claimed.
+The remaining experiments are tracked in [capability coverage](https://github.com/FredDevAxes/compose-atlas/blob/v0.2.0/docs/coverage.md).
+
+
+## Documentation reproduction check — 15 October 2026
+
+A fresh Git clone of `133b1c1` passed `./gradlew ktlintCheck lintDebug
+testDebugUnitTest assembleDebug`: 60 tasks executed, including all 13 unit tests.
+The check reused the installed JDK 17 and Android SDK plus the host dependency
+cache; it was not a fresh operating-system or SDK installation. No local.properties
+or existing build output was copied. The subsequent presentation changes affect
+Markdown only; application source and the v0.2.0 tag remain unchanged.
+
+The README, visual tour, architecture, coverage, design records and dependency
+notices were reviewed together. Local documentation links and image paths were
+checked. Native captures are reused unchanged with their existing provenance.

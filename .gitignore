@@ -9,3 +9,10 @@ local.properties
 *.jks
 .impeccable/*
 !.impeccable/design.json
+
+# Local JVM crash diagnostics may contain machine details.
+hs_err_pid*.log
+replay_pid*.log
+
+# Optional presentation-rendering environment.
+.venv-presentation/

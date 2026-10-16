@@ -1,196 +1,149 @@
 # Verification record
 
-## Current milestone: v0.2.0
+## v0.3.0 redesign
 
-The [gallery milestone](#gallery-milestone--020) is commit
-[`133b1c1`](https://github.com/FredDevAxes/compose-atlas/commit/133b1c18103fc49b5f11273a9942a1fa6a74e7fe),
-tagged [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0).
-Its [GitHub Actions run](https://github.com/FredDevAxes/compose-atlas/actions/runs/38670901824)
-passed both checks and the API 36 x86_64 instrumented job. Local verification passed
-13 unit tests and 14 instrumented tests on API 36 ARM64.
+Scope: the eight-scene application, with global Normal/Slow motion/Off, light/dark
+themes and a scene explanation. The user approved the main-branch merge and GitHub
+push on 16 October 2026. The application identifies itself as `0.3.0` (version code 3).
+Publication checks are recorded in [the v0.3.0 record](publication-v0.3.0.md).
+The earlier public v0.2.0 test results do not verify this source.
 
-The sections below retain each stage's environment and limits. The
-[visual tour](visual-tour.md) is the quickest way to inspect the current experiments.
+## Verified source and results
 
-## Historical milestone: v0.1.0
+Application source: local commit `888c913`, verified on 16 October 2026. All of the
+checks below passed before publication. These are local execution results; see
+the publication record for checks of the tagged revision and GitHub Actions.
 
-This record belongs to the Instrument milestone. The screenshots show the native
-Android build, not the generated design references. All temperatures are synthetic.
+| Check | Result |
+| --- | --- |
+| `ktlintCheck` | Passed |
+| `lintDebug` | Passed: “No issues found.” |
+| `testDebugUnitTest` | 6 tests passed |
+| `assembleDebug` | Passed |
+| `assembleRelease` | Passed; minified APK is unsigned |
+| `connectedDebugAndroidTest` | 11 passed, none skipped or failed: 10 behavior tests and 1 capture tour |
+| Clean local clone of `888c913` | Offline `ktlintCheck lintDebug testDebugUnitTest assembleDebug` passed |
+| Capture tour variants | All 20 capture steps completed separately in light, dark, font scale 1.3 and a wide window |
+| Physical device, TalkBack and performance profiling | Not verified |
+| GitHub Actions on the published revision | See [publication record](publication-v0.3.0.md) |
 
-## Environment
+The six unit tests cover local input validation, overlap lanes, motion policy,
+chart selection boundaries and missing-reading fixtures. The ten behavior tests
+cover scene explanations/navigation, controlled delivery time, global motion and
+recreation, player transport/restoration, shop quantity/bag/Back, ticket validation
+and IME focus, chart selection, poster controls/pinch/reset, inbox swipe/undo and
+agenda movement. The capture tour is counted separately because generating
+screenshots is not equivalent to a behavior test.
 
-- Local host: macOS, Apple Silicon.
-- Java: Oracle JDK 17.0.11+7-LTS-207.
+The final combined run is recorded in the local execution log
+`atlas-final-checks.log`; the clean-clone check is in `atlas-clean-checks.log`.
+Generated reports are under `app/build/reports/`, with connected-device XML under
+`app/build/outputs/androidTest-results/`. These build outputs and temporary logs
+are local evidence, not committed artifacts or public CI links.
+
+The clean clone used an already installed JDK/SDK and populated dependency cache.
+It verifies the committed source with an offline build; it does not verify a
+first-time internet download or a different host environment. Its checks did not
+repeat connected tests or release assembly.
+
+## Recorded environment
+
+- Host: macOS on Apple Silicon; JDK 17.0.11.
 - Gradle 8.13, Android Gradle Plugin 8.12.0, Kotlin 2.2.10.
-- Compile / target API 36, Build Tools 36.0.0; minimum API 26.
-- Emulator: ComposeAtlas_API_36, Pixel 6 profile, Android 16 / API 36,
-  Google APIs ARM64 image revision 7, emulator 35.6.11 (build 13610412),
-  software graphics.
-- Normal viewport: 1080 × 2400 px, density 420 dpi, font scale 1.0.
-- Additional configurations: 1.3 font scale and a 2400 × 1080 px landscape window.
-  Landscape captures use a window-size override, not a sensor-rotation test. The design comparison
-  uses 851 × 1848 px at 320 dpi. These are different configurations of one emulator,
-  not evidence from multiple physical devices.
+- Compose UI/Foundation/Animation 1.9.0; Material 3 1.3.2; ktlint 1.7.1.
+- Compile/target API 36, Build Tools 36.0.0; minimum API 26.
+- Emulator: `ComposeAtlas_API_36`, Android 16/API 36, ARM64, target `emulator-5554`.
+- Phone captures: 1080 × 2400 px at 420 dpi, normal font scale unless labeled.
+- Additional tours: system dark theme, font scale 1.3, and 1600 × 1000 px at 160 dpi.
+  The wide configuration is a window/density override on the same emulator,
+  not a separate tablet or physical device.
+- Intermediate animation tests use system Animator duration scale 1×. Global
+  Slow motion and Off are exercised separately by behavior tests.
 
-## Automated checks
+An initial Android Lint/UAST run encountered a host JDK 17.0.11 C1 compiler VM
+crash. The recorded final and clean-clone checks passed with the local JVM
+workaround below. This is an environment workaround, not evidence that normal
+commands always fail or an application crash.
 
-Run the commands from [the README](../README.md). Seven JVM tests cover fixtures,
-coordinate mapping, selection boundaries, null-gap segmentation and state changes.
-Six instrumented tests cover the main user flows, recreation, selection, series
-visibility, empty/incomplete data and deterministic replay with the Compose test clock.
+## Reproduce the checks
 
-The animation test advances 32 ms into replay, then beyond its duration, and checks
-that disabling motion makes the readout immediately available. It does not measure
-frame timing or rendering performance. Activity recreation is tested; OS process
-termination and cold-launch restoration are not claimed.
+From the repository root, with JDK 17 and the API 36 SDK packages installed:
 
-Captures are produced by the instrumented test helper after Compose settles and
-the emulator compositor presents the frame. Gradle may uninstall test applications
-after connected tests, so collect capture files before uninstalling when reproducing.
+```sh
+./gradlew ktlintCheck lintDebug testDebugUnitTest assembleDebug
+./gradlew connectedDebugAndroidTest
+./gradlew assembleRelease
+```
 
-## Scope and limits
+The combined verification command used on this host was:
 
-- No physical-device smoothness, energy or haptic claim.
-- API 26 is the declared minimum and lint compatibility target, not a tested image.
-- The app provides readable selected values and previous/next semantics. A complete
-  manual TalkBack session and accessibility certification have not been performed.
-- English and the Instrument dark theme are the first milestone's supported content.
-- Landscape and enlarged text scroll vertically; no tablet-specific two-pane claim.
-- Distinct day, week and month fixtures are authored examples, not statistical
-  aggregations of one underlying measurement series.
-- Empty and gaps are local scenarios. There is no simulated network loading or
-  network-error state because this experiment has no remote data dependency.
-- Release output is unsigned and has not been distributed through a store.
+```sh
+./gradlew --no-daemon --max-workers=2 \
+  '-Dorg.gradle.jvmargs=-Xmx3g -XX:TieredStopAtLevel=1 -Dfile.encoding=UTF-8' \
+  ktlintCheck lintDebug testDebugUnitTest assembleDebug assembleRelease connectedDebugAndroidTest
+```
 
-## Recorded local results — 2026-10-15
+The clean local clone used the same JVM options with `--offline` and the tasks
+`ktlintCheck lintDebug testDebugUnitTest assembleDebug`.
 
-Application source: `303509b614298f83fbed57ce977fca23d04bc100`. The following
-build-script change excludes only the `OldTargetApi` SDK-update notice from the
-pinned API 36 milestone; functional source and captures are unchanged.
+Run formatting separately before checks if needed:
 
-| Check | Result |
-| --- | --- |
-| ktlint, Android Lint, debug assembly | Passed |
-| JVM unit tests | 7 passed |
-| API 36 ARM64 instrumented suite | 6 passed |
-| Enlarged-text and landscape-window navigation checks | Passed |
-| Minified release assembly (R8) | Passed; unsigned APK |
+```sh
+./gradlew ktlintFormat
+```
 
-The API 36 x86_64 emulator completed all six tests successfully in
-[run 38663599253](https://github.com/FredDevAxes/compose-atlas/actions/runs/38663599253).
-That run's separate checks job failed on the `OldTargetApi` notice; it is not an
-overall CI pass. [Run 38664049394](https://github.com/FredDevAxes/compose-atlas/actions/runs/38664049394)
-passed with the corrected build configuration; later documentation-only commits
-use the same application source.
+The instrumented command needs one running emulator. Tests that inspect intermediate
+frames need Android Animator duration scale at 1×; global and system motion-off
+behavior should be recorded separately. Reports are under `app/build/reports/`;
+connected-device result XML is under `app/build/outputs/androidTest-results/`.
 
-## Native visual evidence
+The [workflow](../.github/workflows/android.yml) configures static checks, unit tests
+and debug assembly on every push and PR, plus a separate API 36 Google APIs x86_64
+Pixel 6 emulator job for instrumented tests. Actions are pinned to commit SHAs.
+Configured coverage is not an execution result for an unpushed branch.
 
-[Explore](images/phone-home.png), [Adjust](images/phone-controls.png),
-[Understand](images/phone-understand.png), [empty data](images/phone-empty.png),
-[gaps](images/phone-gaps.png), [long labels](images/phone-long-labels.png),
-[large text](images/large-controls.png), [large-text explanation](images/large-understand.png),
-[landscape chart](images/landscape-controls.png) and
-[landscape panel](images/landscape-understand.png) are native captures with embedded
-origin metadata. Some controls require scrolling in the short-window layout.
+## Additional review protocol
 
-The independent review resolved its native visual and semantic corrections and
-found no material regression in this capture set. The strict reference-image
-comparison remains **71.03%**, below its **72%** threshold, and the final review
-disposition remains **fix** for that open gate. See the
-[native adaptation record](design/native-adaptations.md). This milestone does not
-claim a full visual approval or exact reproduction of the generated reference.
+For further runs, record the emulator image, Android API, architecture, graphics
+mode, viewport, density, font scale, theme and system animation scale. Also record JDK, SDK,
+Gradle and dependency versions when comparing runs. Gradle locks app dependencies;
+it does not lock the emulator image or hosted runner.
 
+- Open each of the eight scenes, perform its main task, expand How it works and
+  return using both the app bar and system Back where relevant.
+- Check shop detail Back, form IME focus and errors, inbox archive/undo/empty state,
+  missing chart readings, player background pause and saved scene state.
+- Compare Normal, Slow motion and Off through a finite delivery journey; separately
+  inspect Android system animation scale zero. These modes control authored motion,
+  not every Material internal animation or the simulated media clock.
+- Check light/dark, enlarged text and short/wide windows for reachable controls and
+  readable content. List the scenes actually checked instead of generalizing a pass.
+- Test screen-reader traversal, announcements and alternatives to gestures in a
+  dedicated session before reporting TalkBack coverage.
 
-## Motion comparison follow-up
+## Captures and provenance
 
-The 0.1.0 screenshots above are historical milestone evidence. The motion follow-up
-adds two diagnostic lanes and 1×/0.5×/0.25× playback. Additional instrumented tests
-check visible spring overshoot while the selected chart still reports replay,
-normal/quarter-speed curve equivalence, completion, speed restoration and reset.
-App-level motion-off also checks that both markers finish at 100%.
+The [visual tour](visual-tour.md) references native screenshots of this local
+redesign under `docs/images/redesign/`. They show UI states, not design references.
+The generated composition reference under `.impeccable/mocks/` is an autonomously
+selected design input; no generated bitmap ships in the APK and no user approval
+of that composition is claimed. Runtime illustrations use original Compose/Canvas
+geometry. Captures correspond to source `888c913` and the emulator/configurations above.
+Each configuration's tour completes the same 20 steps, for 80 raw captures across
+four configurations. Documented selections and an overview are under
+`docs/images/redesign/`. Native captures demonstrate these visual states; they
+do not establish complete behavior, contrast or accessibility compliance in every
+configuration.
 
-Local verification on 15 October 2026: ktlint, Android Lint, debug assembly,
-7 JVM tests and all 8 instrumented tests passed on API 36 ARM64. This follow-up
-uses the same AVD with host GPU rendering. A preliminary software-rendered run
-was interrupted after device timeouts; an old replay test was also corrected to
-scroll before freezing the test clock. Neither interrupted run is counted as a pass.
+## Limits and historical evidence
 
-Confirmation captures: [quarter-speed overshoot](images/motion-quarter-overshoot.png),
-[Understand](images/motion-understand.png), [large text](images/motion-large-understand.png),
-and [landscape window](images/motion-landscape-understand.png). The selected flow
-passed at normal size, font scale 1.3 and the 2400 × 1080 window override.
+Synthetic data and local state exercise UI patterns; they do not verify payments,
+audio, dispatch, email delivery, issued tickets or production backend behavior.
+Emulator tests do not establish frame smoothness, battery consumption, haptics or
+performance on physical devices. No comprehensive accessibility certification,
+API 26 device run or dedicated tablet/foldable test is implied.
 
-
-## Gallery milestone — 0.2.0
-
-The gallery adds Quiet frequency, Object collection, Session builder and Spatial
-agenda alongside Temperature study. The native captures below belong to the
-0.2.0 source. Earlier chart captures remain historical evidence for their sections.
-
-Local verification on 15 October 2026 used the same API 36 Google APIs ARM64 AVD,
-1080 × 2400 at density 420, host GPU rendering, JDK 17.0.11 and the pinned toolchain.
-
-| Check | Result |
-| --- | --- |
-| ktlint, Android Lint, debug app and test APK assembly | Passed |
-| Minified release assembly (R8) | Passed; unsigned APK |
-| JVM unit tests | 13 passed |
-| Complete instrumented suite | 14 passed, none skipped |
-| New-scene navigation and Understand at font scale 1.3 | Passed |
-| New-scene navigation and Understand at 2400 × 1080 window override | Passed |
-| Public image origin metadata | 24 rasters, none missing |
-| Secret scan | Passed, no findings |
-
-The six gallery tests include four functional scene flows, a player gesture/back
-flow and a capture/navigation flow. They check playback completion and seeking,
-paused restoration, empty queue recovery, favorite identity through filtering and
-layout changes, empty search, IME focus and submission, local notes confirmation,
-agenda time changes, overlap, zoom and recreation. The eight existing chart tests
-also pass. Pure tests cover filtering, validation, interval lanes, clamped movement,
-clock labels and existing chart math.
-
-The first gallery run exposed a missing IME action in collection search. The
-corrected search declares Done and clears focus. The visual pass also corrected
-tab scroll sharing and clarified disabled timeline zoom in list mode. Failed
-preliminary runs are not counted as successful verification.
-
-### Native evidence
-
-- [Gallery](images/gallery-home.png)
-- [Player](images/gallery-player.png) and [compact player](images/gallery-player-compact.png)
-- [Collection](images/gallery-collection.png)
-- [Form](images/gallery-form.png) and [local confirmation](images/gallery-form-confirmation.png)
-- [Overlapping agenda](images/gallery-agenda.png)
-- [Understand](images/gallery-understand.png)
-- [Large-text agenda list](images/gallery-large-agenda.png)
-- [Landscape Understand](images/gallery-landscape-understand.png)
-
-The large-text and landscape runs exercise scene navigation, scrolling and opening
-Understand. They are not repeats of every functional scenario at every size.
-The landscape evidence uses a window-size override, not a sensor-rotation test.
-The displayed objects, waveform artwork, sessions and chart values are synthetic.
-
-The independent extension review found the native visual direction consistent
-with Instrument. Its sole material finding was stale design-system documentation.
-The documenter updated DESIGN.md and its sidecar; the reviewer scored that fix
-**resolved**, with disposition **ship** for that persistence fix. This is not a new
-full-surface or hardware validation. The historical chart reproduction gate
-(71.03% versus 72%) remains unchanged and outside this extension.
-
-No real audio, network delivery, hardware performance, complete TalkBack session,
-tablet-specific layout, light theme or exhaustive Compose API coverage is claimed.
-The remaining experiments are tracked in [capability coverage](coverage.md).
-
-
-## Documentation reproduction check — 15 October 2026
-
-A fresh Git clone of `133b1c1` passed `./gradlew ktlintCheck lintDebug
-testDebugUnitTest assembleDebug`: 60 tasks executed, including all 13 unit tests.
-The check reused the installed JDK 17 and Android SDK plus the host dependency
-cache; it was not a fresh operating-system or SDK installation. No local.properties
-or existing build output was copied. The subsequent presentation changes affect
-Markdown only; application source and the v0.2.0 tag remain unchanged.
-
-The README, visual tour, architecture, coverage, design records and dependency
-notices were reviewed together. Local documentation links and image paths were
-checked. Native captures are reused unchanged with their existing provenance.
+The published five-scene gallery and prior Temperature study have a separate
+[archived verification record](archive/verification-v0.2.0.md), including their real
+tags, runs, captures and limitations. Those historical results remain attributable
+to their earlier revisions only.
