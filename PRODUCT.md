@@ -4,7 +4,7 @@ Compose Atlas is an offline Android gallery of eight working, visual demonstrati
 of Jetpack Compose. Visitors recognize an everyday app task, interact immediately,
 and optionally read a concise explanation of its implementation and production use.
 
-## Current local redesign
+## Current experiences
 
 Pocket DJ, Little shop, On its way, Poster studio, Your ticket, Inbox zero,
 Energy story and Make room. No per-experiment technical settings. Global motion
@@ -21,6 +21,7 @@ catalog. Emulator evidence is not hardware performance or accessibility certific
 
 ## Delivery
 
-This redesign is local on codex/compose-atlas-playground. No push, deployment or
-merge is authorized for this iteration. The user decides publication later.
+On 16 October 2026, the user approved merging this redesign into main and pushing
+it to GitHub. The v0.3.0 milestone presents the eight-scene replacement.
+The earlier local-only restriction remains part of the design history.
 Repository and UI are English. Original code is MIT. Keep pinned dependencies.

@@ -7,19 +7,12 @@ watch a crowded morning make room. Compose Atlas is an offline Android lab of
 small, working interfaces. Each scene starts with an ordinary task; **How it
 works** explains the Compose mechanism, where it fits in a real app and its limits.
 
-<p>
-  <img src="docs/images/redesign/phone-home.png" width="230" alt="Compose Atlas gallery with a large coral record player and colorful interactive scene tiles">
-  <img src="docs/images/redesign/phone-shop-detail.png" width="230" alt="Little shop detail with an Arc lamp, quantity controls and a local bag action">
-  <img src="docs/images/redesign/phone-ticket-confirmed.png" width="230" alt="Golden ticket preview generated locally from example attendee details">
-</p>
+![Compose Atlas v0.3.0: four real Android screens showing the player, shop, delivery and ticket](docs/presentation/cover.png)
 
-*Native captures of the local eight-scene redesign. Follow the [visual tour](docs/visual-tour.md)
-for actions to try and links to the corresponding source.*
-
-**Status:** local work on `codex/compose-atlas-playground`, with no published
-redesign release or CI result. The public [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0)
-is the earlier five-scene gallery. Check the [verification record](docs/verification.md)
-for the current build's results and remaining work.
+**v0.3.0 — eight hands-on Compose experiences.** Follow the [visual tour](docs/visual-tour.md)
+for actions to try, or browse the [screen presentation](docs/presentation/README.md).
+The [verification record](docs/verification.md) links local checks and the publication
+record. The earlier five-scene gallery remains available at [v0.2.0](https://github.com/FredDevAxes/compose-atlas/tree/v0.2.0).
 
 Everything runs with fictional local data and original geometric artwork. The
 player is silent; the shop charges nothing; no parcel, email or ticket is sent.
@@ -50,16 +43,16 @@ Light and dark themes follow the system.
 
 ## Run locally
 
-The redesign currently exists only in its local checkout. Cloning the public
-repository retrieves the published baseline, not these unpushed changes:
+Clone the repository and select the verified milestone:
 
 ```sh
 git clone https://github.com/FredDevAxes/compose-atlas.git
 cd compose-atlas
+git switch --detach v0.3.0
 ```
 
-For the redesign, use the existing checkout on `codex/compose-atlas-playground`.
-Run all following commands from the repository root.
+Run all following commands from the repository root. To follow ongoing development,
+use `git switch main` instead of the milestone checkout.
 
 You need JDK 17, Android SDK Platform 36, Build Tools 36.0.0, platform-tools and
 an Android 8.0/API 26 or newer emulator or device. The configured instrumented
@@ -117,9 +110,8 @@ toolchain is pinned. API compatibility checks remain enabled.
 
 The [workflow](.github/workflows/android.yml) configures the same checks for every
 push and PR, with a separate API 36 x86_64 emulator job and actions pinned to commit
-SHAs. This local branch has not been pushed, so historical green runs are not
-verification of the redesign. Current results and the scope of the tests belong in
-[verification](docs/verification.md).
+SHAs. Results and the scope of the tests belong in [verification](docs/verification.md);
+older green runs do not verify a later revision.
 
 ## Read and reuse the code
 

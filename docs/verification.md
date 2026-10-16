@@ -1,18 +1,18 @@
 # Verification record
 
-## Current local redesign
+## v0.3.0 redesign
 
-Scope: the eight-scene application on `codex/compose-atlas-playground`, with global
-Normal/Slow motion/Off, light/dark themes and a scene explanation. This iteration
-has not been pushed, merged or released. Public v0.2.0 test results do not verify
-this source. The Gradle application identifies itself as `0.3.0-local` (version code 3),
-which is a local build marker, not a published tag or release.
+Scope: the eight-scene application, with global Normal/Slow motion/Off, light/dark
+themes and a scene explanation. The user approved the main-branch merge and GitHub
+push on 16 October 2026. The application identifies itself as `0.3.0` (version code 3).
+Publication checks are recorded in [the v0.3.0 record](publication-v0.3.0.md).
+The earlier public v0.2.0 test results do not verify this source.
 
 ## Verified source and results
 
 Application source: local commit `888c913`, verified on 16 October 2026. All of the
-checks below passed. This is local execution evidence; no external CI run exists
-for this unpushed redesign.
+checks below passed before publication. These are local execution results; see
+the publication record for checks of the tagged revision and GitHub Actions.
 
 | Check | Result |
 | --- | --- |
@@ -25,7 +25,7 @@ for this unpushed redesign.
 | Clean local clone of `888c913` | Offline `ktlintCheck lintDebug testDebugUnitTest assembleDebug` passed |
 | Capture tour variants | All 20 capture steps completed separately in light, dark, font scale 1.3 and a wide window |
 | Physical device, TalkBack and performance profiling | Not verified |
-| GitHub Actions on this redesign | Not run; source remains local |
+| GitHub Actions on the published revision | See [publication record](publication-v0.3.0.md) |
 
 The six unit tests cover local input validation, overlap lanes, motion policy,
 chart selection boundaries and missing-reading fixtures. The ten behavior tests

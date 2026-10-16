@@ -1,6 +1,6 @@
 # Redesign review
 
-Local review, 16 October 2026. No push, merge or release.
+Local implementation review, 16 October 2026, completed before publication.
 
 ## Independent code review
 
@@ -49,4 +49,5 @@ each of four configurations. See [verification](../../verification.md) for exact
 scope, environment and remaining device/accessibility/performance limits, and the
 [capture manifest](../../images/redesign/manifest.json) for documented images.
 
-No push, merge, tag, deployment or public redesign release was performed.
+At the end of this design review, nothing had been pushed or merged. The user
+subsequently authorized publication; see [the publication record](../../publication-v0.3.0.md).

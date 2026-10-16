@@ -2,7 +2,9 @@
 
 Mode: Experience. Full replacement authorized on 16 October 2026. The user explicitly
 asked the orchestrator to choose and implement autonomously while away; no design
-approval is attributed to the user. Local branch only, no push or deployment.
+approval is attributed to the user. The implementation was initially local only.
+The user subsequently approved the main-branch merge and GitHub push on 16 October
+2026; that authorization changes delivery, not the recorded design-selection process.
 
 ## Direction contract
 

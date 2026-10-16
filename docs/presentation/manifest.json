@@ -1,0 +1,144 @@
+{
+  "version": "0.3.0",
+  "ui_source_commit": "888c913",
+  "capture_manifest": "../images/redesign/manifest.json",
+  "method": "Native screenshots uniformly scaled and placed on presentation backgrounds. Screenshot pixels are not retouched or cropped.",
+  "font": "Manrope, SIL OFL 1.1; tools/presentation/fonts/OFL.txt",
+  "files": [
+    {
+      "file": "screens/home.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "4b8ce998f8e6bdf81562cc0a44167c0b42b36167c69ea104f204a4255e3dbbc2",
+      "screenshots": [
+        "docs/images/redesign/phone-home.png"
+      ]
+    },
+    {
+      "file": "screens/music.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "6c90b9d4d4c1086a10e77b88a1e787fdac93f938ecba8728c163d90bcc184dd5",
+      "screenshots": [
+        "docs/images/redesign/phone-music.png"
+      ]
+    },
+    {
+      "file": "screens/shop.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "1630ff98311eac62f0eee0ee3594a50d6a3eaeff2ef1eefe12eb463dc1869a50",
+      "screenshots": [
+        "docs/images/redesign/phone-shop-detail.png"
+      ]
+    },
+    {
+      "file": "screens/delivery.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "3bb60f033cd36f16953f1ece952cebec2f9c79c2d463d1a485df9c0d5db1bb78",
+      "screenshots": [
+        "docs/images/redesign/phone-delivery-arrived.png"
+      ]
+    },
+    {
+      "file": "screens/energy.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "a08d551e6f98847602fe5bc197d8fd7a10f3ecc62c3f25d1d979417b2f5a8b20",
+      "screenshots": [
+        "docs/images/redesign/phone-energy.png"
+      ]
+    },
+    {
+      "file": "screens/ticket.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "9378e21f0607bf1e69ab3e91c52cecea114f3a89c355539ef78eced260b061f0",
+      "screenshots": [
+        "docs/images/redesign/phone-ticket-confirmed.png"
+      ]
+    },
+    {
+      "file": "screens/poster.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "26a7728cbbcc23a2fc775b27ef45ef0cb2130228ab4d3391c7ff3bdfb4dbe283",
+      "screenshots": [
+        "docs/images/redesign/phone-photo-transformed.png"
+      ]
+    },
+    {
+      "file": "screens/inbox.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "501e6743b3972a6910e042b6b25e5426db91ed6db9b7448e0f7da8904fc11608",
+      "screenshots": [
+        "docs/images/redesign/phone-inbox-undo.png"
+      ]
+    },
+    {
+      "file": "screens/agenda.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "3369bc0671cb06724d8e8e5ed89d37d715a2a78347129f0b9b707a2cdda3a4e8",
+      "screenshots": [
+        "docs/images/redesign/phone-agenda-moved.png"
+      ]
+    },
+    {
+      "file": "screens/motion.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "530cd810c1d41d4fde630a2ef303e6d5526f189ac2064fbbcee4cf9f90d557de",
+      "screenshots": [
+        "docs/images/redesign/phone-motion.png"
+      ]
+    },
+    {
+      "file": "screens/how-it-works.png",
+      "pixels": [
+        1600,
+        1200
+      ],
+      "sha256": "c0a587ca6f29cac17c8b903e0aeb50876ee72504e5109d775db4aceff52f76fc",
+      "screenshots": [
+        "docs/images/redesign/phone-explanation.png"
+      ]
+    },
+    {
+      "file": "cover.png",
+      "pixels": [
+        2400,
+        1260
+      ],
+      "sha256": "375aa187f97cbecbe15fccb889bf1a635a245a8cb7356dafc7389963d6526b2b",
+      "screenshots": [
+        "docs/images/redesign/phone-music.png",
+        "docs/images/redesign/phone-shop-detail.png",
+        "docs/images/redesign/phone-delivery.png",
+        "docs/images/redesign/phone-ticket-confirmed.png"
+      ]
+    }
+  ]
+}

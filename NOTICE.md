@@ -21,3 +21,9 @@ eight-scene redesign uses an autonomously selected generated composition referen
 no user approval of that reference is claimed. No mockup pixels are embedded in
 the application. Scene artwork, thumbnails, charts, maps and ticket geometry are
 original runtime Compose/Canvas drawings using synthetic fixtures.
+
+## Presentation typography
+
+Presentation images use Manrope by Mikhail Sharanda, distributed under the
+SIL Open Font License 1.1. The font and license are retained under
+`tools/presentation/fonts/`. Screenshots preserve Android's native typography.

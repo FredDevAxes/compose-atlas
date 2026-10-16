@@ -3,8 +3,9 @@
 [README](../README.md) · [Capability map](coverage.md) · [Architecture](architecture.md) ·
 [Verification](verification.md)
 
-These native captures belong to the local eight-scene redesign on
-`codex/compose-atlas-playground`, source commit `888c913`, not the public v0.2.0 tag.
+These native captures show the eight-scene v0.3.0 redesign. Their UI source is
+commit `888c913`; packaging and publication changes do not alter these scene pixels.
+The [presentation gallery](presentation/README.md) adds a composed visual for each screen.
 They were captured on an Android 16/API 36 ARM64 emulator at 1080 × 2400 px,
 420 dpi. The 20-step capture tour also completed in dark theme, at font scale 1.3
 and in a 1600 × 1000 px, 160 dpi window. These are visual-state checks; the

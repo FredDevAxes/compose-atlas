@@ -1100,7 +1100,7 @@
       ],
       "artwork": "Original runtime Canvas/Compose geometry only. No shipping raster assets. Concept raster is documentation/reference only.",
       "evidence": "Light, dark, enlarged-font and expanded-width emulator captures under .impeccable/review/round1 informed this scan. Code includes subsequent preview fitting, hidden thumbnail map labels, constrained Motion width, undo reveal and keyed agenda motion fixes. Captures are not a pixel contract or certification.",
-      "publication": "Local redesign documentation. No push, merge, deployment or publication inferred."
+      "publication": "Design documentation extracted from the implemented eight-scene redesign. Publication is recorded separately in docs/publication-v0.3.0.md."
     }
   },
   "components": [
