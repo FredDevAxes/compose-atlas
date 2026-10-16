@@ -19,8 +19,23 @@ prepared publication assets. The final publication commit is scanned before push
 
 ## GitHub state
 
-Main-branch integration, tag and GitHub Actions results are pending in this preparation
-commit. This section will be updated from the actual remote state.
+The eight-scene redesign was integrated into `main` by merge commit
+[`34de0f3`](https://github.com/FredDevAxes/compose-atlas/commit/34de0f3ae6faf269a2014c564b62fecae7f44558), preserving the implementation,
+design-documentation and publication-preparation commits.
+
+The [integration workflow](https://github.com/FredDevAxes/compose-atlas/actions/runs/38906701386)
+records hosted checks and API 36 x86_64 emulator tests for that merge. Later
+documentation-only commits have their own entries in the [main-branch runs](https://github.com/FredDevAxes/compose-atlas/actions?query=branch%3Amain).
+Read the revision and conclusion on each run; the local results above are recorded
+separately. The `v0.3.0` tag identifies the published milestone.
+
+The public FredDevAxes profile was updated in
+[`3645185`](https://github.com/FredDevAxes/FredDevAxes/commit/364518586709f8f226fecd1bc39dea7f3b960420).
+Its [dedicated Compose Atlas page](https://github.com/FredDevAxes/FredDevAxes/blob/master/labs/compose-atlas.md)
+contains the cover and all eleven screen compositions. The home and Labs catalogue
+link to that page; their titles retain the direct repository destination.
+The public profile export validates 18 pages and 252 assets. Only the Compose Atlas
+entry, dedicated page and its images changed; the other project pages are identical.
 
 ## Visuals
 
