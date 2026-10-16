@@ -16,6 +16,8 @@ does not relicense them.
 - [ktlint license](https://github.com/pinterest/ktlint/blob/master/LICENSE)
 
 UI icons come from AndroidX Material Icons. Typography is provided by Android.
-Design mockups were generated with OpenAI image generation and approved as design
-references; no mockup pixels are embedded in the application. Runtime charts use
-synthetic fixtures and native Canvas drawing.
+Earlier design mockups were generated with OpenAI image generation. The local
+eight-scene redesign uses an autonomously selected generated composition reference;
+no user approval of that reference is claimed. No mockup pixels are embedded in
+the application. Scene artwork, thumbnails, charts, maps and ticket geometry are
+original runtime Compose/Canvas drawings using synthetic fixtures.

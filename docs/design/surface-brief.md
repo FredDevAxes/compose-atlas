@@ -1,5 +1,7 @@
 # Temperature study
 Mode: Experience, with Operate controls and Read explanations.
+> Historical v0.2.0 design record. The local redesign is governed by [the new direction contract](redesign/brief.md) and [DESIGN.md](../../DESIGN.md).
+
 Approved comp: .impeccable/mocks/focused.png. Supporting explanation: .impeccable/mocks/guided.png.
 
 ## Direction contract

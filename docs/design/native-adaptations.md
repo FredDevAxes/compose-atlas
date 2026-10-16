@@ -1,5 +1,7 @@
 # Native adaptation record — first chart milestone
 
+> Historical v0.2.0 design record. The local redesign is governed by [the new direction contract](redesign/brief.md) and [DESIGN.md](../../DESIGN.md).
+
 The selected design is Instrument, composition B with the explanation content of C
 inside Understand. The original planning record identified generated numeric
 geometry, spacing and some legend colors as intentions rather than exact data
